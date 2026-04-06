@@ -1,0 +1,548 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Admin Panel — HEALTHWAYS</title>
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
+<script src="firebase-init.js"></script>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html,body{height:100%;}
+body{font-family:'Montserrat',sans-serif;background:#080808;color:#fff;overflow-x:hidden;}
+:root{--gold:#C9922A;--gold-light:#E8B84B;--green:#22C55E;--red:#EF4444;}
+
+/* ── GATE ── */
+#gate{position:fixed;inset:0;z-index:9999;background:#080808;display:flex;align-items:center;justify-content:center;padding:24px;}
+.gate-card{width:100%;max-width:400px;border:1px solid rgba(201,146,42,0.2);background:rgba(255,255,255,0.02);padding:52px 40px;text-align:center;}
+.gate-logo{font-family:'Oswald',sans-serif;font-weight:700;font-size:20px;letter-spacing:5px;text-transform:uppercase;color:#fff;margin-bottom:6px;}
+.gate-logo span{background:linear-gradient(135deg,var(--gold),var(--gold-light));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+.gate-sub{font-family:'Montserrat',sans-serif;font-size:9px;letter-spacing:4px;text-transform:uppercase;color:rgba(255,255,255,0.25);margin-bottom:44px;}
+.gate-label{display:block;font-size:9px;font-weight:600;letter-spacing:2.5px;text-transform:uppercase;color:rgba(255,255,255,0.35);text-align:left;margin-bottom:9px;}
+.gate-input{width:100%;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);color:#fff;font-family:'Montserrat',sans-serif;font-size:14px;padding:13px 16px;outline:none;transition:border-color 0.2s;-webkit-appearance:none;appearance:none;}
+.gate-input:focus{border-color:var(--gold);}
+.gate-btn{width:100%;margin-top:18px;font-family:'Montserrat',sans-serif;font-size:10px;font-weight:600;letter-spacing:3px;text-transform:uppercase;color:#fff;background:linear-gradient(135deg,var(--gold),var(--gold-light));border:none;padding:14px 24px;cursor:pointer;transition:opacity 0.2s;}
+.gate-btn:hover{opacity:0.88;}
+.gate-error{font-size:11px;color:#f87171;margin-top:12px;display:none;letter-spacing:0.5px;}
+.gate-error.show{display:block;}
+
+/* ── HEADER ── */
+header{display:flex;align-items:center;justify-content:space-between;padding:18px 40px;border-bottom:1px solid rgba(201,146,42,0.15);background:#080808;position:sticky;top:0;z-index:100;}
+.header-left{display:flex;align-items:center;gap:14px;}
+.header-logo{font-family:'Oswald',sans-serif;font-weight:700;font-size:16px;letter-spacing:4px;text-transform:uppercase;color:#fff;}
+.header-logo span{background:linear-gradient(135deg,var(--gold),var(--gold-light));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+.admin-badge{font-family:'Montserrat',sans-serif;font-size:8px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:var(--gold);border:1px solid rgba(201,146,42,0.35);padding:4px 10px;}
+.header-right{display:flex;align-items:center;gap:16px;}
+.live-dot{display:flex;align-items:center;gap:7px;font-family:'Montserrat',sans-serif;font-size:9px;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,0.3);}
+.live-dot::before{content:'';width:7px;height:7px;border-radius:50%;background:var(--green);box-shadow:0 0 8px rgba(34,197,94,0.6);animation:blink 2s ease-in-out infinite;}
+@keyframes blink{0%,100%{opacity:1;}50%{opacity:0.4;}}
+.logout-btn{font-family:'Montserrat',sans-serif;font-size:9px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,0.35);background:none;border:1px solid rgba(255,255,255,0.1);padding:8px 16px;cursor:pointer;transition:color 0.2s,border-color 0.2s;}
+.logout-btn:hover{color:#fff;border-color:rgba(255,255,255,0.35);}
+
+/* ── STATS BAR ── */
+.stats-bar{display:grid;grid-template-columns:repeat(4,1fr);border-bottom:1px solid rgba(255,255,255,0.06);}
+.stat-box{padding:24px 32px;border-right:1px solid rgba(255,255,255,0.06);transition:background 0.2s;}
+.stat-box:last-child{border-right:none;}
+.stat-box:hover{background:rgba(255,255,255,0.02);}
+.stat-n{font-family:'Oswald',sans-serif;font-weight:700;font-size:36px;letter-spacing:-1px;line-height:1;background:linear-gradient(135deg,var(--gold),var(--gold-light));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+.stat-l{font-family:'Montserrat',sans-serif;font-size:9px;font-weight:500;letter-spacing:2.5px;text-transform:uppercase;color:rgba(255,255,255,0.3);margin-top:6px;}
+
+/* ── TABS ── */
+.tabs-bar{display:flex;border-bottom:1px solid rgba(255,255,255,0.07);padding:0 40px;}
+.tab{font-family:'Montserrat',sans-serif;font-size:10px;font-weight:600;letter-spacing:2.5px;text-transform:uppercase;color:rgba(255,255,255,0.3);background:none;border:none;cursor:pointer;padding:18px 0;margin-right:32px;position:relative;transition:color 0.2s;}
+.tab.active{color:#fff;}
+.tab.active::after{content:'';position:absolute;bottom:-1px;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--gold),var(--gold-light));}
+
+/* ── PANEL ── */
+.panel{display:none;padding:36px 40px;}
+.panel.active{display:block;}
+
+/* ── SECTION HEADER ── */
+.sec-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:24px;flex-wrap:wrap;gap:12px;}
+.sec-title{font-family:'Oswald',sans-serif;font-weight:600;font-size:20px;letter-spacing:2px;text-transform:uppercase;color:#fff;}
+.sec-count{font-family:'Montserrat',sans-serif;font-size:9px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:rgba(201,146,42,0.7);border:1px solid rgba(201,146,42,0.2);padding:5px 12px;}
+.search-input{background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);color:#fff;font-family:'Montserrat',sans-serif;font-size:12px;padding:9px 14px;outline:none;width:220px;transition:border-color 0.2s;}
+.search-input::placeholder{color:rgba(255,255,255,0.2);}
+.search-input:focus{border-color:rgba(201,146,42,0.4);}
+
+/* ── TABLE ── */
+.table-wrap{overflow-x:auto;border:1px solid rgba(255,255,255,0.07);}
+table{width:100%;border-collapse:collapse;min-width:700px;}
+thead tr{border-bottom:1px solid rgba(201,146,42,0.15);}
+th{font-family:'Montserrat',sans-serif;font-size:8px;font-weight:600;letter-spacing:3px;text-transform:uppercase;color:rgba(201,146,42,0.6);padding:14px 18px;text-align:left;background:#0A0A0A;white-space:nowrap;}
+td{font-family:'Montserrat',sans-serif;font-size:12px;font-weight:300;color:rgba(255,255,255,0.65);padding:14px 18px;border-bottom:1px solid rgba(255,255,255,0.04);vertical-align:middle;}
+tbody tr:last-child td{border-bottom:none;}
+tbody tr:hover td{background:rgba(201,146,42,0.03);color:rgba(255,255,255,0.9);}
+.td-name{font-weight:500;color:#fff;}
+.td-mobile{font-family:'Oswald',sans-serif;font-weight:400;font-size:14px;letter-spacing:0.5px;color:rgba(255,255,255,0.8);}
+.td-facility{display:inline-flex;align-items:center;gap:6px;font-size:9px;font-weight:600;letter-spacing:2px;text-transform:uppercase;padding:4px 9px;border:1px solid;}
+.td-facility.gym{color:rgba(201,146,42,0.9);border-color:rgba(201,146,42,0.25);}
+.td-facility.swim{color:rgba(14,165,233,0.9);border-color:rgba(14,165,233,0.25);}
+.td-date{color:rgba(255,255,255,0.7);}
+.td-time{color:rgba(255,255,255,0.5);font-size:11px;}
+
+/* ── WHATSAPP BUTTON ── */
+.wa-btn{display:inline-flex;align-items:center;gap:6px;font-family:'Montserrat',sans-serif;font-size:9px;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;color:#fff;background:#25D366;border:none;padding:8px 14px;cursor:pointer;text-decoration:none;transition:opacity 0.2s,transform 0.15s;white-space:nowrap;}
+.wa-btn:hover{opacity:0.88;transform:scale(1.03);}
+.wa-btn svg{width:14px;height:14px;fill:#fff;flex-shrink:0;}
+
+/* ── WAYSSCORE TOGGLE ── */
+.ws-badge{display:inline-flex;align-items:center;gap:6px;font-size:9px;font-weight:600;letter-spacing:2px;text-transform:uppercase;padding:4px 10px;border:1px solid;}
+.ws-badge.enabled{color:var(--green);border-color:rgba(34,197,94,0.3);background:rgba(34,197,94,0.06);}
+.ws-badge.disabled{color:rgba(255,255,255,0.3);border-color:rgba(255,255,255,0.1);}
+.ws-toggle{font-family:'Montserrat',sans-serif;font-size:9px;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;border:none;padding:8px 14px;cursor:pointer;transition:opacity 0.2s,transform 0.15s;white-space:nowrap;}
+.ws-toggle:hover{opacity:0.88;transform:scale(1.03);}
+.ws-toggle.enable{background:linear-gradient(135deg,#8B5CF6,#A78BFA);color:#fff;}
+.ws-toggle.disable{background:rgba(239,68,68,0.15);border:1px solid rgba(239,68,68,0.3);color:#f87171;}
+
+/* ── EMPTY STATE ── */
+.empty-state{text-align:center;padding:64px 24px;color:rgba(255,255,255,0.2);}
+.empty-state svg{width:40px;height:40px;margin:0 auto 16px;display:block;opacity:0.2;}
+.empty-state p{font-size:12px;letter-spacing:1px;}
+
+/* ── LOADING ── */
+.loading-row td{text-align:center;padding:48px;color:rgba(255,255,255,0.2);font-size:11px;letter-spacing:2px;text-transform:uppercase;}
+
+/* ── TOAST ── */
+#toast{position:fixed;bottom:32px;left:50%;transform:translateX(-50%) translateY(20px);background:#1A1A1A;border:1px solid rgba(201,146,42,0.3);color:#fff;font-family:'Montserrat',sans-serif;font-size:11px;font-weight:500;letter-spacing:1px;padding:12px 24px;opacity:0;transition:opacity 0.3s,transform 0.3s;z-index:9999;white-space:nowrap;pointer-events:none;}
+#toast.show{opacity:1;transform:translateX(-50%) translateY(0);}
+
+/* ── RESPONSIVE ── */
+@media(max-width:768px){
+  header{padding:16px 20px;}
+  .stats-bar{grid-template-columns:1fr 1fr;}
+  .tabs-bar{padding:0 20px;}
+  .panel{padding:24px 20px;}
+  .stat-box{padding:18px 20px;}
+  .stat-n{font-size:28px;}
+  .admin-badge,.live-dot{display:none;}
+}
+@media(max-width:480px){
+  .stats-bar{grid-template-columns:1fr 1fr;}
+  .sec-head{flex-direction:column;align-items:flex-start;}
+  .search-input{width:100%;}
+}
+</style>
+</head>
+<body>
+
+<!-- ── PASSWORD GATE ── -->
+<div id="gate">
+  <div class="gate-card">
+    <div class="gate-logo">HEALTH<span>WAYS</span></div>
+    <div class="gate-sub">Admin Access Only</div>
+    <label class="gate-label" for="gatePwd">Password</label>
+    <input class="gate-input" type="password" id="gatePwd" placeholder="Enter admin password"
+      autocomplete="current-password" onkeydown="if(event.key==='Enter')checkPassword()"/>
+    <button class="gate-btn" onclick="checkPassword()">Enter →</button>
+    <p class="gate-error" id="gateError">Incorrect password. Try again.</p>
+  </div>
+</div>
+
+<!-- ── MAIN DASHBOARD ── -->
+<div id="dashboard" style="display:none;">
+
+  <!-- Header -->
+  <header>
+    <div class="header-left">
+      <div class="header-logo">HEALTH<span>WAYS</span></div>
+      <div class="admin-badge">Admin Panel</div>
+    </div>
+    <div class="header-right">
+      <div class="live-dot">Live</div>
+      <button class="logout-btn" onclick="adminLogout()">Log Out</button>
+    </div>
+  </header>
+
+  <!-- Stats Bar -->
+  <div class="stats-bar">
+    <div class="stat-box">
+      <div class="stat-n" id="statBookings">—</div>
+      <div class="stat-l">Total Bookings</div>
+    </div>
+    <div class="stat-box">
+      <div class="stat-n" id="statMembers">—</div>
+      <div class="stat-l">Registered Members</div>
+    </div>
+    <div class="stat-box">
+      <div class="stat-n" id="statWays">—</div>
+      <div class="stat-l">WaysScore Active</div>
+    </div>
+    <div class="stat-box">
+      <div class="stat-n" id="statToday">—</div>
+      <div class="stat-l">Bookings Today</div>
+    </div>
+  </div>
+
+  <!-- Tabs -->
+  <div class="tabs-bar">
+    <button class="tab active" id="tabBookings" onclick="switchTab('bookings')">Bookings</button>
+    <button class="tab" id="tabMembers"   onclick="switchTab('members')">Members &amp; WaysScore</button>
+  </div>
+
+  <!-- ── BOOKINGS PANEL ── -->
+  <div class="panel active" id="panelBookings">
+    <div class="sec-head">
+      <div style="display:flex;align-items:center;gap:14px;flex-wrap:wrap;">
+        <div class="sec-title">All Bookings</div>
+        <div class="sec-count" id="bookingCount">Loading…</div>
+      </div>
+      <input class="search-input" type="search" id="bookingSearch" placeholder="Search name or mobile…" oninput="filterBookings()"/>
+    </div>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Name</th>
+            <th>Mobile</th>
+            <th>Facility</th>
+            <th>Goal</th>
+            <th>Date</th>
+            <th>Time Slot</th>
+            <th>Booked On</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody id="bookingsBody">
+          <tr class="loading-row"><td colspan="9">Loading bookings…</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- ── MEMBERS PANEL ── -->
+  <div class="panel" id="panelMembers">
+    <div class="sec-head">
+      <div style="display:flex;align-items:center;gap:14px;flex-wrap:wrap;">
+        <div class="sec-title">Members &amp; WaysScore</div>
+        <div class="sec-count" id="memberCount">Loading…</div>
+      </div>
+      <input class="search-input" type="search" id="memberSearch" placeholder="Search name or mobile…" oninput="filterMembers()"/>
+    </div>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Name</th>
+            <th>Mobile</th>
+            <th>Source</th>
+            <th>Registered On</th>
+            <th>WaysScore</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody id="membersBody">
+          <tr class="loading-row"><td colspan="7">Loading members…</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+</div>
+
+<!-- Toast notification -->
+<div id="toast"></div>
+
+<script>
+var allBookings = [];
+var allMembers  = [];
+var dashboardInit = false;
+
+
+function adminLogout() {
+  sessionStorage.removeItem('hw_admin');
+  if (typeof auth !== 'undefined' && auth && auth.signOut) {
+    auth.signOut().catch(function() {});
+  }
+  document.getElementById('dashboard').style.display = 'none';
+  document.getElementById('gate').style.display = 'flex';
+  document.getElementById('gatePwd').value = '';
+  document.getElementById('gateError').classList.remove('show');
+}
+
+// ── TAB SWITCHING ──────────────────────────────────────────────────────────────
+function switchTab(tab) {
+  document.getElementById('tabBookings').classList.toggle('active', tab === 'bookings');
+  document.getElementById('tabMembers').classList.toggle('active',  tab === 'members');
+  document.getElementById('panelBookings').classList.toggle('active', tab === 'bookings');
+  document.getElementById('panelMembers').classList.toggle('active',  tab === 'members');
+}
+
+// ── TOAST ──────────────────────────────────────────────────────────────────────
+function showToast(msg) {
+  var t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(function() { t.classList.remove('show'); }, 3000);
+}
+
+// ── INIT DASHBOARD ─────────────────────────────────────────────────────────────
+function initDashboard() {
+  if (dashboardInit) return;   // prevent double-init
+  dashboardInit = true;
+  
+  console.log('initDashboard called, auth available:', typeof auth);
+  
+  // Wait for Firebase auth before loading data
+  if (typeof auth === 'undefined') {
+    console.error('Firebase auth not available');
+    showAuthError();
+    return;
+  }
+  
+  function loadData() {
+    console.log('Loading data...');
+    listenBookings();
+    listenMembers();
+  }
+  
+  if (auth.currentUser) {
+    console.log('Already authenticated, loading data');
+    loadData();
+  } else {
+    console.log('Not authenticated, attempting sign-in...');
+    auth.signInAnonymously()
+      .then(function() {
+        console.log('Anonymous sign-in successful');
+        loadData();
+      })
+      .catch(function(error) {
+        console.error('Anonymous sign-in failed:', error);
+        showAuthError(error);
+      });
+  }
+}
+
+function showAuthError(error) {
+  var details = error ? ' (' + (error.code || error.message || 'unknown') + ')' : '';
+  var errorMsg = '<tr class="loading-row"><td colspan="9" style="color:#f87171;letter-spacing:0.5px;">' +
+    '⚠ Cannot authenticate — Firebase auth failed' + details + '<br><span style="font-size:10px;opacity:0.6;">Check Firebase configuration, authorized domains, and network.</span>' +
+    '</td></tr>';
+  document.getElementById('bookingsBody').innerHTML = errorMsg;
+  document.getElementById('membersBody').innerHTML = errorMsg.replace('colspan="9"', 'colspan="7"');
+}
+
+// ── BOOKINGS LISTENER — no orderBy to avoid index requirement ─────────────────
+function listenBookings() {
+  db.collection('bookings')
+    .onSnapshot(function(snap) {
+      allBookings = [];
+      snap.forEach(function(doc) {
+        allBookings.push(Object.assign({ _id: doc.id }, doc.data()));
+      });
+      // Sort newest first client-side (no Firestore index needed)
+      allBookings.sort(function(a, b) {
+        var ta = a.bookedAt && a.bookedAt.toDate ? a.bookedAt.toDate() : new Date(a.bookedAt || 0);
+        var tb = b.bookedAt && b.bookedAt.toDate ? b.bookedAt.toDate() : new Date(b.bookedAt || 0);
+        return tb - ta;
+      });
+      renderBookings(allBookings);
+      updateStats();
+    }, function(err) {
+      console.error('Firestore error:', err);
+      document.getElementById('bookingsBody').innerHTML =
+        '<tr class="loading-row"><td colspan="9" style="color:#f87171;letter-spacing:0.5px;">' +
+        '⚠ Cannot load bookings — ' + err.message + '<br><span style="font-size:10px;opacity:0.6;">Code: ' + err.code + ' | Make sure Firestore rules allow read access.</span>' +
+        '</td></tr>';
+    });
+}
+
+function renderBookings(list) {
+  var tbody = document.getElementById('bookingsBody');
+  document.getElementById('bookingCount').textContent = list.length + ' record' + (list.length !== 1 ? 's' : '');
+
+  if (list.length === 0) {
+    tbody.innerHTML = '<tr><td colspan="9"><div class="empty-state"><svg viewBox="0 0 24 24" fill="none"><rect x="3" y="4" width="18" height="18" rx="2" stroke="currentColor" stroke-width="1.5"/><path d="M8 2v4M16 2v4M3 10h18" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg><p>No bookings yet</p></div></td></tr>';
+    return;
+  }
+
+  tbody.innerHTML = list.map(function(b, i) {
+    var dateDisp = b.date || '—';
+    try { dateDisp = new Date(b.date + 'T00:00:00').toLocaleDateString('en-IN', { day:'numeric', month:'short', year:'numeric' }); } catch {}
+    var bookedOn = '—';
+    try {
+      var ts = b.bookedAt && b.bookedAt.toDate ? b.bookedAt.toDate() : new Date(b.bookedAt);
+      bookedOn = ts.toLocaleDateString('en-IN', { day:'numeric', month:'short', year:'numeric' }) +
+                 ' ' + ts.toLocaleTimeString('en-IN', { hour:'2-digit', minute:'2-digit' });
+    } catch {}
+    var mobile  = (b.mobile || '').replace(/\D/g,'');
+    var facility = (b.source || b.facility || 'gym').toLowerCase();
+    var isSwim   = facility === 'swimming' || facility === 'swimming pool';
+    var waText   = encodeURIComponent(
+      'Hi ' + (b.name || 'there') + '! \uD83C\uDFCB\uFE0F Your booking at HEALTHWAYS ' +
+      (isSwim ? 'Swimming Pool' : 'Gym') + ' is confirmed!\n\n' +
+      '\uD83D\uDCC5 Date: ' + (b.date || '—') + '\n' +
+      '\u23F0 Time: ' + (b.time || '—') + '\n' +
+      '\uD83C\uDFAF Goal: ' + (b.goal || '—') + '\n\n' +
+      'See you at the gym! \uD83D\uDCAA'
+    );
+    var waHref  = mobile ? 'https://wa.me/91' + mobile + '?text=' + waText : '#';
+
+    return '<tr>' +
+      '<td style="color:rgba(255,255,255,0.25);font-size:11px;">' + (i + 1) + '</td>' +
+      '<td class="td-name">' + escHtml(b.name || '—') + '</td>' +
+      '<td class="td-mobile">' + (b.mobile || '—') + '</td>' +
+      '<td><span class="td-facility ' + (isSwim ? 'swim' : 'gym') + '">' + (isSwim ? 'Swimming' : 'Gym') + '</span></td>' +
+      '<td>' + escHtml(b.goal || '—') + '</td>' +
+      '<td class="td-date">' + dateDisp + '</td>' +
+      '<td class="td-time">' + escHtml(b.time || '—') + '</td>' +
+      '<td class="td-time">' + bookedOn + '</td>' +
+      '<td>' + (mobile ?
+        '<a class="wa-btn" href="' + waHref + '" target="_blank" rel="noopener">' +
+        '<svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>' +
+        'Confirm on WhatsApp</a>'
+        : '<span style="color:rgba(255,255,255,0.2);font-size:10px;">No mobile</span>') +
+      '</td>' +
+    '</tr>';
+  }).join('');
+}
+
+// ── MEMBERS LISTENER — no orderBy to avoid index requirement ─────────────────
+function listenMembers() {
+  db.collection('users')
+    .onSnapshot(function(snap) {
+      allMembers = [];
+      snap.forEach(function(doc) {
+        allMembers.push(Object.assign({ _id: doc.id }, doc.data()));
+      });
+      // Sort newest first client-side
+      allMembers.sort(function(a, b) {
+        var ta = a.createdAt && a.createdAt.toDate ? a.createdAt.toDate() : new Date(a.createdAt || 0);
+        var tb = b.createdAt && b.createdAt.toDate ? b.createdAt.toDate() : new Date(b.createdAt || 0);
+        return tb - ta;
+      });
+      renderMembers(allMembers);
+      updateStats();
+    }, function(err) {
+      console.error('Firestore error:', err);
+      document.getElementById('membersBody').innerHTML =
+        '<tr class="loading-row"><td colspan="7" style="color:#f87171;letter-spacing:0.5px;">' +
+        '⚠ Cannot load members — ' + err.message + '<br><span style="font-size:10px;opacity:0.6;">Code: ' + err.code + ' | Make sure Firestore rules allow read access.</span>' +
+        '</td></tr>';
+    });
+}
+
+function renderMembers(list) {
+  var tbody = document.getElementById('membersBody');
+  document.getElementById('memberCount').textContent = list.length + ' member' + (list.length !== 1 ? 's' : '');
+
+  if (list.length === 0) {
+    tbody.innerHTML = '<tr><td colspan="7"><div class="empty-state"><svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="8" r="4" stroke="currentColor" stroke-width="1.5"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg><p>No members yet</p></div></td></tr>';
+    return;
+  }
+
+  tbody.innerHTML = list.map(function(m, i) {
+    var joined = '—';
+    try {
+      var ts = m.createdAt && m.createdAt.toDate ? m.createdAt.toDate() : new Date(m.createdAt);
+      joined = ts.toLocaleDateString('en-IN', { day:'numeric', month:'short', year:'numeric' });
+    } catch {}
+    var enabled  = m.wayscore_enabled === true;
+    var srcLabel = (m.source || 'gym');
+    srcLabel = srcLabel.charAt(0).toUpperCase() + srcLabel.slice(1);
+
+    return '<tr>' +
+      '<td style="color:rgba(255,255,255,0.25);font-size:11px;">' + (i + 1) + '</td>' +
+      '<td class="td-name">' + escHtml(m.name || '—') + '</td>' +
+      '<td class="td-mobile">' + (m.mobile || m._id || '—') + '</td>' +
+      '<td><span style="font-size:9px;letter-spacing:1.5px;text-transform:uppercase;color:rgba(255,255,255,0.4);">' + escHtml(srcLabel) + '</span></td>' +
+      '<td class="td-time">' + joined + '</td>' +
+      '<td><span class="ws-badge ' + (enabled ? 'enabled' : 'disabled') + '">' +
+        (enabled ? '● Active' : '○ Inactive') +
+      '</span></td>' +
+      '<td>' +
+        '<button class="ws-toggle ' + (enabled ? 'disable' : 'enable') + '" onclick="toggleWaysScore(this,\'' + escAttr(m._id) + '\',' + enabled + ')">' +
+          (enabled ? 'Disable' : 'Enable WaysScore') +
+        '</button>' +
+      '</td>' +
+    '</tr>';
+  }).join('');
+}
+
+// ── TOGGLE WAYSSCORE ───────────────────────────────────────────────────────────
+function toggleWaysScore(btn, mobile, currentState) {
+  var newState = !currentState;
+  btn.disabled = true;
+  btn.textContent = 'Saving…';
+
+  db.collection('users').doc(mobile).set({ wayscore_enabled: newState }, { merge: true })
+    .then(function() {
+      showToast(newState ? '✓ WaysScore enabled for ' + mobile : '✓ WaysScore disabled for ' + mobile);
+    })
+    .catch(function(err) {
+      showToast('Error: ' + err.message);
+      btn.disabled = false;
+      btn.textContent = currentState ? 'Disable' : 'Enable WaysScore';
+    });
+}
+
+// ── STATS ──────────────────────────────────────────────────────────────────────
+function updateStats() {
+  document.getElementById('statBookings').textContent = allBookings.length;
+  document.getElementById('statMembers').textContent  = allMembers.length;
+  var wsCount = allMembers.filter(function(m) { return m.wayscore_enabled === true; }).length;
+  document.getElementById('statWays').textContent = wsCount;
+
+  var today = new Date().toISOString().split('T')[0];
+  var todayCount = allBookings.filter(function(b) { return b.date === today; }).length;
+  document.getElementById('statToday').textContent = todayCount;
+}
+
+// ── SEARCH / FILTER ────────────────────────────────────────────────────────────
+function filterBookings() {
+  var q = document.getElementById('bookingSearch').value.toLowerCase().trim();
+  if (!q) { renderBookings(allBookings); return; }
+  renderBookings(allBookings.filter(function(b) {
+    return (b.name || '').toLowerCase().includes(q) || (b.mobile || '').includes(q);
+  }));
+}
+
+function filterMembers() {
+  var q = document.getElementById('memberSearch').value.toLowerCase().trim();
+  if (!q) { renderMembers(allMembers); return; }
+  renderMembers(allMembers.filter(function(m) {
+    return (m.name || '').toLowerCase().includes(q) || (m.mobile || m._id || '').includes(q);
+  }));
+}
+
+// ── HELPERS ────────────────────────────────────────────────────────────────────
+function escHtml(s) {
+  return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+function escAttr(s) {
+  return String(s).replace(/'/g,"\\'");
+}
+
+// ── PASSWORD GATE ──────────────────────────────────────────────────────────────
+var ADMIN_PASSWORD = 'Healthways@2025';
+
+function checkPassword() {
+  var pwd = document.getElementById('gatePwd').value;
+  if (pwd === ADMIN_PASSWORD) {
+    sessionStorage.setItem('hw_admin', '1');
+    document.getElementById('gate').style.display = 'none';
+    document.getElementById('dashboard').style.display = 'block';
+    initDashboard();
+  } else {
+    document.getElementById('gateError').classList.add('show');
+    document.getElementById('gatePwd').value = '';
+    document.getElementById('gatePwd').focus();
+  }
+}
+
+// On load: skip gate if already authenticated this session
+(function() {
+  if (sessionStorage.getItem('hw_admin') === '1') {
+    document.getElementById('gate').style.display = 'none';
+    document.getElementById('dashboard').style.display = 'block';
+    initDashboard();
+  }
+})();
+</script>
+</body>
+</html>

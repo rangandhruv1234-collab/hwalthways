@@ -1,0 +1,829 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<meta name="description" content="HEALTHWAYS Swimming Pool — 25M competition pool, heated water, expert coaches, beginner to advanced programmes. Keshav Puram, New Delhi. Est. 1994."/>
+<title>Swimming Pool — HEALTHWAYS · Keshav Puram, Delhi</title>
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+<link rel="preload" as="video" href="videos/Generate_Slow_Zoom_Video_From_Image.webm" type="video/webm">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{background:#030F1C;color:#fff;font-family:'Montserrat',sans-serif;overflow-x:hidden;}
+ :root{--aqua:#0EA5E9;--aqua-light:#38BDF8;--gold:#C9922A;--gold-light:#E8B84B;--dark:#030F1C;}
+.section,.quote-strip,.cta-banner,footer{content-visibility:auto;contain-intrinsic-size:1px 900px;}
+
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;height:68px;z-index:200;display:flex;align-items:center;justify-content:space-between;padding:0 48px;background:rgba(3,15,28,0);transition:background 0.5s,border-color 0.5s;border-bottom:1px solid transparent;}
+nav.scrolled{background:rgba(3,15,28,0.97);backdrop-filter:blur(20px);border-bottom:1px solid rgba(14,165,233,0.18);}
+.nav-logo{display:flex;align-items:center;gap:12px;text-decoration:none;flex-shrink:0;z-index:210;}
+.nav-logo-img{height:40px;width:40px;object-fit:contain;mix-blend-mode:lighten;}
+.nav-logo-text{font-family:'Oswald',sans-serif;font-weight:700;font-size:18px;letter-spacing:4px;text-transform:uppercase;color:#fff;}
+.nav-logo-text span{background:linear-gradient(135deg,var(--gold),var(--gold-light));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+.nav-links{display:flex;align-items:center;gap:0;margin:0 auto;}
+.nav-links a{font-family:'Montserrat',sans-serif;font-size:11px;font-weight:500;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,0.6);text-decoration:none;padding:6px 18px;transition:color 0.2s;position:relative;}
+.nav-links a::after{content:'';position:absolute;bottom:0;left:18px;right:18px;height:1px;background:var(--aqua);transform:scaleX(0);transition:transform 0.25s;}
+.nav-links a:hover,.nav-links a.active{color:#fff;}
+.nav-links a:hover::after,.nav-links a.active::after{transform:scaleX(1);}
+.nav-right{display:flex;gap:10px;flex-shrink:0;z-index:210;}
+.nav-trial{font-family:'Montserrat',sans-serif;font-size:10px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,0.75);border:1px solid rgba(255,255,255,0.3);padding:9px 20px;text-decoration:none;transition:color 0.2s,border-color 0.2s;}
+.nav-trial:hover{color:#fff;border-color:#fff;}
+.nav-join{font-family:'Montserrat',sans-serif;font-size:10px;font-weight:600;letter-spacing:2px;text-transform:uppercase;background:linear-gradient(135deg,var(--gold),var(--gold-light));color:#fff;padding:10px 24px;text-decoration:none;transition:opacity 0.2s;}
+.nav-join:hover{opacity:0.88;}
+
+/* HAMBURGER */
+.nav-hamburger{display:none;flex-direction:column;justify-content:center;align-items:center;gap:5px;width:44px;height:44px;background:none;border:none;cursor:pointer;z-index:210;padding:0;flex-shrink:0;}
+.nav-hamburger span{display:block;width:24px;height:2px;background:#fff;transition:transform 0.3s,opacity 0.3s,width 0.3s;}
+.nav-hamburger.open span:nth-child(1){transform:translateY(7px) rotate(45deg);}
+.nav-hamburger.open span:nth-child(2){opacity:0;width:0;}
+.nav-hamburger.open span:nth-child(3){transform:translateY(-7px) rotate(-45deg);}
+
+/* MOBILE DRAWER */
+.mobile-menu{display:none;position:fixed;top:68px;left:0;right:0;background:rgba(3,15,28,0.99);backdrop-filter:blur(24px);border-bottom:1px solid rgba(14,165,233,0.18);z-index:199;flex-direction:column;align-items:stretch;transform:translateY(-100%);opacity:0;transition:transform 0.38s cubic-bezier(0.4,0,0.2,1),opacity 0.15s ease;pointer-events:none;box-shadow:0 16px 40px rgba(0,0,0,0.6);}
+.mobile-menu.open{transform:translateY(0);opacity:1;pointer-events:all;}
+.mobile-menu-links{display:flex;flex-direction:column;}
+.mobile-menu-links a{font-family:'Montserrat',sans-serif;font-size:12px;font-weight:600;letter-spacing:2.5px;text-transform:uppercase;color:rgba(255,255,255,0.55);text-decoration:none;padding:17px 24px;border-bottom:1px solid rgba(255,255,255,0.05);display:flex;align-items:center;justify-content:space-between;transition:color 0.2s,background 0.2s,padding-left 0.2s;}
+.mobile-menu-links a::after{content:'→';font-size:11px;color:rgba(14,165,233,0.4);transition:color 0.2s,transform 0.2s;}
+.mobile-menu-links a:hover,.mobile-menu-links a.active{color:#fff;background:rgba(14,165,233,0.04);padding-left:28px;}
+.mobile-menu-links a:hover::after,.mobile-menu-links a.active::after{color:var(--aqua);transform:translateX(3px);}
+.mobile-menu-ctas{display:flex;gap:10px;padding:16px 24px;background:rgba(0,0,0,0.4);}
+.mobile-menu-ctas .nav-trial{font-size:10px;padding:11px 16px;flex:1;text-align:center;}
+.mobile-menu-ctas .nav-join{font-size:10px;padding:11px 16px;flex:1;text-align:center;}
+
+/* HERO */
+.hero{position:relative;height:100vh;min-height:700px;display:flex;flex-direction:column;align-items:center;justify-content:center;overflow:hidden;background-image:url('images/pool-1.jpg');background-size:cover;background-position:center;}
+.hero-video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center;z-index:1;pointer-events:none;}
+.hero-overlay{position:absolute;inset:0;background:rgba(2,8,22,0.62);z-index:2;}
+.hero-vignette{position:absolute;inset:0;background:radial-gradient(ellipse at center,transparent 20%,rgba(0,5,18,0.72) 100%);z-index:2;}
+.hero-bottom-fade{position:absolute;bottom:0;left:0;right:0;height:260px;background:linear-gradient(to top,var(--dark),transparent);z-index:2;}
+
+@keyframes fadein{from{opacity:0;transform:translateY(14px);}to{opacity:1;transform:translateY(0);}}
+@keyframes fadein-left{from{opacity:0;transform:translateY(-50%) translateX(-10px);}to{opacity:1;transform:translateY(-50%) translateX(0);}}
+@keyframes fadein-right{from{opacity:0;transform:translateY(-50%) translateX(10px);}to{opacity:1;transform:translateY(-50%) translateX(0);}}
+@keyframes expandline{from{width:0;}to{width:160px;}}
+@keyframes scrollpulse{0%,100%{opacity:0.4;transform:scaleY(0.6);transform-origin:top;}50%{opacity:1;transform:scaleY(1);transform-origin:top;}}
+
+.hero-corner-left{position:absolute;top:84px;left:48px;z-index:5;opacity:0;animation:fadein 0.9s ease forwards;animation-delay:1s;}
+.hero-corner-right{position:absolute;top:84px;right:48px;z-index:5;text-align:right;opacity:0;animation:fadein 0.9s ease forwards;animation-delay:1s;}
+.corner-label{font-family:'Montserrat',sans-serif;font-size:9px;font-weight:500;letter-spacing:4px;text-transform:uppercase;color:rgba(255,255,255,0.4);margin-bottom:3px;}
+.corner-val{font-family:'Oswald',sans-serif;font-weight:600;font-size:14px;letter-spacing:2px;color:rgba(255,255,255,0.7);}
+.hero-edge-left{position:absolute;left:28px;top:50%;transform:translateY(-50%);z-index:5;display:flex;flex-direction:column;align-items:center;gap:14px;opacity:0;animation:fadein-left 1s ease forwards;animation-delay:1.2s;}
+.hero-edge-right{position:absolute;right:28px;top:50%;transform:translateY(-50%);z-index:5;display:flex;flex-direction:column;align-items:center;gap:14px;opacity:0;animation:fadein-right 1s ease forwards;animation-delay:1.2s;}
+.edge-line{width:1px;height:52px;background:rgba(14,165,233,0.4);}
+.edge-text-left{font-family:'Montserrat',sans-serif;font-size:9px;font-weight:600;letter-spacing:4px;text-transform:uppercase;color:rgba(255,255,255,0.55);writing-mode:vertical-rl;transform:rotate(180deg);}
+.edge-text-right{font-family:'Montserrat',sans-serif;font-size:9px;font-weight:600;letter-spacing:4px;text-transform:uppercase;color:rgba(255,255,255,0.55);writing-mode:vertical-rl;}
+.hero-content{position:relative;z-index:5;text-align:center;display:flex;flex-direction:column;align-items:center;}
+.hero-location{font-family:'Montserrat',sans-serif;font-size:11px;font-weight:500;letter-spacing:5px;text-transform:uppercase;color:rgba(255,255,255,0.65);margin-bottom:26px;opacity:0;animation:fadein 0.9s ease forwards;animation-delay:0.3s;}
+.hero-name{font-family:'Oswald',sans-serif;font-weight:700;font-size:clamp(46px,8vw,108px);letter-spacing:10px;text-transform:uppercase;line-height:1.0;opacity:0;animation:fadein 0.9s ease forwards;animation-delay:0.1s;}
+.hero-name .aq{background:linear-gradient(135deg,var(--aqua) 0%,var(--aqua-light) 50%,var(--aqua) 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+.hero-divider{width:0;height:1px;background:linear-gradient(to right,transparent,var(--aqua),transparent);margin:22px auto;animation:expandline 0.9s ease forwards;animation-delay:0.65s;}
+.hero-tagline{font-family:'Montserrat',sans-serif;font-size:clamp(10px,1.1vw,13px);font-weight:500;letter-spacing:6px;text-transform:uppercase;color:rgba(255,255,255,0.6);margin-bottom:42px;opacity:0;animation:fadein 0.9s ease forwards;animation-delay:0.85s;}
+.hero-cta{font-family:'Montserrat',sans-serif;font-size:11px;font-weight:600;letter-spacing:3px;text-transform:uppercase;color:#fff;border:1px solid var(--aqua);padding:14px 50px;text-decoration:none;display:inline-flex;align-items:center;gap:10px;transition:gap 0.3s;opacity:0;animation:fadein 0.9s ease forwards;animation-delay:1s;position:relative;overflow:hidden;}
+.hero-cta::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,var(--aqua),var(--aqua-light));transform:translateX(-101%);transition:transform 0.35s ease;z-index:-1;}
+.hero-cta:hover::before{transform:translateX(0);}
+.hero-cta:hover{gap:18px;}
+.scroll-cue{position:absolute;bottom:140px;left:50%;transform:translateX(-50%);z-index:5;display:flex;flex-direction:column;align-items:center;gap:8px;opacity:0;animation:fadein 1s ease forwards;animation-delay:1.3s;}
+.scroll-line{width:1px;height:36px;background:linear-gradient(to bottom,var(--aqua),transparent);animation:scrollpulse 2s ease-in-out infinite;}
+.scroll-txt{font-family:'Montserrat',sans-serif;font-size:9px;font-weight:500;letter-spacing:4px;text-transform:uppercase;color:rgba(255,255,255,0.45);}
+
+/* HERO STATS */
+.hero-stats{position:absolute;bottom:0;left:0;right:0;z-index:5;display:grid;grid-template-columns:repeat(3,1fr);border-top:1px solid rgba(14,165,233,0.25);opacity:1;transform:none;animation:none;}
+.hstat{padding:22px 16px;text-align:center;border-right:1px solid rgba(255,255,255,0.07);background:rgba(3,15,28,0.90);backdrop-filter:blur(12px);transition:background 0.25s;}
+.hstat:hover{background:rgba(5,20,40,0.97);}
+.hstat:last-child{border-right:none;}
+.hstat-n{font-family:'Oswald',sans-serif;font-weight:700;font-size:28px;letter-spacing:1px;line-height:1;background:linear-gradient(135deg,var(--aqua),var(--aqua-light));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+.hstat-l{font-family:'Montserrat',sans-serif;font-size:9px;font-weight:500;letter-spacing:2.5px;text-transform:uppercase;color:rgba(255,255,255,0.45);margin-top:5px;}
+
+/* REVEAL */
+.reveal{opacity:0;transform:translateY(28px);transition:opacity 0.9s ease,transform 0.9s ease;}
+.reveal.visible{opacity:1;transform:translateY(0);}
+.rd1{transition-delay:0.1s;}.rd2{transition-delay:0.2s;}.rd3{transition-delay:0.3s;}.rd4{transition-delay:0.4s;}.rd5{transition-delay:0.5s;}.rd6{transition-delay:0.6s;}
+
+/* QUOTE STRIP */
+.quote-strip{padding:90px 48px;text-align:center;border-top:1px solid rgba(14,165,233,0.1);border-bottom:1px solid rgba(14,165,233,0.1);position:relative;overflow:hidden;}
+.quote-strip::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at center,rgba(14,165,233,0.05) 0%,transparent 70%);}
+.quote-eyebrow{font-family:'Montserrat',sans-serif;font-size:9px;font-weight:500;letter-spacing:5px;text-transform:uppercase;color:rgba(14,165,233,0.6);margin-bottom:20px;}
+.quote-text{font-family:'Oswald',sans-serif;font-weight:700;font-size:clamp(26px,4vw,50px);letter-spacing:1px;line-height:1.1;color:#fff;}
+.quote-text em{background:linear-gradient(135deg,var(--aqua),var(--aqua-light));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;font-style:normal;}
+
+/* SECTIONS */
+.section{padding:100px 48px;}
+.section-center{text-align:center;max-width:860px;margin:0 auto;}
+.sec-eyebrow{font-family:'Montserrat',sans-serif;font-size:10px;font-weight:500;letter-spacing:5px;text-transform:uppercase;color:rgba(14,165,233,0.7);margin-bottom:14px;display:block;}
+.sec-title{font-family:'Oswald',sans-serif;font-weight:700;font-size:clamp(34px,5vw,64px);letter-spacing:2px;text-transform:uppercase;color:#fff;line-height:0.92;margin-bottom:18px;}
+.sec-title em{background:linear-gradient(135deg,var(--aqua),var(--aqua-light));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;font-style:normal;}
+.sec-divider{width:56px;height:1px;background:linear-gradient(to right,transparent,var(--aqua),transparent);margin:0 auto 22px;}
+.sec-body{font-family:'Montserrat',sans-serif;font-size:15px;font-weight:300;line-height:1.9;color:rgba(255,255,255,0.5);max-width:620px;margin:0 auto 56px;}
+
+/* SLIDER */
+.slider-wrap{position:relative;width:calc(100% + 96px);margin-left:-48px;margin-right:-48px;margin-bottom:60px;overflow:hidden;}
+.slider-track{display:flex;transition:transform 0.6s cubic-bezier(0.25,0.46,0.45,0.94);}
+.slide{flex-shrink:0;width:100%;aspect-ratio:16/9;max-height:580px;overflow:hidden;position:relative;}
+.slide img{width:100%;height:100%;object-fit:cover;object-position:center;display:block;}
+.slide-overlay{position:absolute;inset:0;background:linear-gradient(to bottom,transparent 60%,rgba(3,15,28,0.5) 100%);}
+.slider-btn{position:absolute;top:50%;transform:translateY(-50%);z-index:10;background:rgba(3,15,28,0.7);border:1px solid rgba(14,165,233,0.4);color:#fff;width:48px;height:48px;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:18px;transition:background 0.2s,border-color 0.2s;backdrop-filter:blur(8px);}
+.slider-btn:hover{background:rgba(14,165,233,0.2);border-color:var(--aqua);}
+.slider-prev{left:16px;}.slider-next{right:16px;}
+.slider-dots{display:flex;justify-content:center;gap:8px;margin-top:16px;}
+.slider-dot{width:6px;height:6px;border-radius:50%;background:rgba(255,255,255,0.2);cursor:pointer;transition:background 0.25s,transform 0.25s;}
+.slider-dot.active{background:var(--aqua);transform:scale(1.3);}
+
+/* POOL SHOWCASE */
+.pool-showcase{position:relative;overflow:hidden;min-height:500px;display:flex;align-items:flex-end;margin-bottom:60px;}
+.pool-showcase-bg{position:absolute;inset:0;}
+.pool-showcase-bg img{width:100%;height:100%;object-fit:cover;object-position:center;transition:transform 8s ease;}
+.pool-showcase:hover .pool-showcase-bg img{transform:scale(1.03);}
+.pool-showcase-overlay{position:absolute;inset:0;background:linear-gradient(to top,rgba(2,8,22,0.97) 0%,rgba(2,8,22,0.55) 55%,rgba(2,8,22,0.18) 100%);}
+.pool-showcase-content{position:relative;z-index:2;width:100%;padding:60px 56px;}
+.pool-showcase-eyebrow{font-family:'Montserrat',sans-serif;font-size:9px;font-weight:600;letter-spacing:5px;text-transform:uppercase;color:var(--aqua);margin-bottom:14px;display:block;}
+.pool-showcase-title{font-family:'Oswald',sans-serif;font-weight:700;font-size:clamp(32px,4.5vw,60px);letter-spacing:3px;text-transform:uppercase;color:#fff;line-height:0.92;margin-bottom:18px;}
+.pool-showcase-title em{background:linear-gradient(135deg,var(--aqua),var(--aqua-light));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;font-style:normal;}
+.pool-showcase-body{font-family:'Montserrat',sans-serif;font-size:14px;font-weight:300;line-height:1.85;color:rgba(255,255,255,0.5);max-width:580px;margin-bottom:36px;}
+.pool-specs-bar{display:flex;align-items:stretch;gap:0;border:1px solid rgba(14,165,233,0.2);max-width:700px;}
+.pool-spec{flex:1;padding:22px 24px;text-align:center;border-right:1px solid rgba(14,165,233,0.12);background:rgba(3,15,28,0.85);backdrop-filter:blur(12px);transition:background 0.25s;}
+.pool-spec:last-child{border-right:none;}
+.pool-spec:hover{background:rgba(14,165,233,0.07);}
+.pool-spec-val{font-family:'Oswald',sans-serif;font-weight:700;font-size:26px;letter-spacing:1px;background:linear-gradient(135deg,var(--aqua),var(--aqua-light));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;display:block;line-height:1;}
+.pool-spec-key{font-family:'Montserrat',sans-serif;font-size:9px;font-weight:500;letter-spacing:2.5px;text-transform:uppercase;color:rgba(255,255,255,0.35);display:block;margin-top:6px;}
+
+/* FEAT GRID */
+.feat-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:rgba(14,165,233,0.1);max-width:1000px;margin:0 auto 56px;}
+.feat-card{background:#040E1C;padding:36px 28px;text-align:center;transition:background 0.25s;}
+.feat-card:hover{background:#061525;}
+.feat-icon{margin-bottom:16px;display:flex;justify-content:center;}
+.feat-icon svg{width:30px;height:30px;}
+.feat-name{font-family:'Oswald',sans-serif;font-weight:600;font-size:15px;letter-spacing:1px;text-transform:uppercase;color:#fff;margin-bottom:10px;}
+.feat-desc{font-family:'Montserrat',sans-serif;font-size:13px;font-weight:300;line-height:1.8;color:rgba(255,255,255,0.4);}
+
+/* PROGRAM CARDS */
+.programs-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:rgba(14,165,233,0.1);max-width:1000px;margin:0 auto 56px;}
+.prog-card{background:#040E1C;padding:32px 28px;transition:background 0.25s;display:flex;flex-direction:column;gap:14px;}
+.prog-card:hover{background:#061525;}
+.prog-icon{display:flex;align-items:center;justify-content:center;width:46px;height:46px;border:1px solid rgba(14,165,233,0.25);}
+.prog-icon svg{width:22px;height:22px;}
+.prog-name{font-family:'Oswald',sans-serif;font-weight:600;font-size:18px;letter-spacing:1px;text-transform:uppercase;color:#fff;margin-bottom:-4px;}
+.prog-desc{font-family:'Montserrat',sans-serif;font-size:12px;font-weight:300;line-height:1.85;color:rgba(255,255,255,0.45);}
+.prog-meta{display:flex;gap:8px;flex-wrap:wrap;margin-top:4px;}
+.prog-badge{font-family:'Montserrat',sans-serif;font-size:9px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:rgba(14,165,233,0.8);border:1px solid rgba(14,165,233,0.2);padding:4px 9px;}
+
+/* SCHEDULE */
+.schedule-wrap{max-width:900px;margin:0 auto 56px;overflow-x:auto;}
+.schedule-table{width:100%;border-collapse:collapse;border:1px solid rgba(14,165,233,0.1);min-width:560px;}
+.schedule-table th{font-family:'Montserrat',sans-serif;font-size:9px;font-weight:600;letter-spacing:3px;text-transform:uppercase;color:rgba(14,165,233,0.65);padding:14px 20px;background:#04101E;border-bottom:1px solid rgba(14,165,233,0.15);text-align:left;}
+.schedule-table td{font-family:'Montserrat',sans-serif;font-size:12px;font-weight:300;color:rgba(255,255,255,0.6);padding:13px 20px;border-bottom:1px solid rgba(255,255,255,0.04);}
+.schedule-table tr:last-child td{border-bottom:none;}
+.schedule-table tr:hover td{background:rgba(14,165,233,0.03);color:rgba(255,255,255,0.85);}
+.schedule-class{font-family:'Oswald',sans-serif;font-weight:500;font-size:14px;letter-spacing:0.5px;color:#fff;}
+.schedule-days{color:rgba(14,165,233,0.75);}
+
+/* COACHES */
+.coaches-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:1px;background:rgba(14,165,233,0.1);max-width:980px;margin:0 auto 56px;}
+.coach-card{background:#040E1C;padding:40px 36px;display:flex;gap:24px;align-items:flex-start;transition:background 0.25s;}
+.coach-card:hover{background:#061525;}
+.coach-num{font-family:'Oswald',sans-serif;font-weight:700;font-size:52px;letter-spacing:-2px;background:linear-gradient(135deg,var(--aqua),var(--aqua-light));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;line-height:1;flex-shrink:0;}
+.coach-name{font-family:'Oswald',sans-serif;font-weight:600;font-size:19px;letter-spacing:1px;text-transform:uppercase;color:#fff;margin-bottom:5px;}
+.coach-role{font-family:'Montserrat',sans-serif;font-size:9px;font-weight:600;letter-spacing:3px;text-transform:uppercase;color:var(--aqua);margin-bottom:14px;}
+.coach-desc{font-family:'Montserrat',sans-serif;font-size:13px;font-weight:300;line-height:1.85;color:rgba(255,255,255,0.4);}
+.coach-tags{display:flex;flex-wrap:wrap;gap:6px;margin-top:16px;}
+.coach-tag{font-family:'Montserrat',sans-serif;font-size:9px;font-weight:500;letter-spacing:1.5px;text-transform:uppercase;color:rgba(255,255,255,0.3);border:1px solid rgba(255,255,255,0.1);padding:4px 10px;}
+
+/* CTA BTN */
+.cta-btn{display:inline-flex;align-items:center;gap:10px;font-family:'Montserrat',sans-serif;font-size:11px;font-weight:600;letter-spacing:3px;text-transform:uppercase;color:#fff;border:1px solid var(--aqua);padding:14px 50px;text-decoration:none;transition:gap 0.3s;position:relative;overflow:hidden;}
+.cta-btn::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,var(--aqua),var(--aqua-light));transform:translateX(-101%);transition:transform 0.35s ease;z-index:-1;}
+.cta-btn:hover::before{transform:translateX(0);}
+.cta-btn:hover{gap:18px;}
+
+/* CTA BANNER */
+.cta-banner{padding:90px 48px;text-align:center;background:#040E1C;border-top:1px solid rgba(14,165,233,0.15);border-bottom:1px solid rgba(14,165,233,0.15);}
+.cta-banner-title{font-family:'Oswald',sans-serif;font-weight:700;font-size:clamp(30px,5vw,58px);letter-spacing:2px;text-transform:uppercase;color:#fff;line-height:0.92;margin-bottom:16px;}
+.cta-banner-title em{background:linear-gradient(135deg,var(--aqua),var(--aqua-light));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;font-style:normal;}
+.cta-banner-sub{font-family:'Montserrat',sans-serif;font-size:13px;font-weight:300;color:rgba(255,255,255,0.4);letter-spacing:1px;margin-bottom:36px;line-height:1.8;}
+.cta-banner-btns{display:flex;gap:16px;justify-content:center;flex-wrap:wrap;}
+
+/* FOOTER */
+footer{background:#020B18;border-top:1px solid rgba(14,165,233,0.12);padding:72px 48px 0;}
+.footer-grid{display:grid;grid-template-columns:1.8fr 1fr 1fr 1fr;gap:52px;padding-bottom:56px;border-bottom:1px solid rgba(255,255,255,0.06);}
+.footer-logo{display:flex;align-items:center;gap:12px;margin-bottom:18px;text-decoration:none;}
+.footer-logo-img{height:38px;width:38px;object-fit:contain;mix-blend-mode:lighten;}
+.footer-logo-text{font-family:'Oswald',sans-serif;font-weight:700;font-size:18px;letter-spacing:4px;text-transform:uppercase;color:#fff;}
+.footer-logo-text span{background:linear-gradient(135deg,var(--gold),var(--gold-light));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+.footer-tagline{font-family:'Montserrat',sans-serif;font-size:13px;font-weight:300;color:rgba(255,255,255,0.3);line-height:1.9;margin-bottom:22px;}
+.footer-social{display:flex;gap:12px;margin-bottom:24px;}
+.footer-social-btn{display:flex;align-items:center;justify-content:center;width:38px;height:38px;border:1px solid rgba(255,255,255,0.1);color:rgba(255,255,255,0.55);text-decoration:none;transition:border-color 0.2s,color 0.2s,background 0.2s;}
+.footer-social-btn:hover{border-color:var(--aqua);color:var(--aqua);background:rgba(14,165,233,0.06);}
+.footer-social-btn svg{width:16px;height:16px;fill:currentColor;}
+.footer-contact-links{display:flex;flex-direction:column;gap:10px;}
+.footer-contact-item{display:flex;align-items:center;gap:10px;text-decoration:none;padding:9px 14px;border:1px solid rgba(255,255,255,0.07);transition:border-color 0.2s,background 0.2s;}
+.footer-contact-item:hover{border-color:rgba(14,165,233,0.35);background:rgba(14,165,233,0.04);}
+.footer-contact-icon{display:flex;align-items:center;justify-content:center;width:28px;height:28px;flex-shrink:0;}
+.footer-contact-icon svg{width:14px;height:14px;fill:var(--aqua);}
+.footer-contact-num{font-family:'Oswald',sans-serif;font-size:15px;font-weight:500;letter-spacing:1px;color:#fff;}
+.footer-contact-sub{font-family:'Montserrat',sans-serif;font-size:9px;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,0.3);}
+.footer-col-title{font-family:'Montserrat',sans-serif;font-size:9px;font-weight:600;letter-spacing:3px;text-transform:uppercase;color:rgba(14,165,233,0.65);margin-bottom:20px;}
+.footer-links{list-style:none;display:flex;flex-direction:column;gap:11px;}
+.footer-links a{font-family:'Montserrat',sans-serif;font-size:13px;font-weight:300;color:rgba(255,255,255,0.4);text-decoration:none;transition:color 0.2s;}
+.footer-links a:hover{color:#fff;}
+.footer-hours{display:flex;flex-direction:column;gap:10px;}
+.fhr{display:flex;justify-content:space-between;align-items:center;padding-bottom:10px;border-bottom:1px solid rgba(255,255,255,0.04);}
+.fhr:last-child{border-bottom:none;}
+.fhr-day{font-family:'Montserrat',sans-serif;font-size:12px;font-weight:300;color:rgba(255,255,255,0.35);}
+.fhr-time{font-family:'Oswald',sans-serif;font-weight:500;font-size:13px;background:linear-gradient(135deg,var(--aqua),var(--aqua-light));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+.footer-map-section{border-top:1px solid rgba(255,255,255,0.06);border-bottom:1px solid rgba(255,255,255,0.06);}
+.footer-map-header{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:18px 0;flex-wrap:wrap;}
+.footer-map-info{display:flex;align-items:center;gap:10px;}
+.footer-map-icon svg{width:16px;height:16px;}
+.footer-map-text{font-family:'Montserrat',sans-serif;font-size:12px;font-weight:300;color:rgba(255,255,255,0.35);line-height:1.6;}
+.footer-map-link{font-family:'Montserrat',sans-serif;font-size:10px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:rgba(14,165,233,0.7);text-decoration:none;border:1px solid rgba(14,165,233,0.25);padding:9px 18px;white-space:nowrap;transition:color 0.2s,border-color 0.2s;}
+.footer-map-link:hover{color:var(--aqua-light);border-color:var(--aqua);}
+.footer-map-embed{overflow:hidden;border:1px solid rgba(255,255,255,0.06);}
+.footer-bottom{display:flex;align-items:center;justify-content:space-between;padding:22px 0;flex-wrap:wrap;gap:12px;}
+.footer-copy{font-family:'Montserrat',sans-serif;font-size:11px;font-weight:300;color:rgba(255,255,255,0.2);}
+.footer-insta-handle{font-family:'Montserrat',sans-serif;font-size:11px;color:rgba(255,255,255,0.18);text-decoration:none;transition:color 0.2s;}
+.footer-insta-handle:hover{color:rgba(14,165,233,0.7);}
+
+/* RESPONSIVE */
+@media (max-width:1100px){.footer-grid{grid-template-columns:1fr 1fr;gap:40px;}}
+@media (max-width:980px){
+  nav{padding:0 24px;}
+  .nav-links,.nav-right{display:none;}
+  .nav-hamburger{display:flex;}
+  .mobile-menu{display:flex;}
+  .hero-corner-left,.hero-corner-right,.hero-edge-left,.hero-edge-right{display:none;}
+  .hero-content{padding:0 24px;}
+  .section{padding:72px 24px;}
+  .quote-strip{padding:72px 24px;}
+  .cta-banner{padding:72px 24px;}
+  footer{padding:56px 24px 0;}
+  .footer-grid{grid-template-columns:1fr 1fr;gap:36px;}
+  .pool-showcase-content{padding:40px 28px;}
+  .pool-specs-bar{max-width:100%;}
+  .feat-grid{grid-template-columns:1fr 1fr;}
+  .programs-grid{grid-template-columns:1fr 1fr;}
+  .coaches-grid{grid-template-columns:1fr;}
+  .slider-wrap{width:calc(100% + 48px);margin-left:-24px;margin-right:-24px;}
+  .schedule-wrap{margin-left:-24px;margin-right:-24px;width:calc(100% + 48px);}
+  .footer-map-header{flex-direction:column;align-items:flex-start;}
+}
+@media (max-width:680px){
+  nav{height:60px;padding:0 20px;}
+  .mobile-menu{top:60px;}
+  .hero{min-height:100svh;}
+  .hero-content{padding:0 20px;}
+  .hero-name{font-size:clamp(34px,10vw,64px);letter-spacing:4px;}
+  .hero-tagline{letter-spacing:3px;font-size:10px;}
+  .hero-divider{width:80px;}
+  .hero-cta{padding:12px 28px;font-size:10px;}
+  .scroll-cue{display:none;}
+  .hero-stats{grid-template-columns:repeat(2,1fr);}
+  .hstat{padding:14px 10px;}
+  .hstat-n{font-size:22px;}
+  .hstat-l{font-size:8px;letter-spacing:1.5px;}
+  .sec-title{font-size:clamp(28px,8vw,42px);}
+  .sec-body{font-size:14px;}
+  .quote-text{font-size:clamp(22px,6.5vw,34px);}
+  .feat-grid{grid-template-columns:1fr;}
+  .feat-card{padding:28px 22px;}
+  .zones-grid{gap:2px;}
+  .zone-card{min-height:340px;}
+  .zone-card-content{padding:28px 22px;}
+  .zone-card-title{font-size:22px;}
+  .programs-grid{grid-template-columns:1fr;}
+  .prog-card{padding:28px 22px;}
+  .coach-card{flex-direction:column;gap:12px;padding:28px 22px;}
+  .coach-num{font-size:40px;}
+  .cta-banner-title{font-size:clamp(26px,9vw,40px);}
+  .cta-banner-btns{flex-direction:column;align-items:center;}
+  .cta-btn{padding:14px 32px;width:100%;justify-content:center;max-width:300px;}
+  footer{padding:48px 20px 0;}
+  .footer-grid{grid-template-columns:1fr;gap:32px;}
+  .footer-bottom{flex-direction:column;align-items:center;text-align:center;padding:20px 0;}
+  .footer-map-embed iframe{height:220px;}
+  .slider-btn{width:36px;height:36px;font-size:14px;}
+  .slide{aspect-ratio:unset;height:360px;max-height:none;}
+}
+@media (max-width:400px){
+  .hero-name{font-size:clamp(28px,11vw,46px);letter-spacing:3px;}
+  .hstat-n{font-size:20px;}
+}
+@media (max-width:768px){
+  .hero-stats{display:grid !important;grid-template-columns:repeat(3,minmax(0,1fr)) !important;overflow:visible !important;white-space:normal !important;}
+  .hstat{min-width:0;padding:10px 6px;border-right:1px solid rgba(255,255,255,0.08) !important;}
+  .hstat-n{font-size:16px;}
+  .hstat-l{font-size:7px;letter-spacing:1px;}
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav id="nav">
+  <a href="index.html" class="nav-logo">
+    <img class="nav-logo-img" src="images/logo.jpg" alt="HEALTHWAYS"/>
+    <span class="nav-logo-text">HEALTH<span>WAYS</span></span>
+  </a>
+  <div class="nav-links">
+    <a href="gym.html">Gym</a>
+    <a href="swimming.html" class="active">Swimming</a>
+    <a href="ai-trainer.html">WaysScore</a>
+    <a href="about.html">About Us</a>
+    <a href="profile.html">Profile</a>
+  </div>
+  <div class="nav-right">
+    <a href="login.html?source=swimming" class="nav-trial">Free Trial</a>
+    <a href="login.html?source=swimming" class="nav-join">Join Now</a>
+  </div>
+  <button class="nav-hamburger" id="hamburger" aria-label="Open navigation menu">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<div class="mobile-menu" id="mobileMenu">
+  <div class="mobile-menu-links">
+    <a href="gym.html">Gym</a>
+    <a href="swimming.html" class="active">Swimming</a>
+    <a href="ai-trainer.html">WaysScore</a>
+    <a href="about.html">About Us</a>
+    <a href="profile.html">Profile</a>
+  </div>
+  <div class="mobile-menu-ctas">
+    <a href="login.html?source=swimming" class="nav-trial">Free Trial</a>
+    <a href="login.html?source=swimming" class="nav-join">Join Now</a>
+  </div>
+</div>
+
+<!-- HERO -->
+<section class="hero">
+  <video class="hero-video" autoplay muted loop playsinline preload="auto" poster="images/pool-1.jpg" aria-hidden="true">
+    <source src="videos/Generate_Slow_Zoom_Video_From_Image.webm" type="video/webm">
+    <source src="videos/Generate_Slow_Zoom_Video_From_Image.mp4" type="video/mp4">
+  </video>
+  <div class="hero-overlay"></div>
+  <div class="hero-vignette"></div>
+  <div class="hero-bottom-fade"></div>
+  <div class="hero-corner-left">
+    <div class="corner-label">Est.</div>
+    <div class="corner-val">1994</div>
+  </div>
+  <div class="hero-corner-right">
+    <div class="corner-label">Pool</div>
+    <div class="corner-val">25M · 5 Lanes</div>
+  </div>
+  <div class="hero-edge-left">
+    <div class="edge-line"></div>
+    <div class="edge-text-left">Swim · Train · Excel</div>
+    <div class="edge-line"></div>
+  </div>
+  <div class="hero-edge-right">
+    <div class="edge-line"></div>
+    <div class="edge-text-right">Keshav Puram · Delhi</div>
+    <div class="edge-line"></div>
+  </div>
+  <div class="hero-content">
+    <div class="hero-location">Healthways Swimming &nbsp;·&nbsp; Keshav Puram &nbsp;·&nbsp; New Delhi</div>
+    <h1 class="hero-name">MASTER THE<br><span class="aq">WATER.</span></h1>
+    <div class="hero-divider"></div>
+    <p class="hero-tagline">25M Pool &nbsp;·&nbsp; Expert Coaches &nbsp;·&nbsp; All Levels &nbsp;·&nbsp; Heated Year-Round &nbsp;·&nbsp; Open Daily</p>
+    <a href="login.html?source=swimming" class="hero-cta">Book Free Trial &nbsp;→</a>
+  </div>
+  <div class="scroll-cue">
+    <div class="scroll-line"></div>
+    <div class="scroll-txt">Scroll</div>
+  </div>
+  <div class="hero-stats">
+    <div class="hstat"><div class="hstat-n" data-count="25" data-suffix="M">0</div><div class="hstat-l">Pool Length</div></div>
+    <div class="hstat"><div class="hstat-n" data-count="5" data-suffix="">0</div><div class="hstat-l">Lap Lanes</div></div>
+    <div class="hstat"><div class="hstat-n" data-count="30" data-suffix="+">0</div><div class="hstat-l">Years of Excellence</div></div>
+  </div>
+</section>
+
+<!-- QUOTE 1 -->
+<div class="quote-strip reveal">
+  <p class="quote-eyebrow">The Water</p>
+  <blockquote class="quote-text">Water doesn't resist. It flows.<br><em>Train like water. Win like a wave.</em></blockquote>
+</div>
+
+<!-- POOL GALLERY -->
+<section class="section" id="gallery">
+  <div class="section-center reveal">
+    <span class="sec-eyebrow">01 · The Pool</span>
+    <h2 class="sec-title">PRISTINE.<br><em>PROFESSIONAL.</em></h2>
+    <div class="sec-divider"></div>
+    <p class="sec-body">Our 25-metre competition-standard pool sits at the heart of the Healthways campus — maintained to the highest standards, heated for year-round comfort, and lit to perfection from dawn to dusk.</p>
+  </div>
+
+  <div class="slider-wrap reveal rd1">
+    <div class="slider-track" id="sliderTrack">
+      <div class="slide"><img src="images/pool-1.jpg" alt="Healthways Swimming Pool — Daytime"/><div class="slide-overlay"></div></div>
+      <div class="slide"><img src="images/pool-2.jpg" alt="Healthways Pool — Evening View"/><div class="slide-overlay"></div></div>
+      <div class="slide"><img src="images/pool-3.jpg" alt="Healthways Pool — Side Angle"/><div class="slide-overlay"></div></div>
+    </div>
+    <button class="slider-btn slider-prev" onclick="slide(-1)" aria-label="Previous">&#8592;</button>
+    <button class="slider-btn slider-next" onclick="slide(1)" aria-label="Next">&#8594;</button>
+    <div class="slider-dots" id="sliderDots">
+      <div class="slider-dot active" onclick="goTo(0)"></div>
+      <div class="slider-dot" onclick="goTo(1)"></div>
+      <div class="slider-dot" onclick="goTo(2)"></div>
+    </div>
+  </div>
+
+  <div class="pool-showcase reveal rd2">
+    <div class="pool-showcase-bg">
+      <img src="images/pool-1.jpg" alt="Healthways Aquatic Centre"/>
+      <div class="pool-showcase-overlay"></div>
+    </div>
+    <div class="pool-showcase-content">
+      <span class="pool-showcase-eyebrow">Competition Standard · Keshav Puram</span>
+      <h3 class="pool-showcase-title">HEALTHWAYS<br><em>AQUATIC CENTRE</em></h3>
+      <p class="pool-showcase-body">A full 25-metre, 5-lane pool built to competition standard and heated to a constant 28°C every day of the year. Anti-turbulence lane ropes, professional starting blocks, certified coaches on deck — this is where serious swimmers train.</p>
+      <div class="pool-specs-bar">
+        <div class="pool-spec"><span class="pool-spec-val">25M</span><span class="pool-spec-key">Pool Length</span></div>
+        <div class="pool-spec"><span class="pool-spec-val">5</span><span class="pool-spec-key">Lap Lanes</span></div>
+        <div class="pool-spec"><span class="pool-spec-val">28°C</span><span class="pool-spec-key">Water Temp</span></div>
+        <div class="pool-spec"><span class="pool-spec-val">365</span><span class="pool-spec-key">Days Open</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="feat-grid reveal rd3">
+    <div class="feat-card rd1">
+      <div class="feat-icon">
+        <svg viewBox="0 0 30 30" fill="none"><path d="M4 20C7 18 10 22 13 20C16 18 19 22 22 20C25 18 26 20 26 20" stroke="#0EA5E9" stroke-width="2.5" stroke-linecap="round" fill="none"/><path d="M4 15C7 13 10 17 13 15C16 13 19 17 22 15C25 13 26 15 26 15" stroke="#0EA5E9" stroke-width="2" stroke-linecap="round" fill="none" opacity="0.5"/></svg>
+      </div>
+      <div class="feat-name">Olympic Standard</div>
+      <p class="feat-desc">25-metre competition pool with 5 marked lap lanes, depth indicators and anti-turbulence ropes — built to match competitive conditions at every session.</p>
+    </div>
+    <div class="feat-card rd2">
+      <div class="feat-icon">
+        <svg viewBox="0 0 30 30" fill="none"><circle cx="15" cy="15" r="11" stroke="#0EA5E9" stroke-width="2" fill="none"/><path d="M15 8v7l4 3" stroke="#0EA5E9" stroke-width="2" stroke-linecap="round" fill="none"/></svg>
+      </div>
+      <div class="feat-name">Heated Year-Round</div>
+      <p class="feat-desc">Water maintained at 28°C regardless of the season. No cold-water shock, no off-season closures — swim in perfect comfort every single day of the year.</p>
+    </div>
+    <div class="feat-card rd3">
+      <div class="feat-icon">
+        <svg viewBox="0 0 30 30" fill="none"><circle cx="15" cy="9" r="4.5" stroke="#0EA5E9" stroke-width="2" fill="none"/><path d="M6 27C6 22.029 10.029 18 15 18C19.971 18 24 22.029 24 27" stroke="#0EA5E9" stroke-width="2" stroke-linecap="round" fill="none"/></svg>
+      </div>
+      <div class="feat-name">Expert Coaches</div>
+      <p class="feat-desc">Nationally certified swimming coaches for all ages and levels. Your coach is on the pool deck every session — tracking your progress, refining your technique.</p>
+    </div>
+    <div class="feat-card rd4">
+      <div class="feat-icon">
+        <svg viewBox="0 0 30 30" fill="none"><circle cx="15" cy="10" r="3.5" stroke="#0EA5E9" stroke-width="2" fill="none"/><path d="M10 14C10 14 11 12 15 12C19 12 20 14 20 14" stroke="#0EA5E9" stroke-width="1.5" stroke-linecap="round" fill="none"/><path d="M6 24C8 22 11 25 15 24C19 23 22 25 24 24" stroke="#0EA5E9" stroke-width="1.5" stroke-linecap="round" fill="none"/></svg>
+      </div>
+      <div class="feat-name">Dedicated Kids Pool</div>
+      <p class="feat-desc">A separate shallow learning pool for children with controlled depth, designed entirely for safety, fun and building the water confidence that lasts a lifetime.</p>
+    </div>
+    <div class="feat-card rd5">
+      <div class="feat-icon">
+        <svg viewBox="0 0 30 30" fill="none"><rect x="4" y="8" width="22" height="14" rx="3" stroke="#0EA5E9" stroke-width="2" fill="none"/><path d="M10 8V6M20 8V6" stroke="#0EA5E9" stroke-width="2" stroke-linecap="round"/><path d="M4 13h22" stroke="#0EA5E9" stroke-width="1.5"/></svg>
+      </div>
+      <div class="feat-name">Changing Rooms</div>
+      <p class="feat-desc">Separate, fully-equipped male and female changing rooms with lockers, showers and all essentials — private, spotlessly clean and maintained to premium standard.</p>
+    </div>
+    <div class="feat-card rd6">
+      <div class="feat-icon">
+        <svg viewBox="0 0 30 30" fill="none"><circle cx="15" cy="15" r="11" stroke="#0EA5E9" stroke-width="2" fill="none"/><polyline points="15,8 15,15 20,19" stroke="#0EA5E9" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg>
+      </div>
+      <div class="feat-name">Open Every Day</div>
+      <p class="feat-desc">Morning and evening sessions 365 days a year. Whether you prefer the stillness of a 6 AM lap or the energy of the evening crowd — the pool is always open.</p>
+    </div>
+  </div>
+</section>
+
+<!-- QUOTE 2 -->
+<div class="quote-strip reveal">
+  <p class="quote-eyebrow">Swimming Programmes</p>
+  <blockquote class="quote-text">Every champion swimmer was once<br><em>a beginner who refused to stop.</em></blockquote>
+</div>
+
+<!-- PROGRAMMES -->
+<section class="section" id="programs" style="background:#040E1C;border-top:1px solid rgba(14,165,233,0.06);">
+  <div class="section-center reveal">
+    <span class="sec-eyebrow">02 · Programmes</span>
+    <h2 class="sec-title">BUILT FOR<br><em>EVERY LEVEL.</em></h2>
+    <div class="sec-divider"></div>
+    <p class="sec-body">Six structured swimming programmes designed to take you from first splash to peak performance. Small groups, expert instruction and morning or evening slots — available every day.</p>
+  </div>
+
+  <div class="programs-grid reveal rd1">
+    <div class="prog-card rd1">
+      <div class="prog-icon">
+        <svg viewBox="0 0 24 24" fill="none"><path d="M5 19C7 17 10 20 12 19C14 18 17 20 19 19" stroke="#0EA5E9" stroke-width="1.5" stroke-linecap="round" fill="none"/><circle cx="12" cy="10" r="3" stroke="#0EA5E9" stroke-width="1.5" fill="none"/></svg>
+      </div>
+      <div class="prog-name">Beginner Adults</div>
+      <p class="prog-desc">For adults swimming for the very first time. Learn water comfort, floating, breathing techniques and your first full strokes — in a calm, supportive small-group setting.</p>
+      <div class="prog-meta">
+        <span class="prog-badge">All Ages</span>
+        <span class="prog-badge">Beginner</span>
+        <span class="prog-badge">45 Min</span>
+      </div>
+    </div>
+    <div class="prog-card rd2">
+      <div class="prog-icon">
+        <svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="7" r="3" stroke="#0EA5E9" stroke-width="1.5" fill="none"/><path d="M8 13C8 13 9.5 11 12 11C14.5 11 16 13 16 13" stroke="#0EA5E9" stroke-width="1.5" stroke-linecap="round" fill="none"/><path d="M5 19C7 17 10 20 12 19C14 18 17 20 19 19" stroke="#0EA5E9" stroke-width="1.5" stroke-linecap="round" fill="none"/></svg>
+      </div>
+      <div class="prog-name">Kids (Age 3–12)</div>
+      <p class="prog-desc">Fun, structured swimming in our dedicated kids pool. Our certified children's coaches turn every session into an adventure — building confidence, safety and stroke foundations from day one.</p>
+      <div class="prog-meta">
+        <span class="prog-badge">Age 3–12</span>
+        <span class="prog-badge">Kids Pool</span>
+        <span class="prog-badge">30 Min</span>
+      </div>
+    </div>
+    <div class="prog-card rd3">
+      <div class="prog-icon">
+        <svg viewBox="0 0 24 24" fill="none"><path d="M5 17C7 15 10 18 12 17C14 16 17 18 19 17" stroke="#0EA5E9" stroke-width="1.5" stroke-linecap="round" fill="none"/><path d="M8 12L6 8L12 6L18 8L16 12" stroke="#0EA5E9" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg>
+      </div>
+      <div class="prog-name">Intermediate</div>
+      <p class="prog-desc">Refine your technique across all four strokes — freestyle, backstroke, breaststroke and butterfly. Covers lap building, turns and breathing patterns with focused correction every session.</p>
+      <div class="prog-meta">
+        <span class="prog-badge">All Ages</span>
+        <span class="prog-badge">Intermediate</span>
+        <span class="prog-badge">60 Min</span>
+      </div>
+    </div>
+    <div class="prog-card rd4">
+      <div class="prog-icon">
+        <svg viewBox="0 0 24 24" fill="none"><path d="M4 18C6 16 9 19 12 18C15 17 18 19 20 18" stroke="#0EA5E9" stroke-width="1.5" stroke-linecap="round" fill="none"/><path d="M12 14V6M8 10l4-4 4 4" stroke="#0EA5E9" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg>
+      </div>
+      <div class="prog-name">Advanced Training</div>
+      <p class="prog-desc">High-intensity, structured lap sessions for experienced swimmers targeting speed, stroke efficiency and race-pace endurance. Lap timings tracked every session, progress benchmarked weekly.</p>
+      <div class="prog-meta">
+        <span class="prog-badge">Advanced</span>
+        <span class="prog-badge">Mon–Sat</span>
+        <span class="prog-badge">75 Min</span>
+      </div>
+    </div>
+    <div class="prog-card rd5">
+      <div class="prog-icon">
+        <svg viewBox="0 0 24 24" fill="none"><path d="M5 16C7 14 10 17 12 16C14 15 17 17 19 16" stroke="#0EA5E9" stroke-width="1.5" stroke-linecap="round" fill="none"/><path d="M7 11C7 11 9 8 12 8C15 8 17 11 17 11V14H7V11Z" stroke="#0EA5E9" stroke-width="1.5" stroke-linejoin="round" fill="none"/></svg>
+      </div>
+      <div class="prog-name">Water Aerobics</div>
+      <p class="prog-desc">Low-impact, high-results cardio in the pool. Ideal for joint recovery, seniors and anyone seeking full-body conditioning without the stress of weight-bearing exercise.</p>
+      <div class="prog-meta">
+        <span class="prog-badge">All Ages</span>
+        <span class="prog-badge">Low Impact</span>
+        <span class="prog-badge">60 Min</span>
+      </div>
+    </div>
+    <div class="prog-card rd6">
+      <div class="prog-icon">
+        <svg viewBox="0 0 24 24" fill="none"><path d="M4 19C6 17 9 20 12 19C15 18 18 20 20 19" stroke="#0EA5E9" stroke-width="1.5" stroke-linecap="round" fill="none"/><path d="M12 15V5M9 8l3-3 3 3" stroke="#0EA5E9" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg>
+      </div>
+      <div class="prog-name">Competition Prep</div>
+      <p class="prog-desc">Intensive programme for competitive swimmers preparing for district, state or national events. Includes race strategy, turn technique, start training and peak performance conditioning.</p>
+      <div class="prog-meta">
+        <span class="prog-badge">Competitive</span>
+        <span class="prog-badge">Daily</span>
+        <span class="prog-badge">90 Min</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="reveal rd4" style="text-align:center;">
+    <a href="login.html?source=swimming" class="cta-btn">Enrol in a Programme &nbsp;→</a>
+  </div>
+</section>
+
+<!-- QUOTE 3 -->
+<div class="quote-strip reveal">
+  <p class="quote-eyebrow">The Coaches</p>
+  <blockquote class="quote-text">A great coach sees what<br><em>you cannot yet see in yourself.</em></blockquote>
+</div>
+
+<!-- COACHES -->
+<section class="section" id="coaches">
+  <div class="section-center reveal">
+    <span class="sec-eyebrow">03 · The Coaches</span>
+    <h2 class="sec-title">GUIDED BY<br><em>THE BEST.</em></h2>
+    <div class="sec-divider"></div>
+    <p class="sec-body">Our swimming coaches are more than instructors — they're invested mentors who track every lap, refine every stroke and push you further than you thought possible. From your child's first splash to your fastest race time, we're in the water with you.</p>
+  </div>
+
+  <div class="coaches-grid reveal rd1">
+    <div class="coach-card rd1">
+      <div class="coach-num">01</div>
+      <div>
+        <div class="coach-name">Head Swimming Coach</div>
+        <div class="coach-role">Competition Pool · Advanced Levels</div>
+        <p class="coach-desc">Nationally certified with over 12 years of competitive coaching. Specialises in stroke mechanics, race strategy and endurance periodisation. Has personally trained multiple district and state-level swimmers from this pool.</p>
+        <div class="coach-tags"><span class="coach-tag">Freestyle</span><span class="coach-tag">Race Prep</span><span class="coach-tag">Endurance</span><span class="coach-tag">Competition</span></div>
+      </div>
+    </div>
+    <div class="coach-card rd2">
+      <div class="coach-num">02</div>
+      <div>
+        <div class="coach-name">Children's Swim Coach</div>
+        <div class="coach-role">Kids Pool · Age 3–12</div>
+        <p class="coach-desc">Certified in children's aquatics with a genuine talent for making young swimmers feel completely safe and excited. Patient, warm and endlessly energetic — every lesson becomes an adventure kids look forward to all week.</p>
+        <div class="coach-tags"><span class="coach-tag">Child Safety</span><span class="coach-tag">Water Confidence</span><span class="coach-tag">Age 3–12</span><span class="coach-tag">Beginner</span></div>
+      </div>
+    </div>
+    <div class="coach-card rd3">
+      <div class="coach-num">03</div>
+      <div>
+        <div class="coach-name">Aqua Fitness Specialist</div>
+        <div class="coach-role">Water Aerobics · Beginner Adults</div>
+        <p class="coach-desc">Certified in aqua fitness therapy and low-impact conditioning. Specialises in rehabilitation, senior fitness and cardiovascular pool training. Exceptional at adapting programmes to individual needs and physical limitations.</p>
+        <div class="coach-tags"><span class="coach-tag">Water Aerobics</span><span class="coach-tag">Rehabilitation</span><span class="coach-tag">Seniors</span><span class="coach-tag">Low Impact</span></div>
+      </div>
+    </div>
+    <div class="coach-card rd4">
+      <div class="coach-num">04</div>
+      <div>
+        <div class="coach-name">WaysScore Coach</div>
+        <div class="coach-role">24/7 · Personalised Plans · All Members</div>
+        <p class="coach-desc">Every Healthways swimmer also gets WaysScore — our AI coaching engine that builds a personalised workout and nutrition plan from your BMI, goals and fitness level. Dry-land training to perfectly complement your pool sessions, always available.</p>
+        <div class="coach-tags"><span class="coach-tag">AI Planning</span><span class="coach-tag">Nutrition</span><span class="coach-tag">BMI Analysis</span><span class="coach-tag">24/7</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="reveal rd5" style="text-align:center;">
+    <a href="login.html?source=swimming" class="cta-btn">Talk to a Coach &nbsp;→</a>
+  </div>
+</section>
+
+<!-- FINAL CTA -->
+<div class="cta-banner reveal" id="join">
+  <div class="cta-banner-title">READY TO SWIM?<br><em>JOIN HEALTHWAYS TODAY.</em></div>
+  <p class="cta-banner-sub">Swimming Pool &nbsp;·&nbsp; Gym &nbsp;·&nbsp; WaysScore &nbsp;·&nbsp; Group Classes<br>Keshav Puram, New Delhi &nbsp;·&nbsp; Open Daily 6 AM – 10 PM &nbsp;·&nbsp; Est. 1994</p>
+  <div class="cta-banner-btns">
+    <a href="login.html?source=swimming" class="cta-btn">Book Free Trial &nbsp;→</a>
+    <a href="tel:+919711114918" class="cta-btn" style="border-color:rgba(255,255,255,0.22);">Call: 97111 14918 &nbsp;→</a>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-grid">
+    <div>
+      <a href="index.html" class="footer-logo">
+        <img class="footer-logo-img" src="images/logo.jpg" alt="HEALTHWAYS"/>
+        <span class="footer-logo-text">HEALTH<span>WAYS</span></span>
+      </a>
+      <p class="footer-tagline">Delhi's most complete fitness experience.<br>Gym · Swimming · WaysScore · Group Classes.<br>Est. 1994 by Multitech Promoters.</p>
+      <div class="footer-social">
+        <a href="https://www.instagram.com/healthwaysgym/" target="_blank" rel="noopener" class="footer-social-btn" aria-label="Instagram">
+          <svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+        </a>
+        <a href="https://wa.me/919711114918" target="_blank" rel="noopener" class="footer-social-btn" aria-label="WhatsApp">
+          <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+        </a>
+      </div>
+      <div class="footer-contact-links">
+        <a href="tel:+919711114918" class="footer-contact-item">
+          <div class="footer-contact-icon"><svg viewBox="0 0 24 24"><path d="M6.6 10.8c1.4 2.8 3.8 5.1 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.1.4 2.3.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1-9.4 0-17-7.6-17-17 0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.3.2 2.5.6 3.6.1.3 0 .7-.2 1L6.6 10.8z"/></svg></div>
+          <div><div class="footer-contact-num">97111 14918</div><div class="footer-contact-sub">Primary</div></div>
+        </a>
+        <a href="tel:+917703949246" class="footer-contact-item">
+          <div class="footer-contact-icon"><svg viewBox="0 0 24 24"><path d="M6.6 10.8c1.4 2.8 3.8 5.1 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.1.4 2.3.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1-9.4 0-17-7.6-17-17 0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.3.2 2.5.6 3.6.1.3 0 .7-.2 1L6.6 10.8z"/></svg></div>
+          <div><div class="footer-contact-num">77039 49246</div><div class="footer-contact-sub">Secondary</div></div>
+        </a>
+      </div>
+    </div>
+    <div>
+      <div class="footer-col-title">Navigate</div>
+      <ul class="footer-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="gym.html">Gym</a></li>
+        <li><a href="swimming.html">Swimming Pool</a></li>
+        <li><a href="ai-trainer.html">WaysScore</a></li>
+        <li><a href="about.html">About Us</a></li>
+      </ul>
+    </div>
+    <div>
+      <div class="footer-col-title">Facilities</div>
+      <ul class="footer-links">
+        <li><a href="gym.html#zones">Weight Training</a></li>
+        <li><a href="gym.html#zones">Cardio Zone</a></li>
+        <li><a href="gym.html#classes">Group Classes</a></li>
+        <li><a href="swimming.html">Swimming Pool</a></li>
+        <li><a href="ai-trainer.html">WaysScore</a></li>
+      </ul>
+    </div>
+    <div>
+      <div class="footer-col-title">Pool Timings</div>
+      <div class="footer-hours">
+        <div class="fhr"><span class="fhr-day">Monday – Friday</span><span class="fhr-time">6AM – 10PM</span></div>
+        <div class="fhr"><span class="fhr-day">Saturday</span><span class="fhr-time">6AM – 10PM</span></div>
+        <div class="fhr"><span class="fhr-day">Sunday</span><span class="fhr-time">6AM – 10PM</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="footer-map-section">
+    <div class="footer-map-header">
+      <div class="footer-map-info">
+        <div class="footer-map-icon"><svg viewBox="0 0 24 24" fill="var(--aqua)"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg></div>
+        <div class="footer-map-text">Healthways Gym &amp; Swim · Keshav Puram, New Delhi</div>
+      </div>
+      <a href="https://maps.google.com/?q=Healthways+Gym+And+Swim+Keshav+Puram+Delhi" target="_blank" rel="noopener" class="footer-map-link">Open in Maps &nbsp;→</a>
+    </div>
+    <div class="footer-map-embed">
+      <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3500.2554276641636!2d77.1602485!3d28.682004900000003!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x390d02461d8830bd%3A0x1428ef90e2cc7c75!2sHealthways%20Gym%20And%20Swim!5e0!3m2!1sen!2sin!4v1775366702657!5m2!1sen!2sin" width="100%" height="300" style="border:0;display:block;filter:grayscale(30%) invert(5%);opacity:0.9;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade" title="HEALTHWAYS Location"></iframe>
+    </div>
+  </div>
+
+  <div class="footer-bottom">
+    <div class="footer-copy">© 2026 Multitech Promoters Pvt. Ltd. · HEALTHWAYS. All rights reserved.</div>
+    <a href="https://www.instagram.com/healthwaysgym/" target="_blank" rel="noopener" class="footer-insta-handle">@healthwaysgym</a>
+  </div>
+</footer>
+
+<script>
+// Nav scroll
+const nav = document.getElementById('nav');
+let navTicking = false;
+function syncNavState() {
+  nav.classList.toggle('scrolled', window.scrollY > 40);
+  navTicking = false;
+}
+window.addEventListener('scroll', () => {
+  if (navTicking) return;
+  navTicking = true;
+  requestAnimationFrame(syncNavState);
+}, { passive: true });
+syncNavState();
+
+// Hamburger
+const hamburger = document.getElementById('hamburger');
+const mobileMenu = document.getElementById('mobileMenu');
+hamburger.addEventListener('click', () => {
+  const open = hamburger.classList.toggle('open');
+  mobileMenu.classList.toggle('open', open);
+});
+mobileMenu.querySelectorAll('a').forEach(a => {
+  a.addEventListener('click', () => {
+    hamburger.classList.remove('open');
+    mobileMenu.classList.remove('open');
+  });
+});
+
+// Slider
+let current = 0;
+const total = 3;
+const track = document.getElementById('sliderTrack');
+const dots = document.querySelectorAll('.slider-dot');
+function goTo(n) {
+  current = (n + total) % total;
+  track.style.transform = `translateX(-${current * 100}%)`;
+  dots.forEach((d, i) => d.classList.toggle('active', i === current));
+}
+function slide(dir) { goTo(current + dir); }
+setInterval(() => slide(1), 4500);
+
+// Scroll Reveal
+const revs = document.querySelectorAll('.reveal');
+const obs = new IntersectionObserver(es => {
+  es.forEach(e => {
+    if (!e.isIntersecting) return;
+    e.target.classList.add('visible');
+    obs.unobserve(e.target);
+  });
+}, { threshold: 0.07 });
+revs.forEach(r => obs.observe(r));
+
+// Stats Counter
+(function() {
+  function animateCount(el) {
+    const target = parseInt(el.dataset.count, 10);
+    const suffix = el.dataset.suffix || '';
+    const duration = 2000;
+    const frameRate = 1000 / 60;
+    const totalFrames = Math.round(duration / frameRate);
+    let frame = 0;
+    const counter = setInterval(() => {
+      frame++;
+      const eased = 1 - Math.pow(1 - frame / totalFrames, 3);
+      el.textContent = Math.round(eased * target) + suffix;
+      if (frame === totalFrames) clearInterval(counter);
+    }, frameRate);
+  }
+  const statEls = document.querySelectorAll('.hstat-n[data-count]');
+  const statsObs = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) { animateCount(e.target); statsObs.unobserve(e.target); }
+    });
+  }, { threshold: 0.5 });
+  statEls.forEach(el => statsObs.observe(el));
+})();
+</script>
+<script src="hw-auth.js"></script>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+

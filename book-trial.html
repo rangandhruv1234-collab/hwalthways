@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Book Free Trial — HEALTHWAYS</title>
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
+<script src="firebase-init.js"></script>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html,body{height:100%;}
+body{font-family:'Montserrat',sans-serif;overflow-x:hidden;display:flex;flex-direction:column;min-height:100vh;}
+:root{--accent:#C9922A;--accent-light:#E8B84B;--bg:#080808;}
+body{background:var(--bg);color:#fff;}
+.bg-glow{position:fixed;inset:0;pointer-events:none;z-index:0;}
+
+/* Header */
+.page-header{position:relative;z-index:10;display:flex;align-items:center;justify-content:space-between;padding:22px 40px;border-bottom:1px solid rgba(255,255,255,0.06);}
+.logo-link{display:flex;align-items:center;gap:10px;text-decoration:none;}
+.logo-img{height:36px;width:36px;object-fit:contain;mix-blend-mode:lighten;}
+.logo-text{font-family:'Oswald',sans-serif;font-weight:700;font-size:16px;letter-spacing:4px;text-transform:uppercase;color:#fff;}
+.logo-text em{font-style:normal;background:linear-gradient(135deg,var(--accent),var(--accent-light));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+.back-link{font-family:'Montserrat',sans-serif;font-size:10px;font-weight:500;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,0.35);text-decoration:none;transition:color 0.2s;}
+.back-link:hover{color:rgba(255,255,255,0.75);}
+
+/* Progress */
+.progress-bar{position:relative;z-index:9;height:2px;background:rgba(255,255,255,0.06);}
+.progress-fill{height:100%;background:linear-gradient(90deg,var(--accent),var(--accent-light));width:33%;transition:width 0.5s ease;}
+
+/* Main */
+.page-main{flex:1;display:flex;align-items:flex-start;justify-content:center;padding:52px 24px 80px;position:relative;z-index:1;}
+.book-card{width:100%;max-width:600px;}
+
+/* Heading */
+.section-eyebrow{font-family:'Montserrat',sans-serif;font-size:9px;font-weight:500;letter-spacing:4px;text-transform:uppercase;color:rgba(255,255,255,0.3);margin-bottom:6px;}
+.section-title{font-family:'Oswald',sans-serif;font-weight:700;font-size:38px;letter-spacing:2px;text-transform:uppercase;color:#fff;line-height:1;margin-bottom:8px;}
+.section-title em{font-style:normal;background:linear-gradient(135deg,var(--accent),var(--accent-light));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+.section-sub{font-family:'Montserrat',sans-serif;font-size:12px;font-weight:300;color:rgba(255,255,255,0.35);letter-spacing:0.5px;margin-bottom:44px;line-height:1.7;}
+
+/* Step label */
+.step-label{font-family:'Montserrat',sans-serif;font-size:9px;font-weight:600;letter-spacing:3px;text-transform:uppercase;color:rgba(255,255,255,0.3);margin-bottom:16px;display:flex;align-items:center;gap:10px;}
+.step-label::after{content:'';flex:1;height:1px;background:rgba(255,255,255,0.07);}
+
+/* Goal grid */
+.goal-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:40px;}
+.goal-card{border:1px solid rgba(255,255,255,0.08);background:rgba(255,255,255,0.025);padding:22px 18px;cursor:pointer;transition:border-color 0.2s,background 0.2s;position:relative;overflow:hidden;}
+.goal-card::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,var(--accent),var(--accent-light));opacity:0;transition:opacity 0.2s;z-index:0;}
+.goal-card:hover{border-color:rgba(255,255,255,0.18);}
+.goal-card.selected{border-color:var(--accent);}
+.goal-card.selected::before{opacity:0.07;}
+.goal-icon{position:relative;z-index:1;width:36px;height:36px;margin-bottom:12px;opacity:0.55;transition:opacity 0.2s;}
+.goal-card.selected .goal-icon{opacity:1;}
+.goal-name{position:relative;z-index:1;font-family:'Oswald',sans-serif;font-weight:600;font-size:14px;letter-spacing:1.5px;text-transform:uppercase;color:#fff;margin-bottom:5px;}
+.goal-desc{position:relative;z-index:1;font-family:'Montserrat',sans-serif;font-size:10px;color:rgba(255,255,255,0.3);letter-spacing:0.3px;line-height:1.6;}
+.goal-card.selected .goal-name{background:linear-gradient(135deg,var(--accent),var(--accent-light));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+.goal-card.selected .goal-desc{color:rgba(255,255,255,0.45);}
+.goal-check{position:absolute;top:12px;right:12px;width:16px;height:16px;border:1px solid rgba(255,255,255,0.12);display:flex;align-items:center;justify-content:center;opacity:0;transition:opacity 0.2s,background 0.2s;z-index:1;}
+.goal-card.selected .goal-check{opacity:1;background:linear-gradient(135deg,var(--accent),var(--accent-light));border-color:transparent;}
+.goal-check svg{width:9px;height:9px;}
+.field-error{font-size:10px;color:#f87171;letter-spacing:0.3px;margin-bottom:20px;display:none;}
+.field-error.show{display:block;}
+
+/* Time slot grid */
+.time-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:40px;}
+.time-slot{border:1px solid rgba(255,255,255,0.08);background:rgba(255,255,255,0.025);padding:14px 16px;cursor:pointer;transition:border-color 0.2s,background 0.2s;position:relative;}
+.time-slot:hover{border-color:rgba(255,255,255,0.18);}
+.time-slot.selected{border-color:var(--accent);background:rgba(255,255,255,0.04);}
+.time-slot-name{font-family:'Oswald',sans-serif;font-weight:500;font-size:13px;letter-spacing:1px;text-transform:uppercase;color:#fff;margin-bottom:3px;}
+.time-slot.selected .time-slot-name{background:linear-gradient(135deg,var(--accent),var(--accent-light));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+.time-slot-range{font-family:'Montserrat',sans-serif;font-size:10px;color:rgba(255,255,255,0.3);letter-spacing:0.3px;}
+.time-slot.selected .time-slot-range{color:rgba(255,255,255,0.5);}
+.time-dot{position:absolute;top:12px;right:12px;width:8px;height:8px;border-radius:50%;border:1px solid rgba(255,255,255,0.15);transition:background 0.2s,border-color 0.2s;}
+.time-slot.selected .time-dot{background:var(--accent);border-color:var(--accent);}
+
+/* Date */
+.date-input{width:100%;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);color:#fff;font-family:'Montserrat',sans-serif;font-size:14px;padding:14px 16px;outline:none;transition:border-color 0.25s;-webkit-appearance:none;appearance:none;color-scheme:dark;cursor:pointer;}
+.date-input:focus{border-color:var(--accent);}
+.date-hint{font-family:'Montserrat',sans-serif;font-size:10px;color:rgba(255,255,255,0.2);margin-top:6px;letter-spacing:0.3px;}
+
+/* Submit */
+.submit-btn{width:100%;font-family:'Montserrat',sans-serif;font-size:11px;font-weight:600;letter-spacing:3px;text-transform:uppercase;color:#fff;background:linear-gradient(135deg,var(--accent),var(--accent-light));border:none;padding:17px 24px;cursor:pointer;margin-top:28px;transition:opacity 0.2s;}
+.submit-btn:hover{opacity:0.88;}
+.note{font-family:'Montserrat',sans-serif;font-size:10px;color:rgba(255,255,255,0.18);letter-spacing:0.3px;margin-top:14px;text-align:center;line-height:1.7;}
+
+/* Success */
+.success-view{display:none;text-align:center;padding:10px 0;}
+.success-view.show{display:block;}
+.success-icon{width:68px;height:68px;margin:0 auto 24px;border:2px solid var(--accent);display:flex;align-items:center;justify-content:center;}
+.success-title{font-family:'Oswald',sans-serif;font-weight:700;font-size:32px;letter-spacing:2px;text-transform:uppercase;color:#fff;margin-bottom:10px;}
+.success-title em{font-style:normal;background:linear-gradient(135deg,var(--accent),var(--accent-light));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+.success-sub{font-family:'Montserrat',sans-serif;font-size:12px;color:rgba(255,255,255,0.4);letter-spacing:0.3px;line-height:1.9;margin-bottom:32px;}
+.booking-summary{border:1px solid rgba(255,255,255,0.08);background:rgba(255,255,255,0.025);padding:22px 24px;text-align:left;margin-bottom:28px;}
+.summary-row{display:flex;justify-content:space-between;align-items:baseline;gap:12px;padding:10px 0;border-bottom:1px solid rgba(255,255,255,0.05);}
+.summary-row:last-child{border-bottom:none;}
+.summary-key{font-family:'Montserrat',sans-serif;font-size:9px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,0.3);flex-shrink:0;}
+.summary-val{font-family:'Montserrat',sans-serif;font-size:11px;font-weight:500;color:#fff;text-align:right;}
+.contact-bar{border:1px solid rgba(255,255,255,0.06);background:rgba(255,255,255,0.02);padding:14px 18px;font-family:'Montserrat',sans-serif;font-size:10px;color:rgba(255,255,255,0.3);letter-spacing:0.5px;margin-bottom:28px;line-height:1.9;}
+.contact-bar a{color:var(--accent);text-decoration:none;}
+.success-btns{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;}
+.success-btn{font-family:'Montserrat',sans-serif;font-size:10px;font-weight:600;letter-spacing:2.5px;text-transform:uppercase;padding:13px 28px;text-decoration:none;transition:opacity 0.2s;}
+.success-btn-primary{color:#fff;background:linear-gradient(135deg,var(--accent),var(--accent-light));border:none;cursor:pointer;}
+.success-btn-ghost{color:rgba(255,255,255,0.5);border:1px solid rgba(255,255,255,0.15);transition:color 0.2s,border-color 0.2s;}
+.success-btn-ghost:hover{color:#fff;border-color:rgba(255,255,255,0.5);}
+
+@media(max-width:520px){
+  .page-header{padding:18px 20px;}
+  .page-main{padding:36px 20px 60px;}
+  .section-title{font-size:30px;}
+  .goal-grid{grid-template-columns:1fr 1fr;gap:8px;}
+  .time-grid{grid-template-columns:1fr 1fr;gap:8px;}
+  .goal-card{padding:16px 12px;}
+  .goal-name{font-size:12px;}
+  .success-btns{flex-direction:column;align-items:center;}
+}
+@media(max-width:360px){
+  .goal-grid,.time-grid{grid-template-columns:1fr;}
+}
+</style>
+</head>
+<body>
+
+<div class="bg-glow" id="bgGlow"></div>
+
+<header class="page-header">
+  <a href="index.html" class="logo-link" id="logoBack">
+    <img class="logo-img" src="images/logo.jpg" alt="HEALTHWAYS"/>
+    <span class="logo-text">HEALTH<em>WAYS</em></span>
+  </a>
+  <a href="login.html" class="back-link" id="backLink">← Back</a>
+</header>
+<div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+
+<main class="page-main">
+  <div class="book-card">
+
+    <!-- BOOKING FORM -->
+    <div id="bookingView">
+      <p class="section-eyebrow" id="formEyebrow">Free Trial Booking</p>
+      <h1 class="section-title">BOOK YOUR<br><em>FREE TRIAL</em></h1>
+      <p class="section-sub" id="greetingText">Choose your goal, pick a time and select a date.</p>
+
+      <form id="bookForm" onsubmit="handleBook(event)" novalidate>
+
+        <!-- STEP 1: GOAL -->
+        <p class="step-label">Step 1 &nbsp;— Choose Your Goal</p>
+        <div class="goal-grid" id="goalGrid"></div>
+        <p class="field-error" id="goalError">Please select a goal to continue.</p>
+
+        <!-- STEP 2: TIME SLOT -->
+        <p class="step-label">Step 2 &nbsp;— Preferred Time Slot</p>
+        <div class="time-grid" id="timeGrid"></div>
+        <p class="field-error" id="timeError">Please select a time slot.</p>
+
+        <!-- STEP 3: DATE -->
+        <p class="step-label">Step 3 &nbsp;— Pick a Date</p>
+        <input class="date-input" type="date" id="trialDate" name="trialDate"/>
+        <p class="date-hint">Available from tomorrow, up to 30 days ahead.</p>
+        <p class="field-error" id="dateError">Please select a date for your trial.</p>
+
+        <button class="submit-btn" type="submit">Confirm Booking &nbsp;→</button>
+        <p class="note">Our team will call you within 24 hours to confirm your slot.</p>
+      </form>
+    </div>
+
+    <!-- SUCCESS VIEW -->
+    <div class="success-view" id="successView">
+      <div class="success-icon">
+        <svg viewBox="0 0 36 36" fill="none" width="36" height="36">
+          <polyline points="7,19 15,27 29,11" stroke="url(#sg)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+          <defs><linearGradient id="sg" x1="7" y1="19" x2="29" y2="11" gradientUnits="userSpaceOnUse"><stop offset="0%" stop-color="var(--accent)"/><stop offset="100%" stop-color="var(--accent-light)"/></linearGradient></defs>
+        </svg>
+      </div>
+      <h2 class="success-title">YOU'RE <em>ALL SET!</em></h2>
+      <p class="success-sub" id="successSub">Your free trial has been booked.<br>We'll call you within 24 hrs to confirm your slot.</p>
+      <div class="booking-summary" id="bookingSummary"></div>
+      <div class="contact-bar">
+        Questions? &nbsp; <a href="tel:+919711114918">97111 14918</a> &nbsp;·&nbsp; <a href="tel:+917703949246">77039 49246</a>
+      </div>
+      <div class="success-btns">
+        <a href="profile.html" class="success-btn success-btn-primary">View My Profile &nbsp;→</a>
+        <a href="index.html" class="success-btn success-btn-ghost" id="homeBtn">Back to Home</a>
+      </div>
+    </div>
+
+  </div>
+</main>
+
+<script>
+// ── Params & theme ──
+var params    = new URLSearchParams(location.search);
+var source    = params.get('source') || 'gym';
+var nameParam = decodeURIComponent(params.get('name') || '');
+var isSwim    = source === 'swimming';
+
+if (isSwim) {
+  document.documentElement.style.setProperty('--accent', '#0EA5E9');
+  document.documentElement.style.setProperty('--accent-light', '#38BDF8');
+  document.documentElement.style.setProperty('--bg', '#030F1C');
+}
+document.getElementById('bgGlow').style.background = isSwim
+  ? 'radial-gradient(ellipse at 50% 0%,rgba(14,165,233,0.07) 0%,transparent 65%)'
+  : 'radial-gradient(ellipse at 50% 0%,rgba(201,146,42,0.07) 0%,transparent 65%)';
+
+document.getElementById('backLink').href = 'login.html?source=' + encodeURIComponent(source);
+document.getElementById('logoBack').href = isSwim ? 'swimming.html' : 'index.html';
+document.getElementById('homeBtn').href  = isSwim ? 'swimming.html' : 'index.html';
+document.getElementById('formEyebrow').textContent = isSwim ? 'Swimming Pool · Free Trial' : 'Gym · Free Trial';
+
+// ── Resolve name from param or localStorage session ──
+var session = null;
+try { session = JSON.parse(localStorage.getItem('hw_session')); } catch {}
+if (!session) {
+  location.href = 'login.html?source=' + encodeURIComponent(source) +
+    '&redirect=booking&name=' + encodeURIComponent(nameParam || '');
+}
+var userName   = nameParam || (session && session.name) || '';
+var identifier = (session && session.identifier) || '';
+
+if (userName) {
+  document.getElementById('greetingText').innerHTML =
+    'Welcome, <strong style="color:#fff">' + userName + '</strong> — choose your goal, time and date.';
+}
+
+// ── Goals ──
+var gymGoals = [
+  { id:'muscle',  icon: muscleIcon(),    name: 'Muscle Building',    desc: 'Build strength and sculpt your physique.' },
+  { id:'fatloss', icon: fatLossIcon(),   name: 'Fat Loss',           desc: 'Burn fat and improve body composition.' },
+  { id:'general', icon: generalIcon(),   name: 'General Fitness',    desc: 'Boost energy and build a sustainable routine.' },
+  { id:'sports',  icon: sportsIcon(),    name: 'Sports & Endurance', desc: 'Train for performance and athletic conditioning.' },
+];
+var swimGoals = [
+  { id:'fitness', icon: swFitnessIcon(), name: 'Fitness Swimming',      desc: 'Swim laps for cardio and endurance.' },
+  { id:'weight',  icon: fatLossIcon(),   name: 'Weight Loss',           desc: 'Low-impact, high-calorie-burn pool workouts.' },
+  { id:'learn',   icon: learnIcon(),     name: 'Learn to Swim',         desc: 'Structured coaching from the very beginning.' },
+  { id:'compete', icon: competeIcon(),   name: 'Competitive Training',  desc: 'Improve strokes, turns and race performance.' },
+];
+var goals = isSwim ? swimGoals : gymGoals;
+
+var goalGrid = document.getElementById('goalGrid');
+goals.forEach(function(g) {
+  var card = document.createElement('div');
+  card.className = 'goal-card';
+  card.dataset.id = g.id;
+  card.innerHTML =
+    '<div class="goal-check"><svg viewBox="0 0 10 8" fill="none"><polyline points="1,4 4,7 9,1" stroke="#fff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>' +
+    '<div class="goal-icon">' + g.icon + '</div>' +
+    '<div class="goal-name">' + g.name + '</div>' +
+    '<p class="goal-desc">' + g.desc + '</p>';
+  card.addEventListener('click', function(){ selectGoal(g.id); });
+  goalGrid.appendChild(card);
+});
+
+var selectedGoal = null;
+function selectGoal(id) {
+  selectedGoal = id;
+  goalGrid.querySelectorAll('.goal-card').forEach(function(c){ c.classList.toggle('selected', c.dataset.id === id); });
+  document.getElementById('goalError').classList.remove('show');
+  document.getElementById('progressFill').style.width = '33%';
+}
+
+// ── Time slots ──
+var timeSlots = [
+  { id:'early',   name: 'Early Morning', range: '6:00 AM – 8:00 AM' },
+  { id:'morning', name: 'Morning',       range: '8:00 AM – 10:00 AM' },
+  { id:'midmorn', name: 'Mid Morning',   range: '10:00 AM – 12:00 PM' },
+  { id:'aftnoon', name: 'Afternoon',     range: '12:00 PM – 2:00 PM' },
+  { id:'evening', name: 'Evening',       range: '4:00 PM – 6:00 PM' },
+  { id:'lateve',  name: 'Late Evening',  range: '6:00 PM – 8:00 PM' },
+  { id:'night',   name: 'Night',         range: '8:00 PM – 10:00 PM' },
+];
+var timeGrid = document.getElementById('timeGrid');
+timeSlots.forEach(function(t) {
+  var slot = document.createElement('div');
+  slot.className = 'time-slot';
+  slot.dataset.id = t.id;
+  slot.innerHTML =
+    '<div class="time-dot"></div>' +
+    '<div class="time-slot-name">' + t.name + '</div>' +
+    '<div class="time-slot-range">' + t.range + '</div>';
+  slot.addEventListener('click', function(){ selectTime(t); });
+  timeGrid.appendChild(slot);
+});
+
+var selectedTime = null;
+function selectTime(t) {
+  selectedTime = t;
+  timeGrid.querySelectorAll('.time-slot').forEach(function(s){ s.classList.toggle('selected', s.dataset.id === t.id); });
+  document.getElementById('timeError').classList.remove('show');
+  document.getElementById('progressFill').style.width = '66%';
+}
+
+// ── Date limits ──
+var today   = new Date();
+// Use local-midnight dates so comparisons work correctly regardless of timezone
+var minDate = new Date(today.getFullYear(), today.getMonth(), today.getDate() + 1);
+var maxDate = new Date(today.getFullYear(), today.getMonth(), today.getDate() + 30);
+function fmtDate(d) {
+  var y = d.getFullYear();
+  var m = String(d.getMonth() + 1).padStart(2, '0');
+  var day = String(d.getDate()).padStart(2, '0');
+  return y + '-' + m + '-' + day;
+}
+var dateInput = document.getElementById('trialDate');
+dateInput.min = fmtDate(minDate);
+dateInput.max = fmtDate(maxDate);
+dateInput.addEventListener('change', function(){
+  document.getElementById('dateError').classList.remove('show');
+});
+
+function isValidIsoDate(value) {
+  if (!/^[0-9]{4}-[0-9]{2}-[0-9]{2}$/.test(value)) return false;
+  var parts = value.split('-').map(Number);
+  var d = new Date(value + 'T00:00:00');
+  if (Number.isNaN(d.getTime())) return false;
+  return d.getFullYear() === parts[0] && d.getMonth() + 1 === parts[1] && d.getDate() === parts[2];
+}
+
+function isDateInRange(value, min, max) {
+  var d = new Date(value + 'T00:00:00');
+  return d >= min && d <= max;
+}
+
+// ── Submit ──
+function handleBook(e) {
+  e.preventDefault();
+  var ok = true;
+  if (!selectedGoal) { document.getElementById('goalError').classList.add('show'); ok = false; }
+  if (!selectedTime) { document.getElementById('timeError').classList.add('show'); ok = false; }
+  var dateVal = dateInput.value;
+  if (!dateVal || !isValidIsoDate(dateVal) || !isDateInRange(dateVal, minDate, maxDate)) {
+    document.getElementById('dateError').classList.add('show');
+    ok = false;
+  } else {
+    document.getElementById('dateError').classList.remove('show');
+  }
+  if (!ok) return;
+
+  document.getElementById('progressFill').style.width = '100%';
+
+  var goalObj  = goals.find(function(g){ return g.id === selectedGoal; });
+  var dateDisp = '';
+  try { dateDisp = new Date(dateVal + 'T00:00:00').toLocaleDateString('en-IN', { weekday:'long', day:'numeric', month:'long', year:'numeric' }); } catch { dateDisp = dateVal; }
+  var facility = isSwim ? 'Swimming Pool' : 'Gym';
+
+  // Save booking to localStorage (fast, for hw-auth modal) AND Firestore
+  var bookings = JSON.parse(localStorage.getItem('hw_bookings') || '[]');
+  var booking = {
+    name: userName,
+    identifier: identifier,
+    source: source,
+    goal: goalObj.name,
+    date: dateVal,
+    time: selectedTime.range,
+    timeLabel: selectedTime.name,
+    bookedAt: new Date().toISOString()
+  };
+  bookings.push(booking);
+  localStorage.setItem('hw_bookings', JSON.stringify(bookings));
+
+  // ── Write booking to Firestore (wait for auth first) ──
+  function saveToFirestore() {
+    if (identifier) {
+      db.collection('users').doc(identifier).set({
+        name:             userName || '',
+        mobile:           identifier,
+        source:           source,
+        wayscore_enabled: false,
+        createdAt:        firebase.firestore.FieldValue.serverTimestamp()
+      }, { merge: true }).catch(function(err) {
+        console.error('User doc write failed:', err.code, err.message);
+      });
+    }
+
+    db.collection('bookings').add({
+      name:      userName    || '',
+      mobile:    identifier  || '',
+      source:    source,
+      facility:  isSwim ? 'Swimming Pool' : 'Gym',
+      goal:      goalObj.name,
+      date:      dateVal,
+      time:      selectedTime.range,
+      timeLabel: selectedTime.name,
+      bookedAt:  firebase.firestore.FieldValue.serverTimestamp()
+    }).catch(function(err) {
+      console.error('Booking write failed:', err.code, err.message);
+    });
+  }
+
+  if (typeof auth !== 'undefined' && auth) {
+    if (auth.currentUser) {
+      saveToFirestore();
+    } else {
+      auth.signInAnonymously()
+        .then(saveToFirestore)
+        .catch(function(err) {
+          console.error('Auth failed before booking write:', err.message);
+          saveToFirestore(); // try anyway in case Firestore rules allow unauthenticated writes
+        });
+    }
+  } else {
+    saveToFirestore();
+  }
+
+  // Build summary
+  document.getElementById('bookingSummary').innerHTML = [
+    { k: 'Name',     v: userName   || '—' },
+    { k: 'Facility', v: facility },
+    { k: 'Goal',     v: goalObj.name },
+    { k: 'Date',     v: dateDisp },
+    { k: 'Time',     v: selectedTime.range },
+  ].map(function(r){
+    return '<div class="summary-row"><span class="summary-key">' + r.k + '</span><span class="summary-val">' + r.v + '</span></div>';
+  }).join('');
+
+  if (userName) {
+    document.getElementById('successSub').innerHTML =
+      'All done, <strong style="color:#fff">' + userName + '</strong>! Your free trial is confirmed.<br>We\'ll call you within 24 hrs to lock in your slot.';
+  }
+
+  // Swap views
+  var bv = document.getElementById('bookingView');
+  bv.style.opacity = '0';
+  bv.style.pointerEvents = 'none';
+  setTimeout(function(){
+    bv.style.display = 'none';
+    document.getElementById('successView').classList.add('show');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }, 320);
+}
+
+// ── SVG Icons ──
+function muscleIcon() {
+  return '<svg viewBox="0 0 40 40" fill="none" width="36" height="36"><rect x="2" y="15" width="36" height="10" rx="5" fill="var(--accent)" opacity=".25"/><rect x="8" y="6" width="5" height="28" rx="2.5" fill="var(--accent)"/><rect x="27" y="6" width="5" height="28" rx="2.5" fill="var(--accent)"/><rect x="2" y="17" width="8" height="6" rx="3" fill="var(--accent-light)"/><rect x="30" y="17" width="8" height="6" rx="3" fill="var(--accent-light)"/></svg>';
+}
+function fatLossIcon() {
+  return '<svg viewBox="0 0 40 40" fill="none" width="36" height="36"><path d="M20 6C20 6 8 16 8 25A12 12 0 0032 25C32 16 20 6 20 6Z" fill="var(--accent)" opacity=".25" stroke="var(--accent)" stroke-width="1.5"/><path d="M14 29Q20 21 26 29" stroke="var(--accent-light)" stroke-width="2" stroke-linecap="round" fill="none"/></svg>';
+}
+function generalIcon() {
+  return '<svg viewBox="0 0 40 40" fill="none" width="36" height="36"><circle cx="20" cy="20" r="14" stroke="var(--accent)" stroke-width="1.5" opacity=".4"/><path d="M20 8L20 20L28 26" stroke="var(--accent)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><circle cx="20" cy="20" r="2.5" fill="var(--accent-light)"/></svg>';
+}
+function sportsIcon() {
+  return '<svg viewBox="0 0 40 40" fill="none" width="36" height="36"><path d="M8 32L20 10L32 32" stroke="var(--accent)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" opacity=".4"/><path d="M12 24L28 24" stroke="var(--accent)" stroke-width="1.5" stroke-linecap="round"/><circle cx="20" cy="10" r="3" fill="var(--accent-light)"/></svg>';
+}
+function swFitnessIcon() {
+  return '<svg viewBox="0 0 40 40" fill="none" width="36" height="36"><path d="M6 22Q13 16 20 22Q27 28 34 22" stroke="var(--accent)" stroke-width="2" stroke-linecap="round" fill="none"/><path d="M6 28Q13 22 20 28Q27 34 34 28" stroke="var(--accent)" stroke-width="1.5" stroke-linecap="round" fill="none" opacity=".4"/><circle cx="20" cy="12" r="4" stroke="var(--accent-light)" stroke-width="1.5" fill="none"/></svg>';
+}
+function learnIcon() {
+  return '<svg viewBox="0 0 40 40" fill="none" width="36" height="36"><circle cx="20" cy="11" r="4.5" stroke="var(--accent)" stroke-width="1.5" fill="none"/><path d="M10 32C10 25 30 25 30 32" stroke="var(--accent)" stroke-width="1.5" stroke-linecap="round" fill="none" opacity=".5"/><path d="M16 22L20 28L30 18" stroke="var(--accent-light)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+}
+function competeIcon() {
+  return '<svg viewBox="0 0 40 40" fill="none" width="36" height="36"><path d="M8 20L20 8L32 20" stroke="var(--accent)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" opacity=".45"/><path d="M8 28L20 16L32 28" stroke="var(--accent)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><circle cx="20" cy="16" r="3" fill="var(--accent-light)"/></svg>';
+}
+</script>
+<style>.hw-wa-float{position:fixed;bottom:28px;right:28px;z-index:9998;width:56px;height:56px;background:#25D366;border-radius:50%;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 24px rgba(37,211,102,0.45);text-decoration:none;transition:transform .25s,box-shadow .25s;animation:hw-wa-pulse 3s ease-in-out infinite;}.hw-wa-float:hover{transform:scale(1.12);box-shadow:0 8px 32px rgba(37,211,102,0.6);}.hw-wa-float svg{width:28px;height:28px;fill:#fff;}@keyframes hw-wa-pulse{0%,100%{box-shadow:0 4px 24px rgba(37,211,102,0.45);}50%{box-shadow:0 4px 32px rgba(37,211,102,0.7),0 0 0 8px rgba(37,211,102,0.1);}}</style>
+<script src="hw-auth.js"></script>
+</body>
+</html>

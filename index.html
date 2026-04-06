@@ -1,0 +1,731 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<meta name="description" content="HEALTHWAYS — Delhi's most complete fitness experience. Premium Gym, Swimming Pool, WaysScore, Group Classes & Cafeteria. Keshav Puram, New Delhi. Est. 1994."/>
+<title>HEALTHWAYS — Gym, Pool & WaysScore · Keshav Puram, Delhi</title>
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@300;400;500;600;700&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="preload" as="video" href="images/hero-video.webm" type="video/webm">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{background:#080808;color:#fff;font-family:'Montserrat',sans-serif;overflow-x:hidden;}
+:root{--gold:#C9922A;--gold-light:#E8B84B;--dark:#080808;}
+.section,.quote-strip,.cta-banner,footer{content-visibility:auto;contain-intrinsic-size:1px 900px;}
+
+/* ── NAV ── */
+nav{position:fixed;top:0;left:0;right:0;height:68px;z-index:200;display:flex;align-items:center;justify-content:space-between;padding:0 48px;background:rgba(8,8,8,0);transition:background 0.5s,border-color 0.5s;border-bottom:1px solid transparent;}
+nav.scrolled{background:rgba(8,8,8,0.97);backdrop-filter:blur(20px);border-bottom:1px solid rgba(201,146,42,0.15);}
+.nav-logo{display:flex;align-items:center;gap:12px;text-decoration:none;flex-shrink:0;z-index:210;}
+.nav-logo-img{height:40px;width:40px;object-fit:contain;mix-blend-mode:lighten;}
+.nav-logo-text{font-family:'Oswald',sans-serif;font-weight:700;font-size:18px;letter-spacing:4px;text-transform:uppercase;color:#fff;}
+.nav-logo-text span{background:linear-gradient(135deg,var(--gold),var(--gold-light));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+.nav-links{display:flex;align-items:center;gap:0;margin:0 auto;}
+.nav-links a{font-family:'Montserrat',sans-serif;font-size:11px;font-weight:500;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,0.6);text-decoration:none;padding:6px 18px;transition:color 0.2s;position:relative;}
+.nav-links a::after{content:'';position:absolute;bottom:0;left:18px;right:18px;height:1px;background:var(--gold);transform:scaleX(0);transition:transform 0.25s;}
+.nav-links a:hover,.nav-links a.active{color:#fff;}
+.nav-links a:hover::after,.nav-links a.active::after{transform:scaleX(1);}
+.nav-right{display:flex;gap:10px;flex-shrink:0;z-index:210;}
+.nav-trial{font-family:'Montserrat',sans-serif;font-size:10px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,0.75);border:1px solid rgba(255,255,255,0.3);padding:9px 20px;text-decoration:none;transition:color 0.2s,border-color 0.2s;}
+.nav-trial:hover{color:#fff;border-color:#fff;}
+.nav-join{font-family:'Montserrat',sans-serif;font-size:10px;font-weight:600;letter-spacing:2px;text-transform:uppercase;background:linear-gradient(135deg,var(--gold),var(--gold-light));color:#fff;padding:10px 24px;text-decoration:none;transition:opacity 0.2s;}
+.nav-join:hover{opacity:0.88;}
+
+/* Hamburger */
+.nav-hamburger{display:none;flex-direction:column;justify-content:center;align-items:center;gap:5px;width:44px;height:44px;background:none;border:none;cursor:pointer;z-index:210;padding:0;flex-shrink:0;}
+.nav-hamburger span{display:block;width:24px;height:2px;background:#fff;transition:transform 0.3s,opacity 0.3s,width 0.3s;}
+.nav-hamburger.open span:nth-child(1){transform:translateY(7px) rotate(45deg);}
+.nav-hamburger.open span:nth-child(2){opacity:0;width:0;}
+.nav-hamburger.open span:nth-child(3){transform:translateY(-7px) rotate(-45deg);}
+
+/* Mobile Drawer — slides down from top, compact & professional */
+.mobile-menu{display:none;position:fixed;top:68px;left:0;right:0;background:rgba(6,6,6,0.99);backdrop-filter:blur(24px);border-bottom:1px solid rgba(201,146,42,0.18);z-index:199;flex-direction:column;align-items:stretch;transform:translateY(-100%);opacity:0;transition:transform 0.38s cubic-bezier(0.4,0,0.2,1),opacity 0.15s ease;pointer-events:none;box-shadow:0 16px 40px rgba(0,0,0,0.6);}
+.mobile-menu.open{transform:translateY(0);opacity:1;pointer-events:all;}
+.mobile-menu-links{display:flex;flex-direction:column;}
+.mobile-menu-links a{font-family:'Montserrat',sans-serif;font-size:12px;font-weight:600;letter-spacing:2.5px;text-transform:uppercase;color:rgba(255,255,255,0.55);text-decoration:none;padding:17px 24px;border-bottom:1px solid rgba(255,255,255,0.05);display:flex;align-items:center;justify-content:space-between;transition:color 0.2s,background 0.2s,padding-left 0.2s;}
+.mobile-menu-links a::after{content:'→';font-size:11px;color:rgba(201,146,42,0.4);transition:color 0.2s,transform 0.2s;}
+.mobile-menu-links a:hover{color:#fff;background:rgba(201,146,42,0.04);padding-left:28px;}
+.mobile-menu-links a:hover::after{color:var(--gold);transform:translateX(3px);}
+.mobile-menu-ctas{display:flex;gap:10px;padding:16px 24px;background:rgba(0,0,0,0.4);}
+.mobile-menu-ctas .nav-trial{font-size:10px;padding:11px 16px;flex:1;text-align:center;}
+.mobile-menu-ctas .nav-join{font-size:10px;padding:11px 16px;flex:1;text-align:center;}
+
+/* ── HERO ── */
+.hero{position:relative;height:100vh;min-height:700px;display:flex;flex-direction:column;align-items:center;justify-content:center;overflow:hidden;background-image:url('images/gym-hero.webp');background-size:cover;background-position:center;}
+/* Local video — layer 1, starts invisible, crossfades in once buffered */
+.hero-video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center;z-index:1;opacity:1;transition:none;pointer-events:none;}
+@media(max-width:768px){.hero-video{opacity:1;transition:none;}}
+.hero-overlay{position:absolute;inset:0;background:rgba(0,0,0,0.55);z-index:1;}
+.hero-vignette{position:absolute;inset:0;background:radial-gradient(ellipse at center,transparent 20%,rgba(0,0,0,0.65) 100%);z-index:1;}
+.hero-bottom-fade{position:absolute;bottom:0;left:0;right:0;height:220px;background:linear-gradient(to top,var(--dark),transparent);z-index:1;}
+@keyframes fadein{from{opacity:0;transform:translateY(14px);}to{opacity:1;transform:translateY(0);}}
+@keyframes fadein-left{from{opacity:0;transform:translateY(-50%) translateX(-10px);}to{opacity:1;transform:translateY(-50%) translateX(0);}}
+@keyframes fadein-right{from{opacity:0;transform:translateY(-50%) translateX(10px);}to{opacity:1;transform:translateY(-50%) translateX(0);}}
+@keyframes expandline{from{width:0;}to{width:160px;}}
+@keyframes scrollpulse{0%,100%{opacity:0.4;transform:scaleY(0.6);transform-origin:top;}50%{opacity:1;transform:scaleY(1);transform-origin:top;}}
+.hero-corner-left{position:absolute;top:84px;left:48px;z-index:5;opacity:0;animation:fadein 0.9s ease forwards;animation-delay:1s;}
+.hero-corner-right{position:absolute;top:84px;right:48px;z-index:5;text-align:right;opacity:0;animation:fadein 0.9s ease forwards;animation-delay:1s;}
+.corner-label{font-family:'Montserrat',sans-serif;font-size:9px;font-weight:500;letter-spacing:4px;text-transform:uppercase;color:rgba(255,255,255,0.4);margin-bottom:3px;}
+.corner-val{font-family:'Oswald',sans-serif;font-weight:600;font-size:14px;letter-spacing:2px;color:rgba(255,255,255,0.7);}
+.hero-edge-left{position:absolute;left:28px;top:50%;transform:translateY(-50%);z-index:5;display:flex;flex-direction:column;align-items:center;gap:14px;opacity:0;animation:fadein-left 1s ease forwards;animation-delay:1.2s;}
+.hero-edge-right{position:absolute;right:28px;top:50%;transform:translateY(-50%);z-index:5;display:flex;flex-direction:column;align-items:center;gap:14px;opacity:0;animation:fadein-right 1s ease forwards;animation-delay:1.2s;}
+.edge-line{width:1px;height:52px;background:rgba(201,146,42,0.4);}
+.edge-text-left{font-family:'Montserrat',sans-serif;font-size:9px;font-weight:600;letter-spacing:4px;text-transform:uppercase;color:rgba(255,255,255,0.55);writing-mode:vertical-rl;transform:rotate(180deg);}
+.edge-text-right{font-family:'Montserrat',sans-serif;font-size:9px;font-weight:600;letter-spacing:4px;text-transform:uppercase;color:rgba(255,255,255,0.55);writing-mode:vertical-rl;}
+.hero-content{position:relative;z-index:5;text-align:center;display:flex;flex-direction:column;align-items:center;}
+.hero-location{font-family:'Montserrat',sans-serif;font-size:11px;font-weight:500;letter-spacing:5px;text-transform:uppercase;color:rgba(255,255,255,0.65);margin-bottom:26px;opacity:0;animation:fadein 0.9s ease forwards;animation-delay:0.3s;}
+.hero-name{font-family:'Oswald',sans-serif;font-weight:700;font-size:clamp(52px,9.5vw,128px);letter-spacing:12px;text-transform:uppercase;line-height:1.02;opacity:0;animation:fadein 0.9s ease forwards;animation-delay:0.1s;}
+.hero-name .hw{background:linear-gradient(135deg,var(--gold) 0%,var(--gold-light) 50%,var(--gold) 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+.hero-divider{width:0;height:1px;background:linear-gradient(to right,transparent,var(--gold),transparent);margin:22px auto;animation:expandline 0.9s ease forwards;animation-delay:0.65s;}
+.hero-tagline{font-family:'Montserrat',sans-serif;font-size:clamp(11px,1.2vw,13px);font-weight:500;letter-spacing:6px;text-transform:uppercase;color:rgba(255,255,255,0.6);margin-bottom:42px;opacity:0;animation:fadein 0.9s ease forwards;animation-delay:0.85s;}
+.hero-cta{font-family:'Montserrat',sans-serif;font-size:11px;font-weight:600;letter-spacing:3px;text-transform:uppercase;color:#fff;border:1px solid var(--gold);padding:14px 50px;text-decoration:none;display:inline-flex;align-items:center;gap:10px;transition:gap 0.3s;opacity:0;animation:fadein 0.9s ease forwards;animation-delay:1s;position:relative;overflow:hidden;}
+.hero-cta::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,var(--gold),var(--gold-light));transform:translateX(-101%);transition:transform 0.35s ease;z-index:-1;}
+.hero-cta:hover::before{transform:translateX(0);}
+.hero-cta:hover{gap:18px;}
+.scroll-cue{position:absolute;bottom:140px;left:50%;transform:translateX(-50%);z-index:5;display:flex;flex-direction:column;align-items:center;gap:8px;opacity:0;animation:fadein 1s ease forwards;animation-delay:1.3s;}
+.scroll-line{width:1px;height:36px;background:linear-gradient(to bottom,var(--gold),transparent);animation:scrollpulse 2s ease-in-out infinite;}
+.scroll-txt{font-family:'Montserrat',sans-serif;font-size:9px;font-weight:500;letter-spacing:4px;text-transform:uppercase;color:rgba(255,255,255,0.45);}
+
+/* Stats bar – fixed to sit cleanly at bottom of hero */
+.hero-stats{position:absolute;bottom:0;left:0;right:0;z-index:5;display:grid;grid-template-columns:repeat(3,1fr);border-top:1px solid rgba(201,146,42,0.25);opacity:1;transform:none;animation:none;}
+.hstat{padding:22px 16px;text-align:center;border-right:1px solid rgba(255,255,255,0.07);background:rgba(8,8,8,0.88);backdrop-filter:blur(12px);transition:background 0.25s;}
+.hstat:hover{background:rgba(20,15,6,0.95);}
+.hstat:last-child{border-right:none;}
+.hstat-n{font-family:'Oswald',sans-serif;font-weight:700;font-size:28px;letter-spacing:1px;line-height:1;background:linear-gradient(135deg,var(--gold),var(--gold-light));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+.hstat-l{font-family:'Montserrat',sans-serif;font-size:9px;font-weight:500;letter-spacing:2.5px;text-transform:uppercase;color:rgba(255,255,255,0.45);margin-top:5px;}
+
+/* ── REVEAL ── */
+.reveal{opacity:0;transform:translateY(28px);transition:opacity 0.9s ease,transform 0.9s ease;}
+.reveal.visible{opacity:1;transform:translateY(0);}
+.rd1{transition-delay:0.1s;}.rd2{transition-delay:0.2s;}.rd3{transition-delay:0.3s;}.rd4{transition-delay:0.4s;}.rd5{transition-delay:0.5s;}.rd6{transition-delay:0.6s;}
+
+/* ── QUOTE STRIP ── */
+.quote-strip{padding:90px 48px;text-align:center;border-top:1px solid rgba(201,146,42,0.1);border-bottom:1px solid rgba(201,146,42,0.1);position:relative;overflow:hidden;}
+.quote-strip::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at center,rgba(201,146,42,0.04) 0%,transparent 70%);}
+.quote-eyebrow{font-family:'Montserrat',sans-serif;font-size:9px;font-weight:500;letter-spacing:5px;text-transform:uppercase;color:rgba(201,146,42,0.55);margin-bottom:20px;}
+.quote-text{font-family:'Oswald',sans-serif;font-weight:700;font-size:clamp(26px,4vw,50px);letter-spacing:1px;line-height:1.1;color:#fff;}
+.quote-text em{background:linear-gradient(135deg,var(--gold),var(--gold-light));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;font-style:normal;}
+
+/* ── SECTIONS ── */
+.section{padding:100px 48px;}
+.section-center{text-align:center;max-width:860px;margin:0 auto;}
+.sec-eyebrow{font-family:'Montserrat',sans-serif;font-size:10px;font-weight:500;letter-spacing:5px;text-transform:uppercase;color:rgba(201,146,42,0.7);margin-bottom:14px;display:block;}
+.sec-title{font-family:'Oswald',sans-serif;font-weight:700;font-size:clamp(34px,5vw,64px);letter-spacing:2px;text-transform:uppercase;color:#fff;line-height:0.92;margin-bottom:18px;}
+.sec-title em{background:linear-gradient(135deg,var(--gold),var(--gold-light));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;font-style:normal;}
+.sec-divider{width:56px;height:1px;background:linear-gradient(to right,transparent,var(--gold),transparent);margin:0 auto 22px;}
+.sec-body{font-family:'Montserrat',sans-serif;font-size:15px;font-weight:300;line-height:1.9;color:rgba(255,255,255,0.5);max-width:620px;margin:0 auto 56px;}
+
+/* ── GYM SLIDER ── */
+.slider-wrap{position:relative;width:calc(100% + 96px);margin-left:-48px;margin-right:-48px;margin-bottom:60px;overflow:hidden;border-radius:0;}
+.slider-track{display:flex;transition:transform 0.6s cubic-bezier(0.25,0.46,0.45,0.94);}
+.slide{flex-shrink:0;width:100%;aspect-ratio:16/9;max-height:600px;overflow:hidden;position:relative;}
+.slide img{width:100%;height:100%;object-fit:cover;object-position:center;display:block;}
+.slide-overlay{position:absolute;inset:0;background:linear-gradient(to bottom,transparent 60%,rgba(8,8,8,0.5) 100%);}
+.slider-btn{position:absolute;top:50%;transform:translateY(-50%);z-index:10;background:rgba(8,8,8,0.7);border:1px solid rgba(201,146,42,0.4);color:#fff;width:48px;height:48px;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:18px;transition:background 0.2s,border-color 0.2s;backdrop-filter:blur(8px);}
+.slider-btn:hover{background:rgba(201,146,42,0.25);border-color:var(--gold);}
+.slider-prev{left:16px;}
+.slider-next{right:16px;}
+.slider-dots{display:flex;justify-content:center;gap:8px;margin-top:16px;}
+.slider-dot{width:6px;height:6px;border-radius:50%;background:rgba(255,255,255,0.2);cursor:pointer;transition:background 0.25s,transform 0.25s;}
+.slider-dot.active{background:var(--gold);transform:scale(1.3);}
+
+/* ── FEAT GRID ── */
+.feat-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:rgba(201,146,42,0.1);max-width:1000px;margin:0 auto 56px;}
+.feat-card{background:#0d0d0d;padding:36px 28px;text-align:center;transition:background 0.25s;}
+.feat-card:hover{background:#111;}
+.feat-icon{margin-bottom:16px;display:flex;justify-content:center;}
+.feat-icon svg{width:30px;height:30px;}
+.feat-name{font-family:'Oswald',sans-serif;font-weight:600;font-size:15px;letter-spacing:1px;text-transform:uppercase;color:#fff;margin-bottom:10px;}
+.feat-desc{font-family:'Montserrat',sans-serif;font-size:13px;font-weight:300;line-height:1.8;color:rgba(255,255,255,0.4);}
+
+/* CTA Button */
+.cta-btn{display:inline-flex;align-items:center;gap:10px;font-family:'Montserrat',sans-serif;font-size:11px;font-weight:600;letter-spacing:3px;text-transform:uppercase;color:#fff;border:1px solid var(--gold);padding:14px 50px;text-decoration:none;transition:gap 0.3s;position:relative;overflow:hidden;}
+.cta-btn::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,var(--gold),var(--gold-light));transform:translateX(-101%);transition:transform 0.35s ease;z-index:-1;}
+.cta-btn:hover::before{transform:translateX(0);}
+.cta-btn:hover{gap:18px;}
+
+/* ── POOL SLIDER ── */
+.pool-slider-wrap{position:relative;width:calc(100% + 96px);margin-left:-48px;margin-right:-48px;margin-bottom:48px;overflow:hidden;}
+.pool-slider-track{display:flex;transition:transform 0.6s cubic-bezier(0.25,0.46,0.45,0.94);}
+.pdot{width:6px;height:6px;border-radius:50%;background:rgba(255,255,255,0.2);cursor:pointer;transition:background 0.25s,transform 0.25s;}
+.pdot.active{background:var(--gold);transform:scale(1.3);}
+
+/* ── POOL DETAILS ── */
+.pool-details{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:rgba(201,146,42,0.1);max-width:900px;margin:0 auto 56px;}
+.pool-detail{background:#0d0d0d;padding:28px 24px;text-align:center;}
+.pool-detail-label{font-family:'Montserrat',sans-serif;font-size:9px;font-weight:500;letter-spacing:4px;text-transform:uppercase;color:rgba(201,146,42,0.6);margin-bottom:8px;}
+.pool-detail-val{font-family:'Oswald',sans-serif;font-weight:600;font-size:18px;letter-spacing:1px;color:#fff;}
+
+/* ── AI GRID ── */
+.ai-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:1px;background:rgba(201,146,42,0.1);max-width:900px;margin:0 auto 56px;}
+.ai-feat{background:#0d0d0d;padding:36px 32px;display:flex;gap:20px;align-items:flex-start;transition:background 0.25s;}
+.ai-feat:hover{background:#111;}
+.ai-feat-num{font-family:'Oswald',sans-serif;font-weight:700;font-size:36px;letter-spacing:-1px;background:linear-gradient(135deg,var(--gold),var(--gold-light));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;line-height:1;flex-shrink:0;}
+.ai-feat-name{font-family:'Oswald',sans-serif;font-weight:600;font-size:15px;letter-spacing:1px;text-transform:uppercase;color:#fff;margin-bottom:8px;}
+.ai-feat-desc{font-family:'Montserrat',sans-serif;font-size:13px;font-weight:300;line-height:1.8;color:rgba(255,255,255,0.4);}
+
+/* ── CTA BANNER ── */
+.cta-banner{padding:90px 48px;text-align:center;background:#0d0d0d;border-top:1px solid rgba(201,146,42,0.15);border-bottom:1px solid rgba(201,146,42,0.15);}
+.cta-banner-title{font-family:'Oswald',sans-serif;font-weight:700;font-size:clamp(30px,5vw,58px);letter-spacing:2px;text-transform:uppercase;color:#fff;line-height:0.92;margin-bottom:16px;}
+.cta-banner-title em{background:linear-gradient(135deg,var(--gold),var(--gold-light));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;font-style:normal;}
+.cta-banner-sub{font-family:'Montserrat',sans-serif;font-size:13px;font-weight:300;color:rgba(255,255,255,0.4);letter-spacing:1px;margin-bottom:36px;line-height:1.8;}
+.cta-banner-btns{display:flex;gap:16px;justify-content:center;flex-wrap:wrap;}
+
+/* ── FOOTER ── */
+footer{background:#000;border-top:1px solid rgba(201,146,42,0.12);padding:72px 48px 0;}
+.footer-grid{display:grid;grid-template-columns:1.8fr 1fr 1fr 1fr;gap:52px;padding-bottom:56px;border-bottom:1px solid rgba(255,255,255,0.06);}
+
+/* Footer brand column */
+.footer-logo{display:flex;align-items:center;gap:12px;margin-bottom:18px;text-decoration:none;}
+.footer-logo-img{height:38px;width:38px;object-fit:contain;mix-blend-mode:lighten;}
+.footer-logo-text{font-family:'Oswald',sans-serif;font-weight:700;font-size:18px;letter-spacing:4px;text-transform:uppercase;color:#fff;}
+.footer-logo-text span{background:linear-gradient(135deg,var(--gold),var(--gold-light));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+.footer-tagline{font-family:'Montserrat',sans-serif;font-size:13px;font-weight:300;color:rgba(255,255,255,0.3);line-height:1.9;margin-bottom:22px;}
+.footer-social{display:flex;gap:12px;margin-bottom:24px;}
+.footer-social-btn{display:flex;align-items:center;justify-content:center;width:38px;height:38px;border:1px solid rgba(255,255,255,0.1);color:rgba(255,255,255,0.55);text-decoration:none;transition:border-color 0.2s,color 0.2s,background 0.2s;font-size:15px;}
+.footer-social-btn:hover{border-color:var(--gold);color:var(--gold);background:rgba(201,146,42,0.06);}
+.footer-social-btn svg{width:16px;height:16px;fill:currentColor;}
+
+/* Footer contact pills */
+.footer-contact-links{display:flex;flex-direction:column;gap:10px;}
+.footer-contact-item{display:flex;align-items:center;gap:10px;text-decoration:none;padding:9px 14px;border:1px solid rgba(255,255,255,0.07);transition:border-color 0.2s,background 0.2s;}
+.footer-contact-item:hover{border-color:rgba(201,146,42,0.35);background:rgba(201,146,42,0.04);}
+.footer-contact-icon{display:flex;align-items:center;justify-content:center;width:28px;height:28px;flex-shrink:0;}
+.footer-contact-icon svg{width:14px;height:14px;fill:var(--gold);}
+.footer-contact-num{font-family:'Oswald',sans-serif;font-size:15px;font-weight:500;letter-spacing:1px;color:#fff;}
+.footer-contact-sub{font-family:'Montserrat',sans-serif;font-size:9px;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,0.3);}
+
+/* Footer columns */
+.footer-col-title{font-family:'Montserrat',sans-serif;font-size:9px;font-weight:600;letter-spacing:3px;text-transform:uppercase;color:rgba(201,146,42,0.65);margin-bottom:20px;}
+.footer-links{list-style:none;display:flex;flex-direction:column;gap:11px;}
+.footer-links a{font-family:'Montserrat',sans-serif;font-size:13px;font-weight:300;color:rgba(255,255,255,0.4);text-decoration:none;transition:color 0.2s;}
+.footer-links a:hover{color:#fff;}
+
+/* Hours */
+.footer-hours{display:flex;flex-direction:column;gap:10px;}
+.fhr{display:flex;justify-content:space-between;align-items:center;padding-bottom:10px;border-bottom:1px solid rgba(255,255,255,0.04);}
+.fhr:last-child{border-bottom:none;}
+.fhr-day{font-family:'Montserrat',sans-serif;font-size:12px;font-weight:300;color:rgba(255,255,255,0.35);}
+.fhr-time{font-family:'Oswald',sans-serif;font-weight:500;font-size:13px;background:linear-gradient(135deg,var(--gold),var(--gold-light));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+
+/* Footer map section */
+.footer-map-section{border-top:1px solid rgba(255,255,255,0.06);border-bottom:1px solid rgba(255,255,255,0.06);margin-bottom:0;}
+.footer-map-header{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:18px 0;flex-wrap:wrap;}
+.footer-map-info{display:flex;align-items:center;gap:10px;}
+.footer-map-icon{display:flex;align-items:center;justify-content:center;}
+.footer-map-icon svg{width:16px;height:16px;}
+.footer-map-text{font-family:'Montserrat',sans-serif;font-size:12px;font-weight:300;color:rgba(255,255,255,0.35);line-height:1.6;}
+.footer-map-link{font-family:'Montserrat',sans-serif;font-size:10px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:rgba(201,146,42,0.7);text-decoration:none;border:1px solid rgba(201,146,42,0.25);padding:9px 18px;white-space:nowrap;transition:color 0.2s,border-color 0.2s;}
+.footer-map-link:hover{color:var(--gold-light);border-color:var(--gold);}
+.footer-map-embed{overflow:hidden;border:1px solid rgba(255,255,255,0.06);}
+
+/* Footer bottom */
+.footer-bottom{display:flex;align-items:center;justify-content:space-between;padding:22px 0;flex-wrap:wrap;gap:12px;}
+.footer-copy{font-family:'Montserrat',sans-serif;font-size:11px;font-weight:300;color:rgba(255,255,255,0.2);}
+.footer-insta-handle{font-family:'Montserrat',sans-serif;font-size:11px;color:rgba(255,255,255,0.18);text-decoration:none;transition:color 0.2s;}
+.footer-insta-handle:hover{color:rgba(201,146,42,0.7);}
+
+/* ── RESPONSIVE ── */
+@media (max-width:1100px){
+  .footer-grid{grid-template-columns:1fr 1fr;gap:40px;}
+}
+@media (max-width:980px){
+  nav{padding:0 24px;}
+  .nav-links,.nav-right{display:none;}
+  .nav-hamburger{display:flex;}
+  .mobile-menu{display:flex;}
+  .hero-corner-left,.hero-corner-right,.hero-edge-left,.hero-edge-right{display:none;}
+  .hero-content{padding:0 24px;}
+  .feat-grid{grid-template-columns:1fr 1fr;}
+  .pool-details{grid-template-columns:1fr 1fr;}
+  .ai-grid{grid-template-columns:1fr;}
+  .section{padding:72px 24px;}
+  .quote-strip{padding:72px 24px;}
+  .cta-banner{padding:72px 24px;}
+  footer{padding:56px 24px 0;}
+  .footer-grid{grid-template-columns:1fr 1fr;gap:36px;}
+  /* Adjust bleed to match new 24px section padding */
+  .slider-wrap{width:calc(100% + 48px);margin-left:-24px;margin-right:-24px;}
+  .pool-slider-wrap{width:calc(100% + 48px);margin-left:-24px;margin-right:-24px;}
+}
+@media (max-width:680px){
+  nav{height:60px;padding:0 20px;}
+  .mobile-menu{top:60px;}
+  .hero{min-height:100svh;}
+  .hero-content{padding:0 20px;}
+  .hero-name{font-size:clamp(42px,13vw,76px);letter-spacing:6px;}
+  .hero-tagline{letter-spacing:3px;font-size:10px;}
+  .hero-divider{width:80px;}
+  .hero-cta{padding:12px 28px;font-size:10px;}
+  .scroll-cue{display:none;}
+  /* Stats bar: horizontal scroll on mobile, fixed compact height */
+  .hero-stats{grid-template-columns:repeat(3,1fr);}
+  .hstat{padding:14px 10px;}
+  .hstat-n{font-size:22px;}
+  .hstat-l{font-size:8px;letter-spacing:1.5px;}
+  .sec-title{font-size:clamp(28px,8vw,42px);}
+  .sec-body{font-size:14px;}
+  .feat-grid{grid-template-columns:1fr;}
+  .feat-card{padding:28px 22px;}
+  .quote-text{font-size:clamp(24px,7vw,36px);}
+  .pool-details{grid-template-columns:1fr 1fr;}
+  .pool-detail{padding:20px 16px;}
+  .cta-banner-title{font-size:clamp(26px,9vw,40px);}
+  .cta-banner-btns{flex-direction:column;align-items:center;}
+  .cta-btn{padding:14px 32px;width:100%;justify-content:center;max-width:280px;}
+  footer{padding:48px 20px 0;}
+  .footer-grid{grid-template-columns:1fr;gap:32px;}
+  .footer-bottom{flex-direction:column;align-items:center;text-align:center;padding:20px 0;}
+  .footer-map-header{flex-direction:column;align-items:flex-start;gap:12px;}
+  .footer-map-embed iframe{height:220px;}
+  .slider-btn{width:36px;height:36px;font-size:14px;}
+  .slide{aspect-ratio:unset;height:360px;max-height:none;}
+}
+@media (max-width:400px){
+  .hero-name{font-size:clamp(36px,14vw,58px);letter-spacing:4px;}
+  .hstat-n{font-size:20px;}
+}
+@media (max-width:768px){
+  .hero-stats{display:grid !important;grid-template-columns:repeat(3,minmax(0,1fr)) !important;overflow:visible !important;white-space:normal !important;}
+  .hstat{min-width:0;padding:10px 6px;border-right:1px solid rgba(255,255,255,0.08) !important;}
+  .hstat-n{font-size:16px;}
+  .hstat-l{font-size:7px;letter-spacing:1px;}
+}
+</style>
+</head>
+<body>
+
+<!-- ── NAV ── -->
+<nav id="nav">
+  <a href="index.html" class="nav-logo">
+    <img class="nav-logo-img" src="images/logo.jpg" alt="HEALTHWAYS"/>
+    <span class="nav-logo-text">HEALTH<span>WAYS</span></span>
+  </a>
+  <div class="nav-links">
+    <a href="gym.html">Gym</a>
+    <a href="swimming.html">Swimming</a>
+    <a href="ai-trainer.html">WaysScore</a>
+    <a href="about.html">About Us</a>
+    <a href="profile.html">Profile</a>
+  </div>
+  <div class="nav-right">
+    <a href="login.html?source=gym" class="nav-trial">Free Trial</a>
+    <a href="login.html?source=gym" class="nav-join">Join Now</a>
+  </div>
+  <button class="nav-hamburger" id="hamburger" aria-label="Open navigation menu">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<!-- Mobile Menu Drawer -->
+<div class="mobile-menu" id="mobileMenu">
+  <div class="mobile-menu-links">
+    <a href="gym.html">Gym</a>
+    <a href="swimming.html">Swimming</a>
+    <a href="ai-trainer.html">WaysScore</a>
+    <a href="about.html">About Us</a>
+    <a href="profile.html">Profile</a>
+  </div>
+  <div class="mobile-menu-ctas">
+    <a href="login.html?source=gym" class="nav-trial">Free Trial</a>
+    <a href="login.html?source=gym" class="nav-join">Join Now</a>
+  </div>
+</div>
+
+<!-- ── HERO ── -->
+<section class="hero" id="home">
+  <video class="hero-video" autoplay muted loop playsinline preload="auto" poster="images/gym-hero.webp" aria-hidden="true">
+    <source src="images/hero-video.webm" type="video/webm">
+    <source src="images/hero-video.mp4" type="video/mp4">
+  </video>
+  <div class="hero-overlay"></div>
+  <div class="hero-vignette"></div>
+  <div class="hero-bottom-fade"></div>
+  <div class="hero-corner-left"><div class="corner-label">Location</div><div class="corner-val">Keshav Puram, Delhi</div></div>
+  <div class="hero-corner-right"><div class="corner-label">Established</div><div class="corner-val">Est. 1994</div></div>
+  <div class="hero-edge-left"><div class="edge-line"></div><div class="edge-text-left">Gym · Pool · WaysScore</div><div class="edge-line"></div></div>
+  <div class="hero-edge-right"><div class="edge-line"></div><div class="edge-text-right">15,000 Sq Ft · 3 Expert Coaches</div><div class="edge-line"></div></div>
+  <div class="hero-content">
+    <div class="hero-location">Keshav Puram &nbsp;·&nbsp; New Delhi &nbsp;·&nbsp; Est. 1994</div>
+    <h1 class="hero-name"><span>HEALTH</span><span class="hw">WAYS</span></h1>
+    <div class="hero-divider"></div>
+    <p class="hero-tagline">Delhi's Most Complete Fitness Experience</p>
+    <a href="login.html?source=gym" class="hero-cta">Join Now &nbsp;→</a>
+  </div>
+  <div class="scroll-cue"><div class="scroll-line"></div><div class="scroll-txt">Scroll</div></div>
+  <div class="hero-stats">
+    <div class="hstat"><div class="hstat-n" data-count="30" data-suffix="+">0</div><div class="hstat-l">Years of Legacy</div></div>
+    <div class="hstat"><div class="hstat-n" data-count="15" data-suffix="K">0</div><div class="hstat-l">Sq Feet</div></div>
+    <div class="hstat"><div class="hstat-n" data-count="10000" data-suffix="+" data-format="comma">0</div><div class="hstat-l">Members Trained</div></div>
+  </div>
+</section>
+
+<!-- QUOTE → GYM -->
+<div class="quote-strip reveal">
+  <p class="quote-eyebrow">The Forge</p>
+  <blockquote class="quote-text">Your body can do it.<br><em>It's your mind you need to convince.</em></blockquote>
+</div>
+
+<!-- GYM -->
+<section class="section" id="gym">
+  <div class="section-center reveal">
+    <span class="sec-eyebrow">01 · The Forge</span>
+    <h2 class="sec-title">WHERE <em>STRENGTH</em><br>IS BUILT.</h2>
+    <div class="sec-divider"></div>
+    <p class="sec-body">World-class equipment, certified trainers and 15,000 sq ft of serious training space — all designed to push you further. From heavy compound lifts to high-energy group classes, Healthways has everything you need to transform your body.</p>
+  </div>
+
+  <div class="slider-wrap reveal rd1">
+    <div class="slider-track" id="sliderTrack">
+      <div class="slide"><img src="images/gym-hero.webp" alt="Healthways Gym"/><div class="slide-overlay"></div></div>
+      <div class="slide"><img src="images/gym-interior.webp" alt="Healthways Weight Zone"/><div class="slide-overlay"></div></div>
+      <div class="slide"><img src="images/gym-cardio.webp" alt="Healthways Cardio Zone"/><div class="slide-overlay"></div></div>
+    </div>
+    <button class="slider-btn slider-prev" onclick="slide(-1)" aria-label="Previous">&#8592;</button>
+    <button class="slider-btn slider-next" onclick="slide(1)" aria-label="Next">&#8594;</button>
+    <div class="slider-dots" id="sliderDots">
+      <div class="slider-dot active" onclick="goTo(0)"></div>
+      <div class="slider-dot" onclick="goTo(1)"></div>
+      <div class="slider-dot" onclick="goTo(2)"></div>
+    </div>
+  </div>
+
+  <div class="feat-grid reveal">
+    <div class="feat-card rd1">
+      <div class="feat-icon"><svg viewBox="0 0 30 30" fill="none"><rect x="1" y="11" width="28" height="8" rx="4" fill="#C9922A"/><rect x="6" y="4" width="4" height="22" rx="2" fill="#C9922A"/><rect x="20" y="4" width="4" height="22" rx="2" fill="#C9922A"/></svg></div>
+      <div class="feat-name">Premium Equipment</div>
+      <p class="feat-desc">Multiple types of state-of-the-art gym equipment — free weights, machines, cables, barbells, kettlebells and more for every training goal.</p>
+    </div>
+    <div class="feat-card rd2">
+      <div class="feat-icon"><svg viewBox="0 0 30 30" fill="none"><path d="M5 15C7 9 10 23 15 15C20 9 23 23 25 15" stroke="#C9922A" stroke-width="2.5" stroke-linecap="round" fill="none"/><circle cx="15" cy="7" r="3.5" stroke="#C9922A" stroke-width="2" fill="none"/></svg></div>
+      <div class="feat-name">Big Cardio Section</div>
+      <p class="feat-desc">A large dedicated cardio floor with treadmills, spin bikes, ellipticals, rowing machines and assault bikes — built for endurance and fat burn.</p>
+    </div>
+    <div class="feat-card rd3">
+      <div class="feat-icon"><svg viewBox="0 0 30 30" fill="none"><circle cx="15" cy="9" r="4.5" stroke="#C9922A" stroke-width="2" fill="none"/><path d="M6 27C6 22.029 10.029 18 15 18C19.971 18 24 22.029 24 27" stroke="#C9922A" stroke-width="2" stroke-linecap="round" fill="none"/></svg></div>
+      <div class="feat-name">Certified Trainers</div>
+      <p class="feat-desc">Expert certified trainers who design personalised programmes, correct your form and keep you accountable — every single session.</p>
+    </div>
+    <div class="feat-card rd4">
+      <div class="feat-icon"><svg viewBox="0 0 30 30" fill="none"><path d="M15 4L26 10V20L15 26L4 20V10L15 4Z" stroke="#C9922A" stroke-width="2" fill="none" stroke-linejoin="round"/><circle cx="15" cy="15" r="3" fill="#C9922A"/></svg></div>
+      <div class="feat-name">Group Classes</div>
+      <p class="feat-desc">Aerobics, Zumba, Yoga, Dance and Fat Loss Functional Training — high-energy guided sessions for all fitness levels, daily schedule.</p>
+    </div>
+    <div class="feat-card rd5">
+      <div class="feat-icon"><svg viewBox="0 0 30 30" fill="none"><path d="M4 18C7 11 10 25 15 18C20 11 23 25 26 18" stroke="#C9922A" stroke-width="2.5" stroke-linecap="round" fill="none"/><path d="M4 24C7 17 10 31 15 24C20 17 23 31 26 24" stroke="#C9922A" stroke-width="1.2" stroke-linecap="round" fill="none" opacity="0.35"/></svg></div>
+      <div class="feat-name">Swimming Classes</div>
+      <p class="feat-desc">Professional pool with structured swimming classes for beginners to advanced. Experienced coaches, morning and evening slots available.</p>
+    </div>
+    <div class="feat-card rd6">
+      <div class="feat-icon"><svg viewBox="0 0 30 30" fill="none"><rect x="4" y="10" width="22" height="16" rx="3" stroke="#C9922A" stroke-width="2" fill="none"/><path d="M10 10V8C10 5.791 12.239 4 15 4C17.761 4 20 5.791 20 8V10" stroke="#C9922A" stroke-width="2" fill="none"/><circle cx="15" cy="18" r="2.5" fill="#C9922A"/></svg></div>
+      <div class="feat-name">Cafeteria</div>
+      <p class="feat-desc">On-site cafeteria serving protein-rich meals, shakes and healthy snacks — everything you need to hit your daily protein goals and fuel recovery.</p>
+    </div>
+  </div>
+
+  <div class="reveal" style="text-align:center;">
+    <a href="gym.html" class="cta-btn">Explore the Gym &nbsp;→</a>
+  </div>
+</section>
+
+<!-- QUOTE → POOL -->
+<div class="quote-strip reveal">
+  <p class="quote-eyebrow">The Pool</p>
+  <blockquote class="quote-text">Water doesn't resist.<br><em>It trains you.</em></blockquote>
+</div>
+
+<!-- SWIMMING -->
+<section class="section" id="pool">
+  <div class="section-center reveal">
+    <span class="sec-eyebrow">02 · The Pool</span>
+    <h2 class="sec-title">DIVE INTO<br><em>ANOTHER WORLD.</em></h2>
+    <div class="sec-divider"></div>
+    <p class="sec-body">A professional swimming pool with lap lanes and structured classes — morning and evening slots daily. Whether you're learning to swim, training for fitness, or recovering after a hard session, the Healthways pool meets you where you are.</p>
+  </div>
+
+  <!-- Pool Slider -->
+  <div class="pool-slider-wrap reveal rd1">
+    <div class="pool-slider-track" id="poolTrack">
+      <div class="slide"><img src="images/pool-1.jpg" alt="Healthways Swimming Pool — Keshav Puram"/><div class="slide-overlay"></div></div>
+      <div class="slide"><img src="images/pool-2.jpg" alt="Healthways Pool — Lap Lanes"/><div class="slide-overlay"></div></div>
+      <div class="slide"><img src="images/pool-3.jpg" alt="Healthways Pool — Side View"/><div class="slide-overlay"></div></div>
+    </div>
+    <button class="slider-btn slider-prev" onclick="poolSlide(-1)" aria-label="Previous">&#8592;</button>
+    <button class="slider-btn slider-next" onclick="poolSlide(1)" aria-label="Next">&#8594;</button>
+    <div class="slider-dots" id="poolDots">
+      <div class="pdot active" onclick="poolGoTo(0)"></div>
+      <div class="pdot" onclick="poolGoTo(1)"></div>
+      <div class="pdot" onclick="poolGoTo(2)"></div>
+    </div>
+  </div>
+
+  <div class="feat-grid reveal" style="grid-template-columns:repeat(2,1fr);max-width:700px;">
+    <div class="feat-card rd1">
+      <div class="feat-icon"><svg viewBox="0 0 30 30" fill="none"><path d="M4 17C7 10 11 24 15 17C19 10 23 24 26 17" stroke="#C9922A" stroke-width="2.5" stroke-linecap="round" fill="none"/><path d="M4 23C7 16 11 30 15 23C19 16 23 30 26 23" stroke="#C9922A" stroke-width="1.2" stroke-linecap="round" fill="none" opacity="0.4"/></svg></div>
+      <div class="feat-name">Lap Swimming</div>
+      <p class="feat-desc">Dedicated lap lanes for all levels. Train for endurance, work on technique or simply unwind. Multiple sessions daily.</p>
+    </div>
+    <div class="feat-card rd2">
+      <div class="feat-icon"><svg viewBox="0 0 30 30" fill="none"><circle cx="15" cy="9" r="4" stroke="#C9922A" stroke-width="2" fill="none"/><path d="M7 27C7 22.582 10.582 19 15 19C19.418 19 23 22.582 23 27" stroke="#C9922A" stroke-width="2" stroke-linecap="round" fill="none"/></svg></div>
+      <div class="feat-name">Swimming Classes</div>
+      <p class="feat-desc">Structured classes for all levels, guided by professional swimming coaches. All ages and abilities welcome.</p>
+    </div>
+  </div>
+
+  <div class="reveal" style="text-align:center;">
+    <a href="swimming.html" class="cta-btn">Explore the Pool &nbsp;→</a>
+  </div>
+</section>
+
+<!-- QUOTE → AI -->
+<div class="quote-strip reveal">
+  <p class="quote-eyebrow">WaysScore</p>
+  <blockquote class="quote-text">Train smarter.<br><em>Not just harder.</em></blockquote>
+</div>
+
+<!-- WaysScore -->
+<section class="section" id="ai">
+  <div class="section-center reveal">
+    <span class="sec-eyebrow">03 · Neural Engine</span>
+    <h2 class="sec-title">YOUR COACH<br><em>NEVER SLEEPS.</em></h2>
+    <div class="sec-divider"></div>
+    <p class="sec-body">An intelligent coaching system that adapts to your goals and delivers a personalised plan — tailored to your BMI, diet and training level. Available 24/7, included free with every Healthways membership.</p>
+  </div>
+
+  <div class="ai-grid reveal">
+    <div class="ai-feat rd1">
+      <div class="ai-feat-num">01</div>
+      <div><div class="ai-feat-name">Personalised Workout Plans</div><p class="ai-feat-desc">Built around your goals and schedule. Never a generic template — every plan is crafted to your body and fitness level.</p></div>
+    </div>
+    <div class="ai-feat rd2">
+      <div class="ai-feat-num">02</div>
+      <div><div class="ai-feat-name">Diet & Nutrition Guidance</div><p class="ai-feat-desc">Full weekly diet blueprint with meal-by-meal recommendations aligned with your training load and body goals.</p></div>
+    </div>
+    <div class="ai-feat rd3">
+      <div class="ai-feat-num">03</div>
+      <div><div class="ai-feat-name">BMI-Based Planning</div><p class="ai-feat-desc">Your weight and height define your starting point. Every session and meal is calibrated to your current fitness baseline.</p></div>
+    </div>
+    <div class="ai-feat rd4">
+      <div class="ai-feat-num">04</div>
+      <div><div class="ai-feat-name">Goal-Driven Results</div><p class="ai-feat-desc">Fat loss, muscle gain, endurance or balance — your complete 7-day exercise and nutrition blueprint, generated instantly.</p></div>
+    </div>
+  </div>
+
+  <div class="reveal" style="text-align:center;">
+    <a href="ai-trainer.html" class="cta-btn">Try the WaysScore &nbsp;→</a>
+  </div>
+</section>
+
+<!-- FINAL CTA -->
+<div class="cta-banner reveal" id="join">
+  <div class="cta-banner-title">READY TO START?<br><em>JOIN HEALTHWAYS TODAY.</em></div>
+  <p class="cta-banner-sub">Gym &nbsp;·&nbsp; Swimming Pool &nbsp;·&nbsp; WaysScore &nbsp;·&nbsp; Group Classes &nbsp;·&nbsp; Cafeteria<br>Keshav Puram, New Delhi &nbsp;·&nbsp; Open Daily 6AM – 10PM &nbsp;·&nbsp; Est. 1994</p>
+  <div class="cta-banner-btns">
+    <a href="login.html?source=gym" class="cta-btn">Book Free Trial &nbsp;→</a>
+    <a href="tel:+919711114918" class="cta-btn" style="border-color:rgba(255,255,255,0.25);">Call: 97111 14918 &nbsp;→</a>
+  </div>
+</div>
+
+<!-- ── FOOTER ── -->
+<footer>
+  <div class="footer-grid">
+
+    <!-- Brand Column -->
+    <div class="footer-brand">
+      <a href="index.html" class="footer-logo">
+        <img class="footer-logo-img" src="images/logo.jpg" alt="HEALTHWAYS"/>
+        <span class="footer-logo-text">HEALTH<span>WAYS</span></span>
+      </a>
+      <p class="footer-tagline">Delhi's most complete fitness experience.<br>Gym · Swimming · WaysScore · Group Classes · Cafeteria.<br>Est. 1994 by Multitech Promoters.</p>
+      <!-- Social -->
+      <div class="footer-social">
+        <a href="https://www.instagram.com/healthwaysgym/" target="_blank" rel="noopener" class="footer-social-btn" aria-label="Instagram">
+          <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+        </a>
+        <a href="https://wa.me/919711114918?text=Hi%2C%20I%20want%20to%20know%20more%20about%20HEALTHWAYS" target="_blank" rel="noopener" class="footer-social-btn" aria-label="WhatsApp">
+          <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+        </a>
+      </div>
+      <!-- Contact numbers -->
+      <div class="footer-contact-links">
+        <a href="tel:+919711114918" class="footer-contact-item">
+          <div class="footer-contact-icon"><svg viewBox="0 0 24 24"><path d="M6.6 10.8c1.4 2.8 3.8 5.1 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.1.4 2.3.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1-9.4 0-17-7.6-17-17 0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.3.2 2.5.6 3.6.1.3 0 .7-.2 1L6.6 10.8z"/></svg></div>
+          <div><div class="footer-contact-num">97111 14918</div><div class="footer-contact-sub">Primary</div></div>
+        </a>
+        <a href="tel:+917703949246" class="footer-contact-item">
+          <div class="footer-contact-icon"><svg viewBox="0 0 24 24"><path d="M6.6 10.8c1.4 2.8 3.8 5.1 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.1.4 2.3.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1-9.4 0-17-7.6-17-17 0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.3.2 2.5.6 3.6.1.3 0 .7-.2 1L6.6 10.8z"/></svg></div>
+          <div><div class="footer-contact-num">77039 49246</div><div class="footer-contact-sub">Secondary</div></div>
+        </a>
+      </div>
+    </div>
+
+    <!-- Quick Links -->
+    <div>
+      <div class="footer-col-title">Navigate</div>
+      <ul class="footer-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="gym.html">Gym</a></li>
+        <li><a href="swimming.html">Swimming Pool</a></li>
+        <li><a href="ai-trainer.html">WaysScore</a></li>
+        <li><a href="about.html">About Us</a></li>
+      </ul>
+    </div>
+
+    <!-- Facilities -->
+    <div>
+      <div class="footer-col-title">Facilities</div>
+      <ul class="footer-links">
+        <li><a href="gym.html">Weight Training</a></li>
+        <li><a href="gym.html">Cardio Zone</a></li>
+        <li><a href="gym.html">Group Classes</a></li>
+        <li><a href="swimming.html">Swimming Pool</a></li>
+        <li><a href="gym.html">Cafeteria</a></li>
+        <li><a href="ai-trainer.html">WaysScore</a></li>
+      </ul>
+    </div>
+
+    <!-- Hours -->
+    <div>
+      <div class="footer-col-title">Timings</div>
+      <div class="footer-hours">
+        <div class="fhr"><span class="fhr-day">Monday – Friday</span><span class="fhr-time">6AM – 10PM</span></div>
+        <div class="fhr"><span class="fhr-day">Saturday</span><span class="fhr-time">6AM – 10PM</span></div>
+        <div class="fhr"><span class="fhr-day">Sunday</span><span class="fhr-time">6AM – 10PM</span></div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Map Section -->
+  <div class="footer-map-section">
+    <div class="footer-map-header">
+      <div class="footer-map-info">
+        <div class="footer-map-icon"><svg viewBox="0 0 24 24" fill="var(--gold)"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg></div>
+        <div class="footer-map-text">Healthways Gym &amp; Swim · Keshav Puram, New Delhi</div>
+      </div>
+      <a href="https://maps.google.com/?q=Healthways+Gym+And+Swim+Keshav+Puram+Delhi" target="_blank" rel="noopener" class="footer-map-link">Open in Maps &nbsp;→</a>
+    </div>
+    <div class="footer-map-embed">
+      <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3500.2554276641636!2d77.1602485!3d28.682004900000003!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x390d02461d8830bd%3A0x1428ef90e2cc7c75!2sHealthways%20Gym%20And%20Swim!5e0!3m2!1sen!2sin!4v1775366702657!5m2!1sen!2sin" width="100%" height="300" style="border:0;display:block;filter:grayscale(30%) invert(5%);opacity:0.9;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade" title="HEALTHWAYS Location"></iframe>
+    </div>
+  </div>
+
+  <!-- Footer Bottom -->
+  <div class="footer-bottom">
+    <div class="footer-copy">© 2025 Multitech Promoters Pvt. Ltd. · HEALTHWAYS. All rights reserved.</div>
+    <a href="https://www.instagram.com/healthwaysgym/" target="_blank" rel="noopener" class="footer-insta-handle">@healthwaysgym</a>
+  </div>
+</footer>
+
+<script>
+// ── Nav scroll
+const nav = document.getElementById('nav');
+let navTicking = false;
+function syncNavState() {
+  nav.classList.toggle('scrolled', window.scrollY > 40);
+  navTicking = false;
+}
+window.addEventListener('scroll', () => {
+  if (navTicking) return;
+  navTicking = true;
+  requestAnimationFrame(syncNavState);
+}, { passive: true });
+syncNavState();
+
+// ── Hamburger — no body scroll lock (menu is compact dropdown, not fullscreen)
+const hamburger = document.getElementById('hamburger');
+const mobileMenu = document.getElementById('mobileMenu');
+hamburger.addEventListener('click', () => {
+  const open = hamburger.classList.toggle('open');
+  mobileMenu.classList.toggle('open', open);
+});
+mobileMenu.querySelectorAll('a').forEach(a => {
+  a.addEventListener('click', () => {
+    hamburger.classList.remove('open');
+    mobileMenu.classList.remove('open');
+  });
+});
+
+// ── Gym Slider
+let current = 0;
+const total = 3;
+const track = document.getElementById('sliderTrack');
+const dots = document.querySelectorAll('.slider-dot');
+function goTo(n) {
+  current = (n + total) % total;
+  track.style.transform = `translateX(-${current * 100}%)`;
+  dots.forEach((d, i) => d.classList.toggle('active', i === current));
+}
+function slide(dir) { goTo(current + dir); }
+setInterval(() => slide(1), 4000);
+
+// ── Pool Slider
+let poolCurrent = 0;
+const poolTotal = 3;
+const poolTrack = document.getElementById('poolTrack');
+const poolDots = document.querySelectorAll('.pdot');
+function poolGoTo(n) {
+  poolCurrent = (n + poolTotal) % poolTotal;
+  poolTrack.style.transform = `translateX(-${poolCurrent * 100}%)`;
+  poolDots.forEach((d, i) => d.classList.toggle('active', i === poolCurrent));
+}
+function poolSlide(dir) { poolGoTo(poolCurrent + dir); }
+setInterval(() => poolSlide(1), 4600);
+
+// ── Scroll Reveal
+const revs = document.querySelectorAll('.reveal');
+const obs = new IntersectionObserver(es => {
+  es.forEach(e => {
+    if (!e.isIntersecting) return;
+    e.target.classList.add('visible');
+    obs.unobserve(e.target);
+  });
+}, { threshold: 0.07 });
+revs.forEach(r => obs.observe(r));
+
+// When local video has buffered enough, it crossfades in and loops forever.
+
+// Stats counter – animate from 0 on page load
+(function() {
+  function easeOut(t) { return 1 - Math.pow(1 - t, 3); }
+  function animCount(el) {
+    const target = parseInt(el.dataset.count, 10);
+    if (isNaN(target)) return;
+    const suffix = el.dataset.suffix || '';
+    const fmt = el.dataset.format === 'comma';
+    const dur = 2000;
+    const start = performance.now();
+    function tick(now) {
+      const p = Math.min((now - start) / dur, 1);
+      const val = Math.round(easeOut(p) * target);
+      el.textContent = fmt ? val.toLocaleString('en-IN') + suffix : val + suffix;
+      if (p < 1) requestAnimationFrame(tick);
+    }
+    requestAnimationFrame(tick);
+  }
+  window.addEventListener('DOMContentLoaded', () => {
+    document.querySelectorAll('.hstat-n[data-count]').forEach(animCount);
+  });
+})();
+
+</script>
+<script src="hw-auth.js"></script>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

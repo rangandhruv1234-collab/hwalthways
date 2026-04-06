@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Login — HEALTHWAYS</title>
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
+<script src="firebase-init.js"></script>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html,body{height:100%;}
+body{font-family:'Montserrat',sans-serif;overflow-x:hidden;display:flex;flex-direction:column;min-height:100vh;}
+:root{--accent:#C9922A;--accent-light:#E8B84B;--bg:#080808;}
+body{background:var(--bg);color:#fff;}
+.bg-glow{position:fixed;inset:0;pointer-events:none;z-index:0;}
+
+/* Header */
+.page-header{position:relative;z-index:10;display:flex;align-items:center;justify-content:space-between;padding:22px 40px;border-bottom:1px solid rgba(255,255,255,0.06);}
+.logo-link{display:flex;align-items:center;gap:10px;text-decoration:none;}
+.logo-img{height:36px;width:36px;object-fit:contain;mix-blend-mode:lighten;}
+.logo-text{font-family:'Oswald',sans-serif;font-weight:700;font-size:16px;letter-spacing:4px;text-transform:uppercase;color:#fff;}
+.logo-text em{font-style:normal;background:linear-gradient(135deg,var(--accent),var(--accent-light));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+.back-link{font-family:'Montserrat',sans-serif;font-size:10px;font-weight:500;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,0.35);text-decoration:none;transition:color 0.2s;}
+.back-link:hover{color:rgba(255,255,255,0.75);}
+
+/* Main */
+.page-main{flex:1;display:flex;align-items:center;justify-content:center;padding:48px 24px;position:relative;z-index:1;}
+
+/* Card */
+.auth-card{width:100%;max-width:420px;border:1px solid rgba(255,255,255,0.08);background:rgba(255,255,255,0.025);backdrop-filter:blur(24px);padding:48px 40px;}
+
+/* Already logged in banner */
+.already-card{width:100%;max-width:420px;border:1px solid rgba(255,255,255,0.08);background:rgba(255,255,255,0.025);backdrop-filter:blur(24px);padding:48px 40px;text-align:center;display:none;}
+.already-card.show{display:block;}
+.already-icon{font-size:32px;margin-bottom:16px;}
+.already-title{font-family:'Oswald',sans-serif;font-weight:700;font-size:24px;letter-spacing:2px;text-transform:uppercase;color:#fff;margin-bottom:8px;}
+.already-sub{font-family:'Montserrat',sans-serif;font-size:12px;color:rgba(255,255,255,0.4);margin-bottom:28px;line-height:1.7;}
+.already-name{color:#fff;font-weight:600;}
+.already-btns{display:flex;flex-direction:column;gap:10px;}
+.already-btn{font-family:'Montserrat',sans-serif;font-size:10px;font-weight:600;letter-spacing:2.5px;text-transform:uppercase;color:#fff;border:none;padding:14px 20px;cursor:pointer;text-decoration:none;text-align:center;display:block;transition:opacity 0.2s;}
+.already-btn:hover{opacity:0.85;}
+.already-btn-primary{background:linear-gradient(135deg,var(--accent),var(--accent-light));}
+.already-btn-ghost{background:none;border:1px solid rgba(255,255,255,0.15);color:rgba(255,255,255,0.5);transition:color 0.2s,border-color 0.2s;}
+.already-btn-ghost:hover{color:#fff;border-color:rgba(255,255,255,0.5);}
+
+/* Card top */
+.card-eyebrow{font-family:'Montserrat',sans-serif;font-size:9px;font-weight:500;letter-spacing:4px;text-transform:uppercase;color:rgba(255,255,255,0.3);margin-bottom:6px;}
+.card-title{font-family:'Oswald',sans-serif;font-weight:700;font-size:32px;letter-spacing:2px;text-transform:uppercase;color:#fff;margin-bottom:32px;line-height:1;}
+.card-title em{font-style:normal;background:linear-gradient(135deg,var(--accent),var(--accent-light));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+
+/* Tabs */
+.tabs{display:flex;border-bottom:1px solid rgba(255,255,255,0.08);margin-bottom:28px;}
+.tab-btn{font-family:'Montserrat',sans-serif;font-size:10px;font-weight:600;letter-spacing:2.5px;text-transform:uppercase;color:rgba(255,255,255,0.3);background:none;border:none;cursor:pointer;padding:10px 0;margin-right:28px;position:relative;transition:color 0.2s;}
+.tab-btn.active{color:#fff;}
+.tab-btn.active::after{content:'';position:absolute;bottom:-1px;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--accent),var(--accent-light));}
+
+/* Panel */
+.auth-panel{display:none;}
+.auth-panel.active{display:block;}
+
+/* Form */
+.form-group{margin-bottom:20px;}
+.form-label{display:block;font-family:'Montserrat',sans-serif;font-size:9px;font-weight:600;letter-spacing:2.5px;text-transform:uppercase;color:rgba(255,255,255,0.4);margin-bottom:9px;}
+.form-hint{font-family:'Montserrat',sans-serif;font-size:10px;color:rgba(255,255,255,0.2);margin-top:6px;letter-spacing:0.5px;}
+.form-input{width:100%;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);color:#fff;font-family:'Montserrat',sans-serif;font-size:14px;font-weight:400;padding:14px 16px;outline:none;transition:border-color 0.25s,background 0.25s;-webkit-appearance:none;appearance:none;}
+.form-input::placeholder{color:rgba(255,255,255,0.2);}
+.form-input:focus{border-color:var(--accent);background:rgba(255,255,255,0.06);}
+.form-error{font-size:10px;color:#f87171;letter-spacing:0.5px;margin-top:7px;display:none;}
+.form-error.show{display:block;}
+
+/* Submit */
+.submit-btn{width:100%;font-family:'Montserrat',sans-serif;font-size:11px;font-weight:600;letter-spacing:3px;text-transform:uppercase;color:#fff;background:linear-gradient(135deg,var(--accent),var(--accent-light));border:none;padding:15px 24px;cursor:pointer;margin-top:4px;transition:opacity 0.2s;}
+.submit-btn:hover{opacity:0.88;}
+
+/* Switch */
+.switch-mode{margin-top:22px;text-align:center;font-family:'Montserrat',sans-serif;font-size:11px;color:rgba(255,255,255,0.3);letter-spacing:0.5px;}
+.switch-mode a{color:var(--accent);text-decoration:none;font-weight:600;margin-left:4px;}
+.switch-mode a:hover{color:var(--accent-light);}
+
+.security-note{margin-top:24px;padding-top:18px;border-top:1px solid rgba(255,255,255,0.05);text-align:center;font-family:'Montserrat',sans-serif;font-size:9px;letter-spacing:1.5px;text-transform:uppercase;color:rgba(255,255,255,0.15);}
+
+@media(max-width:480px){
+  .auth-card,.already-card{padding:32px 22px;}
+  .page-header{padding:18px 20px;}
+  .card-title{font-size:26px;}
+}
+</style>
+</head>
+<body>
+
+<div class="bg-glow" id="bgGlow"></div>
+
+<header class="page-header">
+  <a href="index.html" class="logo-link" id="logoBack">
+    <img class="logo-img" src="images/logo.jpg" alt="HEALTHWAYS"/>
+    <span class="logo-text">HEALTH<em>WAYS</em></span>
+  </a>
+  <a href="index.html" class="back-link" id="backLink">← Back</a>
+</header>
+
+<main class="page-main">
+
+  <!-- Already logged in -->
+  <div class="already-card" id="alreadyCard">
+    <div class="already-icon">👋</div>
+    <h2 class="already-title">You're Logged In</h2>
+    <p class="already-sub">Welcome back, <span class="already-name" id="alreadyName"></span>.<br>What would you like to do?</p>
+    <div class="already-btns">
+      <a href="profile.html" class="already-btn already-btn-primary">View My Profile &nbsp;→</a>
+      <a href="#" class="already-btn already-btn-ghost" id="alreadyBookBtn">Book a Free Trial &nbsp;→</a>
+      <button class="already-btn already-btn-ghost" onclick="doLogout()">Log Out</button>
+    </div>
+  </div>
+
+  <!-- Login / Register form -->
+  <div class="auth-card" id="authCard">
+    <p class="card-eyebrow" id="cardEyebrow">Healthways · Keshav Puram, Delhi</p>
+    <h1 class="card-title">YOUR <em>JOURNEY</em><br>STARTS HERE</h1>
+
+    <div class="tabs">
+      <button class="tab-btn active" id="tabLogin" onclick="switchTab('login')">Login</button>
+      <button class="tab-btn" id="tabRegister" onclick="switchTab('register')">Register</button>
+    </div>
+
+    <!-- LOGIN -->
+    <div class="auth-panel active" id="panelLogin">
+      <form id="loginForm" onsubmit="handleLogin(event)" novalidate>
+        <div class="form-group">
+          <label class="form-label" for="loginMobile">Mobile Number</label>
+          <input class="form-input" type="tel" id="loginMobile" name="loginMobile"
+            placeholder="98765 43210" autocomplete="tel" inputmode="numeric" maxlength="15"
+            pattern="[6-9][0-9]{9}" required title="Enter a valid 10-digit Indian mobile number" />
+          <p class="form-hint">10-digit mobile number</p>
+          <p class="form-error" id="loginMobileError">Please enter a valid 10-digit mobile number.</p>
+          <p class="form-error" id="loginNotFoundError">Mobile not registered. <a href="#" onclick="switchTab('register');return false;" style="color:var(--accent);font-weight:600;">Register first →</a></p>
+        </div>
+        <button class="submit-btn" type="submit">Continue &nbsp;→</button>
+      </form>
+      <p class="switch-mode">First time here?<a href="#" onclick="switchTab('register');return false;">Register Now</a></p>
+    </div>
+
+    <!-- REGISTER -->
+    <div class="auth-panel" id="panelRegister">
+      <form id="registerForm" onsubmit="handleRegister(event)" novalidate>
+        <div class="form-group">
+          <label class="form-label" for="regName">Full Name</label>
+          <input class="form-input" type="text" id="regName" name="regName"
+            placeholder="Your Full Name" autocomplete="name" required minlength="2" />
+          <p class="form-error" id="regNameError">Please enter your name.</p>
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="regMobile">Mobile Number</label>
+          <input class="form-input" type="tel" id="regMobile" name="regMobile"
+            placeholder="98765 43210" autocomplete="tel" inputmode="numeric" maxlength="15"
+            pattern="[6-9][0-9]{9}" required title="Enter a valid 10-digit Indian mobile number" />
+          <p class="form-hint">10-digit mobile number</p>
+          <p class="form-error" id="regMobileError">Please enter a valid 10-digit mobile number.</p>
+        </div>
+        <button class="submit-btn" type="submit">Register &amp; Continue &nbsp;→</button>
+      </form>
+      <p class="switch-mode">Already a member?<a href="#" onclick="switchTab('login');return false;">Login</a></p>
+    </div>
+
+    <p class="security-note">Your details are safe with us</p>
+  </div>
+</main>
+
+<script>
+var params   = new URLSearchParams(location.search);
+var source   = params.get('source') || 'gym';
+var redirect = params.get('redirect') || '';   // 'profile' etc.
+var isSwim   = source === 'swimming';
+
+// ── Theme ──
+if (isSwim) {
+  var r = document.documentElement;
+  r.style.setProperty('--accent', '#0EA5E9');
+  r.style.setProperty('--accent-light', '#38BDF8');
+  r.style.setProperty('--bg', '#030F1C');
+}
+document.getElementById('bgGlow').style.background = isSwim
+  ? 'radial-gradient(ellipse at 50% 0%,rgba(14,165,233,0.07) 0%,transparent 65%)'
+  : 'radial-gradient(ellipse at 50% 0%,rgba(201,146,42,0.07) 0%,transparent 65%)';
+
+var origin = redirect === 'wayscore'
+  ? 'ai-trainer.html'
+  : redirect === 'booking'
+    ? 'book-trial.html?source=' + encodeURIComponent(source)
+    : source === 'swimming'
+      ? 'swimming.html'
+      : 'index.html';
+document.getElementById('backLink').href  = origin;
+document.getElementById('logoBack').href  = origin;
+
+// ── Already logged in? ──
+var existingSession = null;
+try { existingSession = JSON.parse(localStorage.getItem('hw_session')); } catch {}
+
+if (existingSession) {
+  document.getElementById('authCard').style.display = 'none';
+  var ac = document.getElementById('alreadyCard');
+  ac.classList.add('show');
+  document.getElementById('alreadyName').textContent = existingSession.name || 'there';
+  // Book trial button goes to booking for this source
+  document.getElementById('alreadyBookBtn').href =
+    'book-trial.html?source=' + encodeURIComponent(source) +
+    '&name=' + encodeURIComponent(existingSession.name || '');
+}
+
+function doLogout() {
+  localStorage.removeItem('hw_session');
+  location.reload();
+}
+
+// ── Tab switch ──
+function switchTab(tab) {
+  document.getElementById('tabLogin').classList.toggle('active', tab === 'login');
+  document.getElementById('tabRegister').classList.toggle('active', tab === 'register');
+  document.getElementById('panelLogin').classList.toggle('active', tab === 'login');
+  document.getElementById('panelRegister').classList.toggle('active', tab === 'register');
+}
+
+// ── Validation: 10-digit Indian mobile ──
+function validMobile(v) {
+  var digits = v.replace(/\D/g, '');
+  return /^[6-9]\d{9}$/.test(digits);
+}
+function setErr(id, show) { document.getElementById(id).classList.toggle('show', show); }
+
+// ── After auth: decide where to go ──
+function afterAuth(session) {
+  // Save to localStorage (Firebase Auth will replace this)
+  localStorage.setItem('hw_session', JSON.stringify(session));
+
+  // If redirect param says profile, go there
+  if (redirect === 'profile') {
+    location.href = 'profile.html';
+    return;
+  }
+  // If redirect param says wayscore, return to WaysScore with the same source
+  if (redirect === 'wayscore') {
+    location.href = 'ai-trainer.html';
+    return;
+  }
+  // If redirect param says booking, return to the booking flow
+  if (redirect === 'booking') {
+    location.href = 'book-trial.html?source=' + encodeURIComponent(source) +
+      '&name=' + encodeURIComponent(session.name || '');
+    return;
+  }
+  // Otherwise go to book trial
+  location.href = 'book-trial.html?source=' + encodeURIComponent(source) +
+    '&name=' + encodeURIComponent(session.name || '');
+}
+
+// ── Login ── (checks Firestore; falls back to localStorage if offline)
+function handleLogin(e) {
+  e.preventDefault();
+  var raw = document.getElementById('loginMobile').value;
+  if (!validMobile(raw)) { setErr('loginMobileError', true); setErr('loginNotFoundError', false); return; }
+  setErr('loginMobileError', false);
+
+  var mobile = raw.replace(/\D/g, '');
+  var btn = document.querySelector('#panelLogin .submit-btn');
+  btn.textContent = 'Checking…';
+  btn.disabled = true;
+
+  db.collection('users').doc(mobile).get().then(function(doc) {
+    btn.textContent = 'Continue →';
+    btn.disabled = false;
+    if (!doc.exists) {
+      // Also check legacy localStorage list
+      var users = JSON.parse(localStorage.getItem('hw_users') || '[]');
+      var local = users.find(function(u){ return u.id === mobile; });
+      if (!local) { setErr('loginNotFoundError', true); return; }
+      afterAuth({ name: local.name, identifier: mobile, source: source, loginAt: new Date().toISOString() });
+      return;
+    }
+    setErr('loginNotFoundError', false);
+    var data = doc.data();
+    afterAuth({ name: data.name, identifier: mobile, source: source, loginAt: new Date().toISOString() });
+  }).catch(function() {
+    // Firestore unavailable — fall back to localStorage
+    btn.textContent = 'Continue →';
+    btn.disabled = false;
+    var users = JSON.parse(localStorage.getItem('hw_users') || '[]');
+    var match = users.find(function(u){ return u.id === mobile; });
+    if (!match) { setErr('loginNotFoundError', true); return; }
+    afterAuth({ name: match.name, identifier: mobile, source: source, loginAt: new Date().toISOString() });
+  });
+}
+
+// ── Register ── (writes to Firestore + localStorage)
+function handleRegister(e) {
+  e.preventDefault();
+  var name = document.getElementById('regName').value.trim();
+  var raw  = document.getElementById('regMobile').value;
+  var ok   = true;
+
+  if (!name) { setErr('regNameError', true); ok = false; } else setErr('regNameError', false);
+  if (!validMobile(raw)) { setErr('regMobileError', true); ok = false; } else setErr('regMobileError', false);
+  if (!ok) return;
+
+  var mobile = raw.replace(/\D/g, '');
+  var btn = document.querySelector('#panelRegister .submit-btn');
+  btn.textContent = 'Saving…';
+  btn.disabled = true;
+
+  var userData = {
+    name: name,
+    mobile: mobile,
+    source: source,
+    wayscore_enabled: false,
+    createdAt: firebase.firestore.FieldValue.serverTimestamp()
+  };
+
+  db.collection('users').doc(mobile).set(userData, { merge: true }).then(function() {
+    // Also persist to localStorage for offline/fast session reads
+    var users = JSON.parse(localStorage.getItem('hw_users') || '[]');
+    if (!users.find(function(u){ return u.id === mobile; })) {
+      users.push({ name: name, id: mobile, source: source, createdAt: new Date().toISOString() });
+      localStorage.setItem('hw_users', JSON.stringify(users));
+    }
+    btn.textContent = 'Register & Continue →';
+    btn.disabled = false;
+    afterAuth({ name: name, identifier: mobile, source: source, loginAt: new Date().toISOString() });
+  }).catch(function() {
+    // Firestore unavailable — save to localStorage only
+    var users = JSON.parse(localStorage.getItem('hw_users') || '[]');
+    if (!users.find(function(u){ return u.id === mobile; })) {
+      users.push({ name: name, id: mobile, source: source, createdAt: new Date().toISOString() });
+      localStorage.setItem('hw_users', JSON.stringify(users));
+    }
+    btn.textContent = 'Register & Continue →';
+    btn.disabled = false;
+    afterAuth({ name: name, identifier: mobile, source: source, loginAt: new Date().toISOString() });
+  });
+}
+</script>
+.hw-wa-float svg{width:28px;height:28px;fill:#fff;}@keyframes hw-wa-pulse{0%,100%{box-shadow:0 4px 24px rgba(37,211,102,0.45);}50%{box-shadow:0 4px 32px rgba(37,211,102,0.7),0 0 0 8px rgba(37,211,102,0.1);}}</style>
+<a href="tel:+919711114918" class="hw-phone-float" aria-label="Call HEALTHWAYS"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg></a>
+<a href="https://wa.me/919711114918?text=Hi%2C%20I%27d%20like%20to%20know%20more%20about%20HEALTHWAYS%20Gym%20%26%20Swim" target="_blank" rel="noopener noreferrer" class="hw-wa-float" aria-label="Chat with HEALTHWAYS on WhatsApp"><svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg></a>
+
+</body>
+</html>

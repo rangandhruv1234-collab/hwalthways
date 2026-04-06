@@ -1,0 +1,644 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<meta name="description" content="WaysScore — HEALTHWAYS AI-powered coaching engine. Get a fully personalised weekly diet and exercise blueprint based on your BMI, goals and fitness level. Free with every membership."/>
+<title>WaysScore — HEALTHWAYS · Keshav Puram, Delhi</title>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700;900&family=Lato:wght@400&display=swap" rel="stylesheet">
+
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
+<script src="firebase-init.js"></script>
+<link rel="preload" as="video" href="videos/Gym_Video_Creation_for_Website.webm" type="video/webm">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{background:#06040F;color:#fff;font-family:'Lato',sans-serif;overflow-x:hidden;}
+h1,h2,h3,h4{font-family:'Montserrat',sans-serif;font-weight:700;letter-spacing:2px;}
+ :root{--violet:#8B5CF6;--violet-light:#A78BFA;--gold:#C9922A;--gold-light:#E8B84B;--dark:#06040F;}
+.section,.quote-strip,.cta-banner,footer{content-visibility:auto;contain-intrinsic-size:1px 900px;}
+
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;height:68px;z-index:200;display:flex;align-items:center;justify-content:space-between;padding:0 48px;background:rgba(6,4,15,0);transition:background 0.5s,border-color 0.5s;border-bottom:1px solid transparent;}
+nav.scrolled{background:rgba(6,4,15,0.97);backdrop-filter:blur(20px);border-bottom:1px solid rgba(139,92,246,0.18);}
+.nav-logo{display:flex;align-items:center;gap:12px;text-decoration:none;flex-shrink:0;z-index:210;}
+.nav-logo-img{height:40px;width:40px;object-fit:contain;mix-blend-mode:lighten;}
+.nav-logo-text{font-family:'Oswald',sans-serif;font-weight:700;font-size:18px;letter-spacing:4px;text-transform:uppercase;color:#fff;}
+.nav-logo-text span{background:linear-gradient(135deg,var(--gold),var(--gold-light));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+.nav-links{display:flex;align-items:center;gap:0;margin:0 auto;}
+.nav-links a{font-family:'Montserrat',sans-serif;font-size:11px;font-weight:500;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,0.6);text-decoration:none;padding:6px 18px;transition:color 0.2s;position:relative;}
+.nav-links a::after{content:'';position:absolute;bottom:0;left:18px;right:18px;height:1px;background:var(--violet);transform:scaleX(0);transition:transform 0.25s;}
+.nav-links a:hover,.nav-links a.active{color:#fff;}
+.nav-links a:hover::after,.nav-links a.active::after{transform:scaleX(1);}
+.nav-right{display:flex;gap:10px;flex-shrink:0;z-index:210;}
+.nav-trial{font-family:'Montserrat',sans-serif;font-size:10px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,0.75);border:1px solid rgba(255,255,255,0.3);padding:9px 20px;text-decoration:none;transition:color 0.2s,border-color 0.2s;}
+.nav-trial:hover{color:#fff;border-color:#fff;}
+.nav-join{font-family:'Montserrat',sans-serif;font-size:10px;font-weight:600;letter-spacing:2px;text-transform:uppercase;background:linear-gradient(135deg,var(--gold),var(--gold-light));color:#fff;padding:10px 24px;text-decoration:none;transition:opacity 0.2s;}
+.nav-join:hover{opacity:0.88;}
+.nav-hamburger{display:none;flex-direction:column;justify-content:center;align-items:center;gap:5px;width:44px;height:44px;background:none;border:none;cursor:pointer;z-index:210;padding:0;flex-shrink:0;}
+.nav-hamburger span{display:block;width:24px;height:2px;background:#fff;transition:transform 0.3s,opacity 0.3s,width 0.3s;}
+.nav-hamburger.open span:nth-child(1){transform:translateY(7px) rotate(45deg);}
+.nav-hamburger.open span:nth-child(2){opacity:0;width:0;}
+.nav-hamburger.open span:nth-child(3){transform:translateY(-7px) rotate(-45deg);}
+.mobile-menu{display:none;position:fixed;top:68px;left:0;right:0;background:rgba(6,4,15,0.99);backdrop-filter:blur(24px);border-bottom:1px solid rgba(139,92,246,0.18);z-index:199;flex-direction:column;align-items:stretch;transform:translateY(-100%);opacity:0;transition:transform 0.38s cubic-bezier(0.4,0,0.2,1),opacity 0.15s ease;pointer-events:none;box-shadow:0 16px 40px rgba(0,0,0,0.6);}
+.mobile-menu.open{transform:translateY(0);opacity:1;pointer-events:all;}
+.mobile-menu-links{display:flex;flex-direction:column;}
+.mobile-menu-links a{font-family:'Montserrat',sans-serif;font-size:12px;font-weight:600;letter-spacing:2.5px;text-transform:uppercase;color:rgba(255,255,255,0.55);text-decoration:none;padding:17px 24px;border-bottom:1px solid rgba(255,255,255,0.05);display:flex;align-items:center;justify-content:space-between;transition:color 0.2s,background 0.2s,padding-left 0.2s;}
+.mobile-menu-links a::after{content:'→';font-size:11px;color:rgba(139,92,246,0.4);transition:color 0.2s,transform 0.2s;}
+.mobile-menu-links a:hover,.mobile-menu-links a.active{color:#fff;background:rgba(139,92,246,0.04);padding-left:28px;}
+.mobile-menu-links a:hover::after,.mobile-menu-links a.active::after{color:var(--violet);transform:translateX(3px);}
+.mobile-menu-ctas{display:flex;gap:10px;padding:16px 24px;background:rgba(0,0,0,0.4);}
+.mobile-menu-ctas .nav-trial{font-size:10px;padding:11px 16px;flex:1;text-align:center;}
+.mobile-menu-ctas .nav-join{font-size:10px;padding:11px 16px;flex:1;text-align:center;}
+
+/* HERO */
+.hero{position:relative;height:100vh;min-height:700px;display:flex;flex-direction:column;align-items:center;justify-content:center;overflow:hidden;background:#06040F;}
+.hero-video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:1;pointer-events:none;filter:hue-rotate(220deg) saturate(0.5) brightness(0.45);}
+.hero-overlay{position:absolute;inset:0;background:rgba(4,2,14,0.72);z-index:2;}
+.hero-grid{position:absolute;inset:0;z-index:2;background-image:linear-gradient(rgba(139,92,246,0.04) 1px,transparent 1px),linear-gradient(90deg,rgba(139,92,246,0.04) 1px,transparent 1px);background-size:80px 80px;mask-image:radial-gradient(ellipse at center,rgba(0,0,0,0.7) 0%,transparent 70%);}
+.hero-glow{position:absolute;inset:0;z-index:2;background:radial-gradient(ellipse at 50% 55%,rgba(139,92,246,0.14) 0%,transparent 60%);}
+.hero-vignette{position:absolute;inset:0;background:radial-gradient(ellipse at center,transparent 20%,rgba(3,1,10,0.82) 100%);z-index:2;}
+.hero-bottom-fade{position:absolute;bottom:0;left:0;right:0;height:260px;background:linear-gradient(to top,var(--dark),transparent);z-index:2;}
+
+@keyframes fadein{from{opacity:0;transform:translateY(14px);}to{opacity:1;transform:translateY(0);}}
+@keyframes fadein-left{from{opacity:0;transform:translateY(-50%) translateX(-10px);}to{opacity:1;transform:translateY(-50%) translateX(0);}}
+@keyframes fadein-right{from{opacity:0;transform:translateY(-50%) translateX(10px);}to{opacity:1;transform:translateY(-50%) translateX(0);}}
+@keyframes expandline{from{width:0;}to{width:160px;}}
+@keyframes scrollpulse{0%,100%{opacity:0.4;transform:scaleY(0.6);transform-origin:top;}50%{opacity:1;transform:scaleY(1);transform-origin:top;}}
+@keyframes pulse-dot{0%,100%{opacity:0.6;transform:scale(1);}50%{opacity:1;transform:scale(1.4);}}
+
+.hero-corner-left{position:absolute;top:84px;left:48px;z-index:5;opacity:0;animation:fadein 0.9s ease forwards;animation-delay:1s;}
+.hero-corner-right{position:absolute;top:84px;right:48px;z-index:5;text-align:right;opacity:0;animation:fadein 0.9s ease forwards;animation-delay:1s;}
+.corner-label{font-family:'Montserrat',sans-serif;font-size:9px;font-weight:500;letter-spacing:4px;text-transform:uppercase;color:rgba(255,255,255,0.4);margin-bottom:3px;}
+.corner-val{font-family:'Oswald',sans-serif;font-weight:600;font-size:14px;letter-spacing:2px;color:rgba(255,255,255,0.7);}
+.hero-edge-left{position:absolute;left:28px;top:50%;transform:translateY(-50%);z-index:5;display:flex;flex-direction:column;align-items:center;gap:14px;opacity:0;animation:fadein-left 1s ease forwards;animation-delay:1.2s;}
+.hero-edge-right{position:absolute;right:28px;top:50%;transform:translateY(-50%);z-index:5;display:flex;flex-direction:column;align-items:center;gap:14px;opacity:0;animation:fadein-right 1s ease forwards;animation-delay:1.2s;}
+.edge-line{width:1px;height:52px;background:rgba(139,92,246,0.4);}
+.edge-text-left{font-family:'Montserrat',sans-serif;font-size:9px;font-weight:600;letter-spacing:4px;text-transform:uppercase;color:rgba(255,255,255,0.55);writing-mode:vertical-rl;transform:rotate(180deg);}
+.edge-text-right{font-family:'Montserrat',sans-serif;font-size:9px;font-weight:600;letter-spacing:4px;text-transform:uppercase;color:rgba(255,255,255,0.55);writing-mode:vertical-rl;}
+.hero-content{position:relative;z-index:5;text-align:center;display:flex;flex-direction:column;align-items:center;}
+.hero-pill{display:inline-flex;align-items:center;gap:8px;font-family:'Montserrat',sans-serif;font-size:9px;font-weight:700;letter-spacing:4px;text-transform:uppercase;color:rgba(167,139,250,0.9);border:1px solid rgba(139,92,246,0.3);padding:8px 18px;margin-bottom:24px;opacity:0;animation:fadein 0.9s ease forwards;animation-delay:0.3s;}
+.hero-pill-dot{width:6px;height:6px;border-radius:50%;background:var(--violet);flex-shrink:0;animation:pulse-dot 2s ease-in-out infinite;}
+.hero-name{font-family:'Oswald',sans-serif;font-weight:700;font-size:clamp(52px,9vw,120px);letter-spacing:8px;text-transform:uppercase;line-height:0.92;opacity:0;animation:fadein 0.9s ease forwards;animation-delay:0.1s;}
+.hero-name .vi{background:linear-gradient(135deg,var(--violet) 0%,var(--violet-light) 50%,#C4B5FD 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+.hero-divider{width:0;height:1px;background:linear-gradient(to right,transparent,var(--violet),transparent);margin:22px auto;animation:expandline 0.9s ease forwards;animation-delay:0.65s;}
+.hero-tagline{font-family:'Montserrat',sans-serif;font-size:clamp(10px,1.1vw,13px);font-weight:400;letter-spacing:4px;text-transform:uppercase;color:rgba(255,255,255,0.5);margin-bottom:42px;opacity:0;animation:fadein 0.9s ease forwards;animation-delay:0.85s;max-width:520px;line-height:1.9;text-align:center;}
+.hero-cta{font-family:'Montserrat',sans-serif;font-size:11px;font-weight:600;letter-spacing:3px;text-transform:uppercase;color:#fff;border:1px solid var(--violet);padding:14px 50px;text-decoration:none;display:inline-flex;align-items:center;gap:10px;transition:gap 0.3s;opacity:0;animation:fadein 0.9s ease forwards;animation-delay:1s;position:relative;overflow:hidden;}
+.hero-cta::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,var(--violet),var(--violet-light));transform:translateX(-101%);transition:transform 0.35s ease;z-index:-1;}
+.hero-cta:hover::before{transform:translateX(0);}
+.hero-cta:hover{gap:18px;}
+.scroll-cue{position:absolute;bottom:140px;left:50%;transform:translateX(-50%);z-index:5;display:flex;flex-direction:column;align-items:center;gap:8px;opacity:0;animation:fadein 1s ease forwards;animation-delay:1.3s;}
+.scroll-line{width:1px;height:36px;background:linear-gradient(to bottom,var(--violet),transparent);animation:scrollpulse 2s ease-in-out infinite;}
+.scroll-txt{font-family:'Montserrat',sans-serif;font-size:9px;font-weight:500;letter-spacing:4px;text-transform:uppercase;color:rgba(255,255,255,0.45);}
+.hero-stats{position:absolute;bottom:0;left:0;right:0;z-index:5;display:grid;grid-template-columns:repeat(4,1fr);border-top:1px solid rgba(139,92,246,0.2);opacity:1;transform:none;animation:none;}
+.hstat{padding:22px 16px;text-align:center;border-right:1px solid rgba(255,255,255,0.06);background:rgba(6,4,15,0.90);backdrop-filter:blur(12px);transition:background 0.25s;}
+.hstat:hover{background:rgba(12,8,28,0.97);}
+.hstat:last-child{border-right:none;}
+.hstat-n{font-family:'Oswald',sans-serif;font-weight:700;font-size:28px;letter-spacing:1px;line-height:1;background:linear-gradient(135deg,var(--violet),var(--violet-light));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+.hstat-l{font-family:'Montserrat',sans-serif;font-size:9px;font-weight:500;letter-spacing:2.5px;text-transform:uppercase;color:rgba(255,255,255,0.4);margin-top:5px;}
+
+/* REVEAL */
+.reveal{opacity:0;transform:translateY(28px);transition:opacity 0.9s ease,transform 0.9s ease;}
+.reveal.visible{opacity:1;transform:translateY(0);}
+.rd1{transition-delay:0.1s;}.rd2{transition-delay:0.2s;}.rd3{transition-delay:0.3s;}.rd4{transition-delay:0.4s;}.rd5{transition-delay:0.5s;}.rd6{transition-delay:0.6s;}
+
+/* QUOTE */
+.quote-strip{padding:90px 48px;text-align:center;border-top:1px solid rgba(139,92,246,0.1);border-bottom:1px solid rgba(139,92,246,0.1);position:relative;overflow:hidden;}
+.quote-strip::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at center,rgba(139,92,246,0.06) 0%,transparent 70%);}
+.quote-eyebrow{font-family:'Montserrat',sans-serif;font-size:9px;font-weight:500;letter-spacing:5px;text-transform:uppercase;color:rgba(139,92,246,0.65);margin-bottom:20px;}
+.quote-text{font-family:'Oswald',sans-serif;font-weight:700;font-size:clamp(26px,4vw,50px);letter-spacing:1px;line-height:1.1;color:#fff;}
+.quote-text em{background:linear-gradient(135deg,var(--violet),var(--violet-light));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;font-style:normal;}
+
+/* SECTION */
+.section{padding:100px 48px;}
+.section-center{text-align:center;max-width:860px;margin:0 auto;}
+.sec-eyebrow{font-family:'Montserrat',sans-serif;font-size:10px;font-weight:500;letter-spacing:5px;text-transform:uppercase;color:rgba(139,92,246,0.7);margin-bottom:14px;display:block;}
+.sec-title{font-family:'Oswald',sans-serif;font-weight:700;font-size:clamp(34px,5vw,64px);letter-spacing:2px;text-transform:uppercase;color:#fff;line-height:0.92;margin-bottom:18px;}
+.sec-title em{background:linear-gradient(135deg,var(--violet),var(--violet-light));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;font-style:normal;}
+.sec-divider{width:56px;height:1px;background:linear-gradient(to right,transparent,var(--violet),transparent);margin:0 auto 22px;}
+.sec-body{font-family:'Montserrat',sans-serif;font-size:15px;font-weight:300;line-height:1.9;color:rgba(255,255,255,0.5);max-width:620px;margin:0 auto 56px;}
+
+/* STEPS */
+.steps-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:rgba(139,92,246,0.1);max-width:1000px;margin:0 auto 56px;}
+.step-card{background:#0C0818;padding:44px 32px;text-align:center;transition:background 0.25s;}
+.step-card:hover{background:#110D20;}
+.step-num{font-family:'Oswald',sans-serif;font-weight:700;font-size:72px;letter-spacing:-3px;background:linear-gradient(135deg,var(--violet),var(--violet-light));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;line-height:1;margin-bottom:20px;opacity:0.35;}
+.step-title{font-family:'Oswald',sans-serif;font-weight:600;font-size:20px;letter-spacing:1.5px;text-transform:uppercase;color:#fff;margin-bottom:14px;}
+.step-desc{font-family:'Montserrat',sans-serif;font-size:13px;font-weight:300;line-height:1.85;color:rgba(255,255,255,0.45);}
+
+/* CAPS */
+.caps-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:rgba(139,92,246,0.1);max-width:1000px;margin:0 auto 56px;}
+.cap-card{background:#0C0818;padding:36px 28px;text-align:center;transition:background 0.25s;}
+.cap-card:hover{background:#110D20;}
+.cap-icon{margin-bottom:16px;display:flex;justify-content:center;}
+.cap-icon svg{width:30px;height:30px;}
+.cap-name{font-family:'Oswald',sans-serif;font-weight:600;font-size:15px;letter-spacing:1px;text-transform:uppercase;color:#fff;margin-bottom:10px;}
+.cap-desc{font-family:'Montserrat',sans-serif;font-size:13px;font-weight:300;line-height:1.8;color:rgba(255,255,255,0.4);}
+
+/* FORM SECTION */
+.form-section{padding:100px 48px;background:#0A0616;border-top:1px solid rgba(139,92,246,0.08);}
+.form-inner{max-width:980px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:72px;align-items:start;}
+.form-copy{display:flex;flex-direction:column;gap:20px;padding-top:8px;}
+.form-copy-eyebrow{font-family:'Montserrat',sans-serif;font-size:10px;font-weight:500;letter-spacing:5px;text-transform:uppercase;color:rgba(139,92,246,0.7);}
+.form-copy-title{font-family:'Oswald',sans-serif;font-weight:700;font-size:clamp(32px,4.5vw,56px);letter-spacing:2px;text-transform:uppercase;color:#fff;line-height:0.92;}
+.form-copy-title em{background:linear-gradient(135deg,var(--violet),var(--violet-light));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;font-style:normal;}
+.form-copy-divider{width:48px;height:1px;background:linear-gradient(to right,var(--violet),transparent);}
+.form-copy-body{font-family:'Montserrat',sans-serif;font-size:14px;font-weight:300;line-height:1.9;color:rgba(255,255,255,0.5);}
+.form-features{list-style:none;display:flex;flex-direction:column;gap:12px;}
+.form-features li{font-family:'Montserrat',sans-serif;font-size:12px;font-weight:400;color:rgba(255,255,255,0.55);display:flex;align-items:flex-start;gap:10px;line-height:1.6;}
+.form-features li::before{content:'';width:5px;height:5px;border-radius:50%;background:var(--violet);flex-shrink:0;margin-top:6px;}
+
+/* AI CARD */
+.ai-card{background:#0D0A1E;border:1px solid rgba(139,92,246,0.2);padding:40px 36px;position:relative;}
+.ai-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--violet),var(--violet-light),transparent);}
+.ai-card-title{font-family:'Oswald',sans-serif;font-weight:700;font-size:22px;letter-spacing:3px;text-transform:uppercase;color:#fff;margin-bottom:4px;}
+.ai-card-sub{font-family:'Montserrat',sans-serif;font-size:10px;font-weight:300;color:rgba(255,255,255,0.3);letter-spacing:2px;text-transform:uppercase;margin-bottom:32px;}
+.form-grid{display:flex;flex-direction:column;gap:20px;}
+.form-group{display:flex;flex-direction:column;gap:8px;}
+.form-group label{font-family:'Montserrat',sans-serif;font-size:9px;font-weight:600;letter-spacing:3px;text-transform:uppercase;color:rgba(255,255,255,0.5);}
+.form-group input,.form-group select{width:100%;padding:13px 16px;background:rgba(139,92,246,0.05);border:1px solid rgba(139,92,246,0.15);color:#fff;font-family:'Montserrat',sans-serif;font-size:13px;font-weight:300;outline:none;transition:border-color 0.2s,background 0.2s;-webkit-appearance:none;appearance:none;}
+.form-group input:focus,.form-group select:focus{border-color:rgba(139,92,246,0.5);background:rgba(139,92,246,0.08);}
+.form-group input::placeholder{color:rgba(255,255,255,0.2);}
+.form-group select option{background:#0D0A1E;color:#fff;}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
+.generate-btn{width:100%;margin-top:8px;font-family:'Montserrat',sans-serif;font-size:11px;font-weight:700;letter-spacing:3px;text-transform:uppercase;padding:16px 24px;border:none;background:linear-gradient(135deg,var(--violet),var(--violet-light));color:#fff;cursor:pointer;transition:opacity 0.2s,transform 0.15s;display:flex;align-items:center;justify-content:center;gap:10px;}
+.generate-btn:hover{opacity:0.88;transform:translateY(-1px);}
+
+/* RESULTS */
+.results-section{padding:80px 48px 100px;background:#08050F;display:none;}
+.results-inner{max-width:1000px;margin:0 auto;}
+.results-header{margin-bottom:48px;padding-bottom:32px;border-bottom:1px solid rgba(139,92,246,0.12);}
+.results-eyebrow{font-family:'Montserrat',sans-serif;font-size:9px;font-weight:600;letter-spacing:4px;text-transform:uppercase;color:rgba(139,92,246,0.6);margin-bottom:12px;}
+.results-title{font-family:'Oswald',sans-serif;font-weight:700;font-size:clamp(28px,4vw,48px);letter-spacing:2px;text-transform:uppercase;color:#fff;line-height:0.92;}
+.results-title em{background:linear-gradient(135deg,var(--violet),var(--violet-light));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;font-style:normal;}
+.summary-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:rgba(139,92,246,0.1);margin-bottom:48px;}
+.summary-card{background:#0D0A1E;padding:28px 24px;}
+.summary-label{font-family:'Montserrat',sans-serif;font-size:9px;font-weight:600;letter-spacing:3px;text-transform:uppercase;color:rgba(139,92,246,0.6);margin-bottom:12px;}
+.summary-val{font-family:'Oswald',sans-serif;font-size:16px;font-weight:500;color:#fff;letter-spacing:0.5px;line-height:1.6;}
+.diet-section-title{font-family:'Montserrat',sans-serif;font-size:9px;font-weight:600;letter-spacing:4px;text-transform:uppercase;color:rgba(139,92,246,0.6);margin-bottom:16px;margin-top:0;}
+.diet-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:rgba(139,92,246,0.1);margin-bottom:48px;}
+.diet-card{background:#0D0A1E;padding:28px 24px;}
+.diet-card h4{font-family:'Oswald',sans-serif;font-size:16px;letter-spacing:1px;text-transform:uppercase;color:#fff;margin-bottom:16px;padding-bottom:12px;border-bottom:1px solid rgba(139,92,246,0.12);}
+.diet-card ul{list-style:none;display:flex;flex-direction:column;gap:10px;}
+.diet-card li{font-family:'Montserrat',sans-serif;color:rgba(255,255,255,0.65);font-size:12px;line-height:1.7;padding-left:14px;position:relative;}
+.diet-card li::before{content:'';position:absolute;left:0;top:8px;width:4px;height:4px;border-radius:50%;background:var(--violet);}
+.exercise-section-title{font-family:'Montserrat',sans-serif;font-size:9px;font-weight:600;letter-spacing:4px;text-transform:uppercase;color:rgba(139,92,246,0.6);margin-bottom:16px;}
+.exercise-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:1px;background:rgba(139,92,246,0.1);}
+.exercise-day{background:#0D0A1E;padding:28px 24px;}
+.exercise-day h5{font-family:'Oswald',sans-serif;font-size:15px;letter-spacing:1px;text-transform:uppercase;color:#fff;margin-bottom:8px;}
+.exercise-day .day-intent{font-family:'Montserrat',sans-serif;font-size:11px;color:rgba(139,92,246,0.7);letter-spacing:1px;margin-bottom:14px;padding-bottom:12px;border-bottom:1px solid rgba(139,92,246,0.1);}
+.exercise-day ul{list-style:none;display:flex;flex-direction:column;gap:8px;}
+.exercise-day li{font-family:'Montserrat',sans-serif;color:rgba(255,255,255,0.6);font-size:12px;line-height:1.7;padding-left:14px;position:relative;}
+.exercise-day li::before{content:'';position:absolute;left:0;top:8px;width:4px;height:4px;border-radius:50%;background:rgba(139,92,246,0.5);}
+
+/* CTA BTN */
+.cta-btn{display:inline-flex;align-items:center;gap:10px;font-family:'Montserrat',sans-serif;font-size:11px;font-weight:600;letter-spacing:3px;text-transform:uppercase;color:#fff;border:1px solid var(--violet);padding:14px 50px;text-decoration:none;transition:gap 0.3s;position:relative;overflow:hidden;}
+.cta-btn::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,var(--violet),var(--violet-light));transform:translateX(-101%);transition:transform 0.35s ease;z-index:-1;}
+.cta-btn:hover::before{transform:translateX(0);}
+.cta-btn:hover{gap:18px;}
+
+/* CTA BANNER */
+.cta-banner{padding:90px 48px;text-align:center;background:#0A0616;border-top:1px solid rgba(139,92,246,0.15);border-bottom:1px solid rgba(139,92,246,0.15);}
+.cta-banner-title{font-family:'Oswald',sans-serif;font-weight:700;font-size:clamp(30px,5vw,58px);letter-spacing:2px;text-transform:uppercase;color:#fff;line-height:0.92;margin-bottom:16px;}
+.cta-banner-title em{background:linear-gradient(135deg,var(--violet),var(--violet-light));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;font-style:normal;}
+.cta-banner-sub{font-family:'Montserrat',sans-serif;font-size:13px;font-weight:300;color:rgba(255,255,255,0.4);letter-spacing:1px;margin-bottom:36px;line-height:1.8;}
+.cta-banner-btns{display:flex;gap:16px;justify-content:center;flex-wrap:wrap;}
+
+/* FOOTER */
+footer{background:#04020D;border-top:1px solid rgba(139,92,246,0.12);padding:72px 48px 0;}
+.footer-grid{display:grid;grid-template-columns:1.8fr 1fr 1fr 1fr;gap:52px;padding-bottom:56px;border-bottom:1px solid rgba(255,255,255,0.06);}
+.footer-logo{display:flex;align-items:center;gap:12px;margin-bottom:18px;text-decoration:none;}
+.footer-logo-img{height:38px;width:38px;object-fit:contain;mix-blend-mode:lighten;}
+.footer-logo-text{font-family:'Oswald',sans-serif;font-weight:700;font-size:18px;letter-spacing:4px;text-transform:uppercase;color:#fff;}
+.footer-logo-text span{background:linear-gradient(135deg,var(--gold),var(--gold-light));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+.footer-tagline{font-family:'Montserrat',sans-serif;font-size:13px;font-weight:300;color:rgba(255,255,255,0.3);line-height:1.9;margin-bottom:22px;}
+.footer-social{display:flex;gap:12px;margin-bottom:24px;}
+.footer-social-btn{display:flex;align-items:center;justify-content:center;width:38px;height:38px;border:1px solid rgba(255,255,255,0.1);color:rgba(255,255,255,0.55);text-decoration:none;transition:border-color 0.2s,color 0.2s,background 0.2s;}
+.footer-social-btn:hover{border-color:var(--violet);color:var(--violet);background:rgba(139,92,246,0.06);}
+.footer-social-btn svg{width:16px;height:16px;fill:currentColor;}
+.footer-contact-links{display:flex;flex-direction:column;gap:10px;}
+.footer-contact-item{display:flex;align-items:center;gap:10px;text-decoration:none;padding:9px 14px;border:1px solid rgba(255,255,255,0.07);transition:border-color 0.2s,background 0.2s;}
+.footer-contact-item:hover{border-color:rgba(139,92,246,0.35);background:rgba(139,92,246,0.04);}
+.footer-contact-icon{display:flex;align-items:center;justify-content:center;width:28px;height:28px;flex-shrink:0;}
+.footer-contact-icon svg{width:14px;height:14px;fill:var(--violet);}
+.footer-contact-num{font-family:'Oswald',sans-serif;font-size:15px;font-weight:500;letter-spacing:1px;color:#fff;}
+.footer-contact-sub{font-family:'Montserrat',sans-serif;font-size:9px;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,0.3);}
+.footer-col-title{font-family:'Montserrat',sans-serif;font-size:9px;font-weight:600;letter-spacing:3px;text-transform:uppercase;color:rgba(139,92,246,0.65);margin-bottom:20px;}
+.footer-links{list-style:none;display:flex;flex-direction:column;gap:11px;}
+.footer-links a{font-family:'Montserrat',sans-serif;font-size:13px;font-weight:300;color:rgba(255,255,255,0.4);text-decoration:none;transition:color 0.2s;}
+.footer-links a:hover{color:#fff;}
+.footer-hours{display:flex;flex-direction:column;gap:10px;}
+.fhr{display:flex;justify-content:space-between;align-items:center;padding-bottom:10px;border-bottom:1px solid rgba(255,255,255,0.04);}
+.fhr:last-child{border-bottom:none;}
+.fhr-day{font-family:'Montserrat',sans-serif;font-size:12px;font-weight:300;color:rgba(255,255,255,0.35);}
+.fhr-time{font-family:'Oswald',sans-serif;font-weight:500;font-size:13px;background:linear-gradient(135deg,var(--violet),var(--violet-light));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+.footer-map-section{border-top:1px solid rgba(255,255,255,0.06);border-bottom:1px solid rgba(255,255,255,0.06);}
+.footer-map-header{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:18px 0;flex-wrap:wrap;}
+.footer-map-info{display:flex;align-items:center;gap:10px;}
+.footer-map-icon svg{width:16px;height:16px;}
+.footer-map-text{font-family:'Montserrat',sans-serif;font-size:12px;font-weight:300;color:rgba(255,255,255,0.35);line-height:1.6;}
+.footer-map-link{font-family:'Montserrat',sans-serif;font-size:10px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:rgba(139,92,246,0.7);text-decoration:none;border:1px solid rgba(139,92,246,0.25);padding:9px 18px;white-space:nowrap;transition:color 0.2s,border-color 0.2s;}
+.footer-map-link:hover{color:var(--violet-light);border-color:var(--violet);}
+.footer-map-embed{overflow:hidden;border:1px solid rgba(255,255,255,0.06);}
+.footer-bottom{display:flex;align-items:center;justify-content:space-between;padding:22px 0;flex-wrap:wrap;gap:12px;}
+.footer-copy{font-family:'Montserrat',sans-serif;font-size:11px;font-weight:300;color:rgba(255,255,255,0.2);}
+.footer-insta-handle{font-family:'Montserrat',sans-serif;font-size:11px;color:rgba(255,255,255,0.18);text-decoration:none;transition:color 0.2s;}
+.footer-insta-handle:hover{color:rgba(139,92,246,0.7);}
+
+/* RESPONSIVE */
+@media (max-width:1100px){.footer-grid{grid-template-columns:1fr 1fr;gap:40px;}}
+@media (max-width:980px){
+  nav{padding:0 24px;}
+  .nav-links,.nav-right{display:none;}
+  .nav-hamburger{display:flex;}
+  .mobile-menu{display:flex;}
+  .hero-corner-left,.hero-corner-right,.hero-edge-left,.hero-edge-right{display:none;}
+  .hero-content{padding:0 24px;}
+  .section{padding:72px 24px;}
+  .quote-strip{padding:72px 24px;}
+  .cta-banner{padding:72px 24px;}
+  footer{padding:56px 24px 0;}
+  .footer-grid{grid-template-columns:1fr 1fr;gap:36px;}
+  .steps-grid{grid-template-columns:1fr;}
+  .caps-grid{grid-template-columns:1fr 1fr;}
+  .form-section{padding:72px 24px;}
+  .form-inner{grid-template-columns:1fr;gap:48px;}
+  .results-section{padding:60px 24px 80px;}
+  .summary-grid{grid-template-columns:1fr;}
+  .diet-grid{grid-template-columns:1fr;}
+  .exercise-grid{grid-template-columns:1fr;}
+  .footer-map-header{flex-direction:column;align-items:flex-start;}
+}
+@media (max-width:680px){
+  nav{height:60px;padding:0 20px;}
+  .mobile-menu{top:60px;}
+  .hero{min-height:100svh;}
+  .hero-content{padding:0 20px;}
+  .hero-name{font-size:clamp(44px,13vw,80px);letter-spacing:4px;}
+  .hero-tagline{font-size:10px;letter-spacing:2px;}
+  .hero-divider{width:80px;}
+  .hero-cta{padding:12px 28px;font-size:10px;}
+  .scroll-cue{display:none;}
+  .hero-stats{grid-template-columns:repeat(2,1fr);}
+  .hstat{padding:14px 10px;}
+  .hstat-n{font-size:22px;}
+  .hstat-l{font-size:8px;letter-spacing:1.5px;}
+  .sec-title{font-size:clamp(28px,8vw,42px);}
+  .quote-text{font-size:clamp(22px,6.5vw,34px);}
+  .caps-grid{grid-template-columns:1fr;}
+  .ai-card{padding:28px 22px;}
+  .form-row{grid-template-columns:1fr;}
+  .cta-banner-title{font-size:clamp(26px,9vw,40px);}
+  .cta-banner-btns{flex-direction:column;align-items:center;}
+  .cta-btn{padding:14px 32px;width:100%;justify-content:center;max-width:300px;}
+  footer{padding:48px 20px 0;}
+  .footer-grid{grid-template-columns:1fr;gap:32px;}
+  .footer-bottom{flex-direction:column;align-items:center;text-align:center;padding:20px 0;}
+  .footer-map-embed iframe{height:220px;}
+}
+@media (max-width:400px){.hero-name{font-size:clamp(36px,13vw,60px);letter-spacing:3px;}.hstat-n{font-size:20px;}}
+@media (max-width:768px){
+  .hero-stats{display:grid !important;grid-template-columns:repeat(4,minmax(0,1fr)) !important;overflow:visible !important;white-space:normal !important;}
+  .hstat{min-width:0;padding:8px 4px;border-right:1px solid rgba(255,255,255,0.08) !important;}
+  .hstat-n{font-size:13px;}
+  .hstat-l{font-size:6px;letter-spacing:0.6px;}
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav id="nav">
+  <a href="index.html" class="nav-logo">
+    <img class="nav-logo-img" src="images/logo.jpg" alt="HEALTHWAYS"/>
+    <span class="nav-logo-text">HEALTH<span>WAYS</span></span>
+  </a>
+  <div class="nav-links">
+    <a href="gym.html">Gym</a>
+    <a href="swimming.html">Swimming</a>
+    <a href="ai-trainer.html" class="active">WaysScore</a>
+    <a href="about.html">About Us</a>
+  </div>
+  <div class="nav-right">
+    <a href="login.html?source=gym" class="nav-trial">Free Trial</a>
+    <a href="login.html?source=gym" class="nav-join">Join Now</a>
+  </div>
+  <button class="nav-hamburger" id="hamburger" aria-label="Open navigation">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+<div class="mobile-menu" id="mobileMenu">
+  <div class="mobile-menu-links">
+    <a href="gym.html">Gym</a>
+    <a href="swimming.html">Swimming</a>
+    <a href="ai-trainer.html" class="active">WaysScore</a>
+    <a href="about.html">About Us</a>
+  </div>
+  <div class="mobile-menu-ctas">
+    <a href="login.html?source=gym" class="nav-trial">Free Trial</a>
+    <a href="login.html?source=gym" class="nav-join">Join Now</a>
+  </div>
+</div>
+
+<!-- HERO -->
+<section class="hero">
+  <video class="hero-video" autoplay muted loop playsinline preload="auto" poster="images/gym-hero.webp" aria-hidden="true">
+    <source src="videos/Gym_Video_Creation_for_Website.webm" type="video/webm">
+    <source src="videos/Gym_Video_Creation_for_Website.mp4" type="video/mp4">
+  </video>
+  <div class="hero-overlay"></div>
+  <div class="hero-grid"></div>
+  <div class="hero-glow"></div>
+  <div class="hero-vignette"></div>
+  <div class="hero-bottom-fade"></div>
+  <div class="hero-corner-left"><div class="corner-label">Powered by</div><div class="corner-val">AI · BMI · Data</div></div>
+  <div class="hero-corner-right"><div class="corner-label">Access</div><div class="corner-val">100% Free</div></div>
+  <div class="hero-edge-left"><div class="edge-line"></div><div class="edge-text-left">Plan · Train · Excel</div><div class="edge-line"></div></div>
+  <div class="hero-edge-right"><div class="edge-line"></div><div class="edge-text-right">Healthways · Delhi</div><div class="edge-line"></div></div>
+  <div class="hero-content">
+    <div class="hero-pill"><span class="hero-pill-dot"></span>AI-POWERED COACHING ENGINE</div>
+    <h1 class="hero-name"><span class="vi">WAYS</span><br>SCORE</h1>
+    <div class="hero-divider"></div>
+    <p class="hero-tagline">Your profile. Your goals. Your blueprint.<br>Personalised diet &amp; training — generated in seconds.<br>Free with every Healthways membership.</p>
+    <a href="#build-plan" class="hero-cta">Build My Plan &nbsp;→</a>
+  </div>
+  <div class="scroll-cue"><div class="scroll-line"></div><div class="scroll-txt">Scroll</div></div>
+  <div class="hero-stats">
+    <div class="hstat"><div class="hstat-n" data-count="100" data-suffix="%">0</div><div class="hstat-l">Personalised</div></div>
+    <div class="hstat"><div class="hstat-n" data-count="7" data-suffix=" Days">0</div><div class="hstat-l">Full Blueprint</div></div>
+    <div class="hstat"><div class="hstat-n" data-count="4" data-suffix="">0</div><div class="hstat-l">Goal Tracks</div></div>
+    <div class="hstat"><div class="hstat-n" data-count="0" data-suffix="Free">0</div><div class="hstat-l">Cost to You</div></div>
+  </div>
+</section>
+
+<!-- QUOTE 1 -->
+<div class="quote-strip reveal">
+  <p class="quote-eyebrow">WaysScore Intelligence</p>
+  <blockquote class="quote-text">Stop guessing what to eat.<br><em>Start knowing exactly what to do.</em></blockquote>
+</div>
+
+<!-- ── WAYSSCORE ACCESS GATE ── -->
+<div id="ws-gate" style="display:none;position:relative;z-index:50;padding:100px 48px;text-align:center;background:#0A0616;border-top:1px solid rgba(139,92,246,0.08);">
+  <div style="max-width:480px;margin:0 auto;">
+    <div id="ws-gate-icon" style="width:72px;height:72px;border:2px solid rgba(139,92,246,0.4);border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 28px;">
+      <svg id="ws-gate-svg" viewBox="0 0 24 24" fill="none" width="30" height="30"><rect x="5" y="11" width="14" height="10" rx="2" stroke="rgba(139,92,246,0.8)" stroke-width="1.5"/><path d="M8 11V7a4 4 0 018 0v4" stroke="rgba(139,92,246,0.8)" stroke-width="1.5" stroke-linecap="round"/></svg>
+    </div>
+    <p style="font-family:'Montserrat',sans-serif;font-size:10px;font-weight:500;letter-spacing:5px;text-transform:uppercase;color:rgba(139,92,246,0.7);margin-bottom:14px;" id="ws-gate-eyebrow">Access Required</p>
+    <h2 style="font-family:'Oswald',sans-serif;font-weight:700;font-size:clamp(28px,5vw,48px);letter-spacing:2px;text-transform:uppercase;color:#fff;line-height:1;margin-bottom:16px;" id="ws-gate-title">WAYSSCORE<br><span style="background:linear-gradient(135deg,#8B5CF6,#A78BFA);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;" id="ws-gate-title-em">LOCKED</span></h2>
+    <div style="width:48px;height:1px;background:linear-gradient(to right,transparent,rgba(139,92,246,0.6),transparent);margin:0 auto 20px;"></div>
+    <p style="font-family:'Montserrat',sans-serif;font-size:14px;font-weight:300;line-height:1.9;color:rgba(255,255,255,0.45);margin-bottom:32px;" id="ws-gate-msg">You need to log in or register to access WaysScore.</p>
+    <a id="ws-gate-btn" href="login.html?source=waysscore&redirect=waysscore" style="display:inline-flex;align-items:center;gap:10px;font-family:'Montserrat',sans-serif;font-size:11px;font-weight:600;letter-spacing:3px;text-transform:uppercase;color:#fff;background:linear-gradient(135deg,#8B5CF6,#A78BFA);padding:14px 40px;text-decoration:none;transition:opacity 0.2s;">Login / Register &nbsp;→</a>
+  </div>
+</div>
+
+<!-- AI FORM -->
+<div class="form-section" id="build-plan">
+  <div class="form-inner reveal">
+    <div class="form-copy">
+      <div class="form-copy-eyebrow">03 · Your Plan</div>
+      <h2 class="form-copy-title">BUILD YOUR<br><em>BLUEPRINT.</em></h2>
+      <div class="form-copy-divider"></div>
+      <p class="form-copy-body">Five questions. One complete 7-day diet and training plan — calibrated to your BMI, goal and experience level. Takes under 60 seconds.</p>
+      <ul class="form-features">
+        <li>BMI calculated from weight &amp; height</li>
+        <li>Full breakfast, lunch and dinner — every day</li>
+        <li>Day-by-day training schedule with rest days</li>
+        <li>Separate plans for vegetarian and non-veg</li>
+        <li>Adapts to Beginner through Pro Athlete</li>
+        <li>Completely free — no login, no signup</li>
+      </ul>
+    </div>
+    <div class="ai-card">
+      <div class="ai-card-title">WaysScore</div>
+      <div class="ai-card-sub">Personalised coaching · 60 seconds</div>
+      <div class="form-grid">
+        <div class="form-row">
+          <div class="form-group"><label for="weight">Weight (kg)</label><input type="number" id="weight" min="30" max="200" placeholder="e.g. 72"></div>
+          <div class="form-group"><label for="height">Height (cm)</label><input type="number" id="height" min="120" max="230" placeholder="e.g. 175"></div>
+        </div>
+        <div class="form-group"><label for="goal">Fitness Goal</label><select id="goal"><option value="">Choose your focus</option><option value="lose">Lose Fat</option><option value="build">Build Muscle</option><option value="endurance">Boost Endurance</option><option value="balance">Stay Balanced</option></select></div>
+        <div class="form-group"><label for="diet">Diet Type</label><select id="diet"><option value="">Select diet type</option><option value="veg">Vegetarian</option><option value="nonveg">Non-Vegetarian</option></select></div>
+        <div class="form-group" id="veg-options" style="display:none;"><label for="eggs">Do you eat eggs?</label><select id="eggs"><option value="">Select</option><option value="yes">Yes</option><option value="no">No</option></select></div>
+        <div class="form-group"><label for="experience">Training Experience</label><select id="experience"><option value="">Choose experience</option><option value="beginner">Beginner</option><option value="intermediate">Intermediate</option><option value="advanced">Advanced</option><option value="pro">Pro Athlete</option></select></div>
+        <button type="button" id="generate-btn" class="generate-btn">Generate My Plan &nbsp;→</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- RESULTS -->
+<div id="plan-results" class="results-section">
+  <div class="results-inner">
+    <div class="results-header">
+      <div class="results-eyebrow">Your WaysScore Blueprint</div>
+      <h2 class="results-title">YOUR PERSONALISED<br><em>PLAN IS READY.</em></h2>
+    </div>
+    <div class="summary-grid">
+      <div class="summary-card"><div class="summary-label">Plan Type</div><div class="summary-val" id="plan-type"></div></div>
+      <div class="summary-card"><div class="summary-label">BMI Status</div><div class="summary-val" id="plan-bmi"></div></div>
+      <div class="summary-card"><div class="summary-label">Weekly Intent</div><div class="summary-val" id="plan-intent"></div></div>
+    </div>
+    <div class="diet-section-title">Your 7-Day Meal Plan</div>
+    <div class="diet-grid">
+      <div class="diet-card"><h4>Breakfast</h4><ul id="breakfast-list"></ul></div>
+      <div class="diet-card"><h4>Lunch</h4><ul id="lunch-list"></ul></div>
+      <div class="diet-card"><h4>Dinner</h4><ul id="dinner-list"></ul></div>
+    </div>
+    <div class="exercise-section-title">Your 7-Day Training Schedule</div>
+    <div class="exercise-grid" id="exercise-grid"></div>
+    <div style="text-align:center;margin-top:56px;">
+      <a href="https://wa.me/919711114918?text=Hi%2C%20I%20generated%20my%20WaysScore%20plan%20and%20want%20to%20start%20training%20at%20HEALTHWAYS" target="_blank" rel="noopener" class="cta-btn">Start Training at HEALTHWAYS &nbsp;→</a>
+    </div>
+  </div>
+</div>
+
+<!-- CTA BANNER -->
+<div class="cta-banner reveal" id="join">
+  <div class="cta-banner-title">READY TO TRAIN<br><em>WITH INTELLIGENCE?</em></div>
+  <p class="cta-banner-sub">WaysScore &nbsp;·&nbsp; Gym &nbsp;·&nbsp; Swimming Pool &nbsp;·&nbsp; Group Classes<br>Keshav Puram, New Delhi &nbsp;·&nbsp; Open Daily 6 AM – 10 PM &nbsp;·&nbsp; Est. 1994</p>
+  <div class="cta-banner-btns">
+    <a href="tel:+919711114918" class="cta-btn">Call: 97111 14918 &nbsp;→</a>
+    <a href="https://wa.me/919711114918?text=Hi%2C%20I%20want%20to%20join%20HEALTHWAYS" target="_blank" rel="noopener" class="cta-btn" style="border-color:rgba(255,255,255,0.22);">WhatsApp Us &nbsp;→</a>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-grid">
+    <div>
+      <a href="index.html" class="footer-logo"><img class="footer-logo-img" src="images/logo.jpg" alt="HEALTHWAYS"/><span class="footer-logo-text">HEALTH<span>WAYS</span></span></a>
+      <p class="footer-tagline">Delhi's most complete fitness experience.<br>Gym · Swimming · WaysScore · Group Classes.<br>Est. 1994 by Multitech Promoters.</p>
+      <div class="footer-social">
+        <a href="https://www.instagram.com/healthwaysgym/" target="_blank" rel="noopener" class="footer-social-btn" aria-label="Instagram"><svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg></a>
+        <a href="https://wa.me/919711114918" target="_blank" rel="noopener" class="footer-social-btn" aria-label="WhatsApp"><svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg></a>
+      </div>
+      <div class="footer-contact-links">
+        <a href="tel:+919711114918" class="footer-contact-item"><div class="footer-contact-icon"><svg viewBox="0 0 24 24"><path d="M6.6 10.8c1.4 2.8 3.8 5.1 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.1.4 2.3.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1-9.4 0-17-7.6-17-17 0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.3.2 2.5.6 3.6.1.3 0 .7-.2 1L6.6 10.8z"/></svg></div><div><div class="footer-contact-num">97111 14918</div><div class="footer-contact-sub">Primary</div></div></a>
+        <a href="tel:+917703949246" class="footer-contact-item"><div class="footer-contact-icon"><svg viewBox="0 0 24 24"><path d="M6.6 10.8c1.4 2.8 3.8 5.1 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.1.4 2.3.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1-9.4 0-17-7.6-17-17 0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.3.2 2.5.6 3.6.1.3 0 .7-.2 1L6.6 10.8z"/></svg></div><div><div class="footer-contact-num">77039 49246</div><div class="footer-contact-sub">Secondary</div></div></a>
+      </div>
+    </div>
+    <div><div class="footer-col-title">Navigate</div><ul class="footer-links"><li><a href="index.html">Home</a></li><li><a href="gym.html">Gym</a></li><li><a href="swimming.html">Swimming Pool</a></li><li><a href="ai-trainer.html">WaysScore</a></li><li><a href="about.html">About Us</a></li></ul></div>
+    <div><div class="footer-col-title">Facilities</div><ul class="footer-links"><li><a href="gym.html#zones">Weight Training</a></li><li><a href="gym.html#zones">Cardio Zone</a></li><li><a href="gym.html#classes">Group Classes</a></li><li><a href="swimming.html">Swimming Pool</a></li><li><a href="ai-trainer.html">WaysScore</a></li></ul></div>
+    <div><div class="footer-col-title">Timings</div><div class="footer-hours"><div class="fhr"><span class="fhr-day">Monday – Friday</span><span class="fhr-time">6AM – 10PM</span></div><div class="fhr"><span class="fhr-day">Saturday</span><span class="fhr-time">6AM – 10PM</span></div><div class="fhr"><span class="fhr-day">Sunday</span><span class="fhr-time">6AM – 10PM</span></div></div></div>
+  </div>
+  <div class="footer-map-section">
+    <div class="footer-map-header">
+      <div class="footer-map-info"><div class="footer-map-icon"><svg viewBox="0 0 24 24" fill="var(--violet)"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg></div><div class="footer-map-text">Healthways Gym &amp; Swim · Keshav Puram, New Delhi</div></div>
+      <a href="https://maps.google.com/?q=Healthways+Gym+And+Swim+Keshav+Puram+Delhi" target="_blank" rel="noopener" class="footer-map-link">Open in Maps &nbsp;→</a>
+    </div>
+    <div class="footer-map-embed"><iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3500.2554276641636!2d77.1602485!3d28.682004900000003!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x390d02461d8830bd%3A0x1428ef90e2cc7c75!2sHealthways%20Gym%20And%20Swim!5e0!3m2!1sen!2sin!4v1775366702657!5m2!1sen!2sin" width="100%" height="300" style="border:0;display:block;filter:grayscale(30%) invert(5%);opacity:0.9;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade" title="HEALTHWAYS Location"></iframe></div>
+  </div>
+  <div class="footer-bottom">
+    <div class="footer-copy">© 2026 Multitech Promoters Pvt. Ltd. · HEALTHWAYS. All rights reserved.</div>
+    <a href="https://www.instagram.com/healthwaysgym/" target="_blank" rel="noopener" class="footer-insta-handle">@healthwaysgym</a>
+  </div>
+</footer>
+
+<script>
+const nav=document.getElementById('nav');
+let navTicking=false;
+function syncNavState(){nav.classList.toggle('scrolled',window.scrollY>40);navTicking=false;}
+window.addEventListener('scroll',()=>{if(navTicking)return;navTicking=true;requestAnimationFrame(syncNavState);},{ passive:true });
+syncNavState();
+const hamburger=document.getElementById('hamburger'),mobileMenu=document.getElementById('mobileMenu');
+hamburger.addEventListener('click',()=>{const o=hamburger.classList.toggle('open');mobileMenu.classList.toggle('open',o);});
+mobileMenu.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>{hamburger.classList.remove('open');mobileMenu.classList.remove('open');}));
+const revs=document.querySelectorAll('.reveal');
+const obs=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');obs.unobserve(e.target);}}),{threshold:0.07});
+revs.forEach(r=>obs.observe(r));
+(function(){
+  function animateCount(el){
+    const target=parseInt(el.dataset.count,10),suffix=el.dataset.suffix||'';
+    if(target===0){el.textContent=suffix;return;}
+    const dur=2000,fps=1000/60,frames=Math.round(dur/fps);let f=0;
+    const t=setInterval(()=>{f++;const e=1-Math.pow(1-f/frames,3);el.textContent=Math.round(e*target)+suffix;if(f===frames)clearInterval(t);},fps);
+  }
+  const els=document.querySelectorAll('.hstat-n[data-count]');
+  const so=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){animateCount(e.target);so.unobserve(e.target);}}),{threshold:0.5});
+  els.forEach(el=>so.observe(el));
+})();
+
+// ── WaysScore Access Gate ──
+(function() {
+  var session = null;
+  try { session = JSON.parse(localStorage.getItem('hw_session')); } catch {}
+  var gate     = document.getElementById('ws-gate');
+  var formSec  = document.getElementById('build-plan');
+
+  function showGate(type) {
+    gate.style.display = 'block';
+    formSec.style.display = 'none';
+    if (type === 'login') {
+      document.getElementById('ws-gate-eyebrow').textContent  = 'Access Required';
+      document.getElementById('ws-gate-title-em').textContent = 'LOCKED';
+      document.getElementById('ws-gate-msg').textContent      = 'WaysScore is available to registered Healthways members. Please log in or create an account to continue.';
+      document.getElementById('ws-gate-btn').textContent      = 'Login / Register →';
+    document.getElementById('ws-gate-btn').href             = 'login.html?source=waysscore&redirect=waysscore';
+    } else if (type === 'unpaid') {
+      document.getElementById('ws-gate-eyebrow').textContent  = 'Premium Feature';
+      document.getElementById('ws-gate-title-em').textContent = 'PREMIUM';
+      document.getElementById('ws-gate-msg').innerHTML        = 'WaysScore is a <strong style="color:#fff">paid add-on</strong>.<br>Visit the reception desk to enable it — one click and you\'re in.';
+      document.getElementById('ws-gate-btn').textContent      = 'Back to Home →';
+      document.getElementById('ws-gate-btn').href             = 'index.html';
+      // Change lock icon to crown
+      document.getElementById('ws-gate-svg').innerHTML        = '<path d="M3 17l3-8 4 5 3-9 4 5 3-3v8H3z" stroke="rgba(139,92,246,0.8)" stroke-width="1.5" stroke-linejoin="round" fill="none"/>';
+    }
+  }
+
+  if (!session) {
+    showGate('login');
+    return;
+  }
+
+  // Session exists — check Firestore for wayscore_enabled
+  // Must wait for anonymous auth to complete before reading Firestore
+  function checkWaysScore() {
+    db.collection('users').doc(session.identifier).get().then(function(doc) {
+      if (!doc.exists || doc.data().wayscore_enabled !== true) {
+        showGate('unpaid');
+      } else {
+        gate.style.display    = 'none';
+        formSec.style.display = '';
+      }
+    }).catch(function(err) {
+      console.error('WaysScore check failed:', err.code, err.message);
+      showGate('unpaid');
+    });
+  }
+
+  if (typeof auth !== 'undefined' && auth) {
+    if (auth.currentUser) {
+      checkWaysScore();
+    } else {
+      auth.signInAnonymously()
+        .then(checkWaysScore)
+        .catch(function(err) {
+          console.error('Auth failed for WaysScore check:', err.message);
+          checkWaysScore(); // try anyway
+        });
+    }
+  } else {
+    checkWaysScore();
+  }
+})();
+
+document.getElementById('diet').addEventListener('change',function(){
+  document.getElementById('veg-options').style.display=this.value==='veg'?'block':'none';
+});
+
+function calcBMI(w,h){const m=h/100;return m>0?+(w/(m*m)).toFixed(1):0;}
+function bmiCat(b){if(b<18.5)return'Underweight';if(b<25)return'Normal weight';if(b<30)return'Overweight';return'Obese';}
+
+const profiles={
+  lose:{title:'Fat-Loss Performance Plan',intent:'Calorie-smart meals, metabolic sessions and active recovery for a leaner, stronger body.',schedule:['Full body activation','Cardio interval burn','Upper body strength','Rest & recovery','Lower body power','Core conditioning','Active recovery flow']},
+  build:{title:'Muscle-Building Mass Plan',intent:'High-protein meals, compound lifts and a strength split that grows muscle across every zone.',schedule:['Push power','Pull hypertrophy','Leg strength','Rest & recovery','Upper hypertrophy','Posterior chain','Shoulder & core power']},
+  endurance:{title:'Endurance & Stamina Plan',intent:'Conditioning sessions and steady-state fuel to keep you moving stronger for longer.',schedule:['Aerobic base build','Circuit conditioning','Mixed cardio','Rest & recovery','Interval training','Mobility & recovery','Plyometric flow']},
+  balance:{title:'Balanced Lifestyle Plan',intent:'Sustainable blend of strength, cardio and flexibility for a body that performs and feels great.',schedule:['Full body strength','Cardio & core','Yoga & recovery','Rest & recovery','Upper body tone','Lower body strength','Flexibility & stretch']}
+};
+const vegM={breakfast:['Oats with banana & almonds','Besan chilla with mint chutney','Sprouts salad + green tea','Whole wheat toast + peanut butter','Idli with sambar','Banana smoothie + nuts','Poha with peanuts & lemon'],lunch:['Dal rice + mixed veg sabzi','Rajma + roti + raita','Chole + brown rice + salad','Paneer sabzi + 2 rotis','Mixed dal khichdi + yoghurt','Aloo gobi + roti + dal','Palak paneer + rice + raita'],dinner:['Moong dal soup + 1 roti','Vegetable stew + brown rice','Tofu stir-fry + quinoa','Masoor dal + roti + salad','Sautéed veggies + 2 rotis','Yellow dal + roti + raita','Mixed veg soup + toast']};
+const vegEggM={breakfast:['2 boiled eggs + oats porridge','Egg white omelette + toast','Sprouts + 1 egg bhurji','Banana smoothie + 2 eggs','Whole wheat toast + scrambled eggs','Oats + egg + nuts','Egg chilla + chutney'],lunch:['Egg curry + brown rice','Boiled egg + dal + roti','Egg bhurji + 2 rotis + salad','Egg salad wrap + soup','Dal + egg + rice','Paneer & egg sabzi + roti','Egg fried rice + raita'],dinner:['Egg soup + 1 roti','Boiled egg + veg stir-fry','Egg omelette + toast','Moong dal + 1 egg + roti','Egg curry + brown rice','Veg soup + 1 boiled egg','Egg bhurji + 1 roti']};
+const nonvegM={breakfast:['Egg omelette + whole wheat toast','Chicken poha + green tea','Boiled eggs + oats & fruits','Egg bhurji + 2 rotis','Chicken sandwich + juice','Scrambled eggs + avocado toast','Egg salad + multigrain bread'],lunch:['Chicken curry + brown rice + salad','Fish curry + rice + dal','Egg curry + 2 rotis + raita','Grilled chicken + quinoa','Mutton keema + roti','Tuna salad + multigrain bread','Chicken dal + brown rice'],dinner:['Grilled chicken + sautéed veggies','Fish tikka + 1 roti + salad','Chicken soup + toast','Egg curry + brown rice','Baked fish + steamed veggies','Chicken stir-fry + quinoa','Grilled chicken + salad']};
+const exPlans={
+  beginner:{sessions:['20 min walk + bodyweight squats (3×10)','Rest or light stretching','Bodyweight push-ups (3×8) + plank 20s','30 min walk + lunges (3×10 each leg)','Rest & recovery','Bodyweight circuit: squat, push-up, crunch','Yoga or full rest']},
+  intermediate:{sessions:['Squats 4×10, Deadlift 3×8','Cardio: 30 min run or cycling','Bench press 4×8, Rows 4×8','Rest & active recovery','Leg press 4×10, Lunges 3×12','Full body circuit (4 rounds)','Yoga or mobility work']},
+  advanced:{sessions:['Heavy squat 5×5, Deadlift 4×4','HIIT: 45 min intervals','Bench 5×5, OHP 4×6, Triceps 3×12','Rest & foam rolling','Weighted rows 5×5, Pull-ups 4×6','Kettlebell complex + sprints','Active recovery: swim or yoga']},
+  pro:{sessions:['Max strength: Squat 6×3 (85%+)','Sport-specific conditioning 60 min','Push: Bench 5×3, Incline 4×5','Olympic lifting + recovery','Pull: Deadlift 5×3, Weighted chin-ups 5×5','Power: Box jumps + sled push + sprints','Full recovery: contrast therapy + mobility']}
+};
+
+document.getElementById('generate-btn').addEventListener('click',function(){
+  const w=parseFloat(document.getElementById('weight').value),h=parseFloat(document.getElementById('height').value),goal=document.getElementById('goal').value,diet=document.getElementById('diet').value,eggs=document.getElementById('eggs').value,exp=document.getElementById('experience').value;
+  if(!w||!h||!goal||!diet||!exp){alert('Please complete all fields to generate your plan.');return;}
+  const bmi=calcBMI(w,h),cat=bmiCat(bmi),prof=profiles[goal];
+  document.getElementById('plan-type').textContent=prof.title;
+  document.getElementById('plan-bmi').textContent='BMI '+bmi+' — '+cat;
+  document.getElementById('plan-intent').textContent=prof.intent;
+  const meals=diet==='nonveg'?nonvegM:diet==='veg'&&eggs==='yes'?vegEggM:vegM;
+  ['breakfast','lunch','dinner'].forEach(m=>{document.getElementById(m+'-list').innerHTML=meals[m].map(i=>`<li>${i}</li>`).join('');});
+  const days=['Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday'],exPlan=exPlans[exp]||exPlans.beginner;
+  document.getElementById('exercise-grid').innerHTML=days.map((d,i)=>`<div class="exercise-day"><h5>${d}</h5><div class="day-intent">${prof.schedule[i]}</div><ul><li>${exPlan.sessions[i]}</li></ul></div>`).join('');
+  const results=document.getElementById('plan-results');
+  results.style.display='block';
+  setTimeout(()=>results.scrollIntoView({behavior:'smooth',block:'start'}),100);
+});
+</script>
+<style>.hw-wa-float{position:fixed;bottom:28px;right:28px;z-index:9998;width:56px;height:56px;background:#25D366;border-radius:50%;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 24px rgba(37,211,102,0.45);text-decoration:none;transition:transform .25s,box-shadow .25s;animation:hw-wa-pulse 3s ease-in-out infinite;}.hw-wa-float:hover{transform:scale(1.12);box-shadow:0 8px 32px rgba(37,211,102,0.6);}.hw-wa-float svg{width:28px;height:28px;fill:#fff;}@keyframes hw-wa-pulse{0%,100%{box-shadow:0 4px 24px rgba(37,211,102,0.45);}50%{box-shadow:0 4px 32px rgba(37,211,102,0.7),0 0 0 8px rgba(37,211,102,0.1);}}</style>
+<a href="https://wa.me/919711114918?text=Hi%2C%20I%27d%20like%20to%20know%20more%20about%20HEALTHWAYS%20Gym%20%26%20Swim" target="_blank" rel="noopener noreferrer" class="hw-wa-float" aria-label="Chat with HEALTHWAYS on WhatsApp"><svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg></a>
+<script src="hw-auth.js"></script>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
