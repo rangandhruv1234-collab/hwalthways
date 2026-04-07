@@ -260,6 +260,32 @@ footer{background:#000;border-top:1px solid rgba(201,146,42,0.12);padding:72px 4
 .footer-insta-handle{font-family:'Inter',sans-serif;font-size:11px;color:rgba(255,255,255,0.18);text-decoration:none;transition:color 0.2s;}
 .footer-insta-handle:hover{color:rgba(201,146,42,0.7);}
 
+/* ── CLASS SLIDER (NEW) ── */
+.classes-slider-outer{position:relative;width:calc(100% + 96px);margin-left:-48px;margin-right:-48px;margin-bottom:24px;overflow:hidden;}
+.classes-slider-track{display:flex;transition:transform 0.5s cubic-bezier(0.25,0.46,0.45,0.94);will-change:transform;}
+.class-slide{flex-shrink:0;width:calc(50% - 1px);padding:0 1px;box-sizing:border-box;}
+.class-slide-inner{background:#0E0E0E;padding:32px 28px;display:flex;flex-direction:column;gap:14px;height:100%;border:1px solid rgba(201,146,42,0.08);transition:background 0.25s,border-color 0.25s;}
+.class-slide-inner:hover{background:#131313;border-color:rgba(201,146,42,0.2);}
+.classes-slider-btn{position:absolute;top:50%;transform:translateY(-50%);z-index:10;background:rgba(8,8,8,0.85);border:1px solid rgba(201,146,42,0.4);color:#fff;width:44px;height:44px;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:16px;transition:background 0.2s,border-color 0.2s;backdrop-filter:blur(8px);}
+.classes-slider-btn:hover{background:rgba(201,146,42,0.25);border-color:var(--gold);}
+.classes-slider-prev{left:12px;}.classes-slider-next{right:12px;}
+.classes-slider-dots{display:flex;justify-content:center;gap:8px;margin-top:0;margin-bottom:40px;}
+.classes-slider-dot{width:6px;height:6px;border-radius:50%;background:rgba(255,255,255,0.2);cursor:pointer;transition:background 0.25s,transform 0.25s;}
+.classes-slider-dot.active{background:var(--gold);transform:scale(1.3);}
+
+/* ── TRAINER SLIDER (NEW) ── */
+.trainers-slider-outer{position:relative;width:calc(100% + 96px);margin-left:-48px;margin-right:-48px;margin-bottom:24px;overflow:hidden;}
+.trainers-slider-track{display:flex;transition:transform 0.5s cubic-bezier(0.25,0.46,0.45,0.94);will-change:transform;}
+.trainer-slide{flex-shrink:0;width:calc(50% - 1px);padding:0 1px;box-sizing:border-box;}
+.trainer-slide-inner{background:#0E0E0E;padding:36px 28px;display:flex;gap:20px;align-items:flex-start;height:100%;border:1px solid rgba(201,146,42,0.08);transition:background 0.25s,border-color 0.25s;}
+.trainer-slide-inner:hover{background:#131313;border-color:rgba(201,146,42,0.2);}
+.trainers-slider-btn{position:absolute;top:50%;transform:translateY(-50%);z-index:10;background:rgba(8,8,8,0.85);border:1px solid rgba(201,146,42,0.4);color:#fff;width:44px;height:44px;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:16px;transition:background 0.2s,border-color 0.2s;backdrop-filter:blur(8px);}
+.trainers-slider-btn:hover{background:rgba(201,146,42,0.25);border-color:var(--gold);}
+.trainers-slider-prev{left:12px;}.trainers-slider-next{right:12px;}
+.trainers-slider-dots{display:flex;justify-content:center;gap:8px;margin-top:0;margin-bottom:40px;}
+.trainers-slider-dot{width:6px;height:6px;border-radius:50%;background:rgba(255,255,255,0.2);cursor:pointer;transition:background 0.25s,transform 0.25s;}
+.trainers-slider-dot.active{background:var(--gold);transform:scale(1.3);}
+
 /* ── RESPONSIVE ── */
 @media (max-width:1100px){
   .footer-grid{grid-template-columns:1fr 1fr;gap:40px;}
@@ -283,6 +309,8 @@ footer{background:#000;border-top:1px solid rgba(201,146,42,0.12);padding:72px 4
   .slider-wrap{width:calc(100% + 48px);margin-left:-24px;margin-right:-24px;}
   .schedule-wrap{margin-left:-24px;margin-right:-24px;width:calc(100% + 48px);}
   .footer-map-header{flex-direction:column;align-items:flex-start;}
+  .classes-slider-outer{width:calc(100% + 48px);margin-left:-24px;margin-right:-24px;}
+  .trainers-slider-outer{width:calc(100% + 48px);margin-left:-24px;margin-right:-24px;}
 }
 @media (max-width:760px){
   .plans-grid{grid-template-columns:1fr;}
@@ -325,6 +353,9 @@ footer{background:#000;border-top:1px solid rgba(201,146,42,0.12);padding:72px 4
   .footer-map-embed iframe{height:220px;}
   .slider-btn{width:36px;height:36px;font-size:14px;}
   .slide{aspect-ratio:unset;height:360px;max-height:none;}
+  .class-slide{width:85%;}
+  .trainer-slide{width:85%;}
+  .classes-slider-btn,.trainers-slider-btn{width:36px;height:36px;font-size:13px;}
 }
 @media (max-width:400px){
   .hero-name{font-size:clamp(30px,12vw,50px);letter-spacing:3px;}
@@ -422,6 +453,7 @@ footer{background:#000;border-top:1px solid rgba(201,146,42,0.12);padding:72px 4
     <div class="hstat"><div class="hstat-n" data-count="10000" data-suffix="+" data-format="comma">0</div><div class="hstat-l">Members Trained</div></div>
   </div>
 </section>
+
 <!-- ── GYM ZONES ── -->
 <section class="section" id="zones">
   <div class="section-center reveal">
@@ -495,67 +527,53 @@ footer{background:#000;border-top:1px solid rgba(201,146,42,0.12);padding:72px 4
     <p class="sec-body">Five high-energy group classes led by specialist instructors , for all fitness levels and all ages. Included with your Healthways membership, or available as standalone drop-in sessions.</p>
   </div>
 
-  <div class="classes-grid reveal rd1">
-    <div class="class-card rd1">
-      <div class="class-icon">
-        <svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="5.5" r="2.5" fill="#C9922A"/><path d="M8 11C8 11 10 9.5 12 9.5C14 9.5 16 11 16 11V18H8V11Z" stroke="#C9922A" stroke-width="1.5" fill="none" stroke-linejoin="round"/><path d="M5 12L3 20M19 12L21 20" stroke="#C9922A" stroke-width="1.5" stroke-linecap="round" fill="none"/></svg>
-      </div>
-      <div class="class-name">Aerobics</div>
-      <p class="class-desc">High-intensity cardio circuits that elevate your heart rate, torch calories and build cardiovascular endurance.</p>
-      <div class="class-meta">
-        <span class="class-badge">Daily</span>
-        <span class="class-badge">All Levels</span>
-        <span class="class-badge">60 Min</span>
-      </div>
+  <div class="classes-slider-outer reveal rd1">
+    <div class="classes-slider-track" id="classesTrack">
+      <div class="class-slide"><div class="class-slide-inner">
+        <div class="class-icon"><svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="5.5" r="2.5" fill="#C9922A"/><path d="M8 11C8 11 10 9.5 12 9.5C14 9.5 16 11 16 11V18H8V11Z" stroke="#C9922A" stroke-width="1.5" fill="none" stroke-linejoin="round"/><path d="M5 12L3 20M19 12L21 20" stroke="#C9922A" stroke-width="1.5" stroke-linecap="round" fill="none"/></svg></div>
+        <div style="font-family:'Inter',sans-serif;font-size:9px;font-weight:600;letter-spacing:3px;text-transform:uppercase;color:rgba(201,146,42,0.65);">CLASS 01</div>
+        <div class="class-name">Aerobics</div>
+        <p class="class-desc">High-intensity cardio circuits that elevate your heart rate, torch calories and build cardiovascular endurance.</p>
+        <div class="class-meta"><span class="class-badge">Daily</span><span class="class-badge">All Levels</span><span class="class-badge">60 Min</span></div>
+      </div></div>
+      <div class="class-slide"><div class="class-slide-inner">
+        <div class="class-icon"><svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="5.5" r="2.5" fill="#C9922A"/><path d="M7 10C7 10 9 8 12 8C15 8 17 10 17 10" stroke="#C9922A" stroke-width="1.5" stroke-linecap="round" fill="none"/><path d="M7 10C5 13 5 17 7 20M17 10C19 13 19 17 17 20" stroke="#C9922A" stroke-width="1.5" stroke-linecap="round" fill="none"/><path d="M9 20C9 20 11 18 12 18C13 18 15 20 15 20" stroke="#C9922A" stroke-width="1.5" stroke-linecap="round" fill="none"/></svg></div>
+        <div style="font-family:'Inter',sans-serif;font-size:9px;font-weight:600;letter-spacing:3px;text-transform:uppercase;color:rgba(201,146,42,0.65);">CLASS 02</div>
+        <div class="class-name">Zumba</div>
+        <p class="class-desc">Latin-inspired dance fitness combining salsa, merengue and reggaeton rhythms with easy-to-follow choreography.</p>
+        <div class="class-meta"><span class="class-badge">Mon · Wed · Fri</span><span class="class-badge">All Levels</span><span class="class-badge">60 Min</span></div>
+      </div></div>
+      <div class="class-slide"><div class="class-slide-inner">
+        <div class="class-icon"><svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="5" r="2.5" fill="#C9922A"/><path d="M5 12C5 12 8 10 12 10C16 10 19 12 19 12" stroke="#C9922A" stroke-width="1.5" stroke-linecap="round" fill="none"/><line x1="12" y1="10" x2="12" y2="22" stroke="#C9922A" stroke-width="1.5" stroke-linecap="round"/><path d="M8 22C8 22 10 19 12 19C14 19 16 22 16 22" stroke="#C9922A" stroke-width="1.5" stroke-linecap="round" fill="none"/></svg></div>
+        <div style="font-family:'Inter',sans-serif;font-size:9px;font-weight:600;letter-spacing:3px;text-transform:uppercase;color:rgba(201,146,42,0.65);">CLASS 03</div>
+        <div class="class-name">Yoga</div>
+        <p class="class-desc">A holistic mind-body practice combining asanas, pranayama and mindfulness. Improves flexibility, balance, and mental clarity.</p>
+        <div class="class-meta"><span class="class-badge">Daily</span><span class="class-badge">All Levels</span><span class="class-badge">60 Min</span></div>
+      </div></div>
+      <div class="class-slide"><div class="class-slide-inner">
+        <div class="class-icon"><svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="5.5" r="2.5" fill="#C9922A"/><path d="M8 9L5 15L8 21M16 9L19 15L16 21" stroke="#C9922A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/><line x1="8" y1="15" x2="16" y2="15" stroke="#C9922A" stroke-width="1.5" stroke-linecap="round"/></svg></div>
+        <div style="font-family:'Inter',sans-serif;font-size:9px;font-weight:600;letter-spacing:3px;text-transform:uppercase;color:rgba(201,146,42,0.65);">CLASS 04</div>
+        <div class="class-name">Dance</div>
+        <p class="class-desc">Rhythmic movement and coordination classes covering multiple dance styles.</p>
+        <div class="class-meta"><span class="class-badge">Tue · Thu · Sat</span><span class="class-badge">All Levels</span><span class="class-badge">60 Min</span></div>
+      </div></div>
+      <div class="class-slide"><div class="class-slide-inner">
+        <div class="class-icon"><svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="5.5" r="2.5" fill="#C9922A"/><path d="M4 20L8 12L12 15L16 9L20 20" stroke="#C9922A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg></div>
+        <div style="font-family:'Inter',sans-serif;font-size:9px;font-weight:600;letter-spacing:3px;text-transform:uppercase;color:rgba(201,146,42,0.65);">CLASS 05</div>
+        <div class="class-name">Fat Loss Functional Training</div>
+        <p class="class-desc">The most results-driven class on the schedule. A high-intensity blend of strength circuits, conditioning drills and metabolic training.</p>
+        <div class="class-meta"><span class="class-badge">Daily</span><span class="class-badge">Intermediate +</span><span class="class-badge">75 Min</span></div>
+      </div></div>
     </div>
-    <div class="class-card rd2">
-      <div class="class-icon">
-        <svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="5.5" r="2.5" fill="#C9922A"/><path d="M7 10C7 10 9 8 12 8C15 8 17 10 17 10" stroke="#C9922A" stroke-width="1.5" stroke-linecap="round" fill="none"/><path d="M7 10C5 13 5 17 7 20M17 10C19 13 19 17 17 20" stroke="#C9922A" stroke-width="1.5" stroke-linecap="round" fill="none"/><path d="M9 20C9 20 11 18 12 18C13 18 15 20 15 20" stroke="#C9922A" stroke-width="1.5" stroke-linecap="round" fill="none"/></svg>
-      </div>
-      <div class="class-name">Zumba</div>
-      <p class="class-desc">Latin-inspired dance fitness combining salsa, merengue and reggaeton rhythms with easy-to-follow choreography.</p>
-      <div class="class-meta">
-        <span class="class-badge">Mon · Wed · Fri</span>
-        <span class="class-badge">All Levels</span>
-        <span class="class-badge">60 Min</span>
-      </div>
-    </div>
-    <div class="class-card rd3">
-      <div class="class-icon">
-        <svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="5" r="2.5" fill="#C9922A"/><path d="M5 12C5 12 8 10 12 10C16 10 19 12 19 12" stroke="#C9922A" stroke-width="1.5" stroke-linecap="round" fill="none"/><line x1="12" y1="10" x2="12" y2="22" stroke="#C9922A" stroke-width="1.5" stroke-linecap="round"/><path d="M8 22C8 22 10 19 12 19C14 19 16 22 16 22" stroke="#C9922A" stroke-width="1.5" stroke-linecap="round" fill="none"/></svg>
-      </div>
-      <div class="class-name">Yoga</div>
-      <p class="class-desc">A holistic mind-body practice combining asanas, pranayama and mindfulness. Improves flexibility, balance, and mental clarity.</p>
-      <div class="class-meta">
-        <span class="class-badge">Daily</span>
-        <span class="class-badge">All Levels</span>
-        <span class="class-badge">60 Min</span>
-      </div>
-    </div>
-    <div class="class-card rd4">
-      <div class="class-icon">
-        <svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="5.5" r="2.5" fill="#C9922A"/><path d="M8 9L5 15L8 21M16 9L19 15L16 21" stroke="#C9922A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/><line x1="8" y1="15" x2="16" y2="15" stroke="#C9922A" stroke-width="1.5" stroke-linecap="round"/></svg>
-      </div>
-      <div class="class-name">Dance</div>
-      <p class="class-desc">Rhythmic movement and coordination classes covering multiple dance styles.</p>
-      <div class="class-meta">
-        <span class="class-badge">Tue · Thu · Sat</span>
-        <span class="class-badge">All Levels</span>
-        <span class="class-badge">60 Min</span>
-      </div>
-    </div>
-    <div class="class-card rd5 span-2" style="grid-column:span 2;">
-      <div class="class-icon">
-        <svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="5.5" r="2.5" fill="#C9922A"/><path d="M4 20L8 12L12 15L16 9L20 20" stroke="#C9922A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg>
-      </div>
-      <div class="class-name">Fat Loss Functional Training</div>
-      <p class="class-desc">The most results-driven class on the schedule. A high-intensity blend of strength circuits, conditioning drills and metabolic training.</p>
-      <div class="class-meta">
-        <span class="class-badge">Daily</span>
-        <span class="class-badge">Intermediate +</span>
-        <span class="class-badge">75 Min</span>
-      </div>
-    </div>
+    <button class="classes-slider-btn classes-slider-prev" onclick="classSlide(-1)" aria-label="Previous">&#8592;</button>
+    <button class="classes-slider-btn classes-slider-next" onclick="classSlide(1)" aria-label="Next">&#8594;</button>
+  </div>
+  <div class="classes-slider-dots" id="classesSliderDots">
+    <div class="classes-slider-dot active" onclick="classGoTo(0)"></div>
+    <div class="classes-slider-dot" onclick="classGoTo(1)"></div>
+    <div class="classes-slider-dot" onclick="classGoTo(2)"></div>
+    <div class="classes-slider-dot" onclick="classGoTo(3)"></div>
+    <div class="classes-slider-dot" onclick="classGoTo(4)"></div>
   </div>
 
   <div class="reveal rd4" style="text-align:center;">
@@ -572,63 +590,53 @@ footer{background:#000;border-top:1px solid rgba(201,146,42,0.12);padding:72px 4
     <p class="sec-body">Our certified trainers are not just instructors — they're invested in your transformation. Each zone has a dedicated specialist who knows your name, your goals, and exactly how to push you past your limits safely.</p>
   </div>
 
-  <div class="trainers-grid reveal rd1">
-    <div class="trainer-card rd1">
-      <div class="trainer-num">01</div>
-      <div>
-        <div class="trainer-name">Cardio Specialist</div>
-        <div class="trainer-role">Zone 01 · Cardio & Endurance</div>
-        <p class="trainer-desc">Certified in cardiovascular training and endurance programming.</p>
-        <div class="trainer-tags">
-          <span class="trainer-tag">Fat Loss</span>
-          <span class="trainer-tag">Endurance</span>
-          <span class="trainer-tag">HIIT</span>
-          <span class="trainer-tag">Cardio Programming</span>
+  <div class="trainers-slider-outer reveal rd1">
+    <div class="trainers-slider-track" id="trainersTrack">
+      <div class="trainer-slide"><div class="trainer-slide-inner">
+        <div class="trainer-num">01</div>
+        <div>
+          <div class="trainer-name">Cardio Specialist</div>
+          <div class="trainer-role">Zone 01 · Cardio &amp; Endurance</div>
+          <p class="trainer-desc">Certified in cardiovascular training and endurance programming. Dedicated to fat loss and performance results.</p>
+          <div class="trainer-tags"><span class="trainer-tag">Fat Loss</span><span class="trainer-tag">Endurance</span><span class="trainer-tag">HIIT</span><span class="trainer-tag">Cardio Programming</span></div>
         </div>
-      </div>
-    </div>
-    <div class="trainer-card rd2">
-      <div class="trainer-num">02</div>
-      <div>
-        <div class="trainer-name">Strength Specialist</div>
-        <div class="trainer-role">Zone 02 · Weight Training</div>
-        <p class="trainer-desc">Expert in strength and hypertrophy programming. Certified in powerlifting and functional movement.</p>
-        <div class="trainer-tags">
-          <span class="trainer-tag">Hypertrophy</span>
-          <span class="trainer-tag">Powerlifting</span>
-          <span class="trainer-tag">Strength</span>
-          <span class="trainer-tag">Form & Technique</span>
+      </div></div>
+      <div class="trainer-slide"><div class="trainer-slide-inner">
+        <div class="trainer-num">02</div>
+        <div>
+          <div class="trainer-name">Strength Specialist</div>
+          <div class="trainer-role">Zone 02 · Weight Training</div>
+          <p class="trainer-desc">Expert in strength and hypertrophy programming. Certified in powerlifting and functional movement.</p>
+          <div class="trainer-tags"><span class="trainer-tag">Hypertrophy</span><span class="trainer-tag">Powerlifting</span><span class="trainer-tag">Strength</span><span class="trainer-tag">Form &amp; Technique</span></div>
         </div>
-      </div>
-    </div>
-    <div class="trainer-card rd3">
-      <div class="trainer-num">03</div>
-      <div>
-        <div class="trainer-name">Group Classes Lead</div>
-        <div class="trainer-role">All Classes · Dance · Zumba · Yoga</div>
-        <p class="trainer-desc">A certified group fitness instructor with expertise across Zumba, Yoga, Aerobics and Dance.</p>
-        <div class="trainer-tags">
-          <span class="trainer-tag">Zumba</span>
-          <span class="trainer-tag">Yoga</span>
-          <span class="trainer-tag">Aerobics</span>
-          <span class="trainer-tag">Dance</span>
+      </div></div>
+      <div class="trainer-slide"><div class="trainer-slide-inner">
+        <div class="trainer-num">03</div>
+        <div>
+          <div class="trainer-name">Group Classes Lead</div>
+          <div class="trainer-role">All Classes · Dance · Zumba · Yoga</div>
+          <p class="trainer-desc">A certified group fitness instructor with expertise across Zumba, Yoga, Aerobics and Dance.</p>
+          <div class="trainer-tags"><span class="trainer-tag">Zumba</span><span class="trainer-tag">Yoga</span><span class="trainer-tag">Aerobics</span><span class="trainer-tag">Dance</span></div>
         </div>
-      </div>
-    </div>
-    <div class="trainer-card rd4">
-      <div class="trainer-num">04</div>
-      <div>
-        <div class="trainer-name">WaysScore</div>
-        <div class="trainer-role">24/7 · Personalised Plans · All Members</div>
-        <p class="trainer-desc">Your fourth trainer , always available, never off-duty. Waysscore builds a complete personalised workout and nutrition plan from your fitness level.</p>
-        <div class="trainer-tags">
-          <span class="trainer-tag">Workout Plans</span>
-          <span class="trainer-tag">Nutrition</span>
-          <span class="trainer-tag">BMI Analysis</span>
-          <span class="trainer-tag">24/7</span>
+      </div></div>
+      <div class="trainer-slide"><div class="trainer-slide-inner">
+        <div class="trainer-num">04</div>
+        <div>
+          <div class="trainer-name">WaysScore</div>
+          <div class="trainer-role">24/7 · Personalised Plans · All Members</div>
+          <p class="trainer-desc">Your fourth trainer, always available, never off-duty. Waysscore builds a complete personalised workout and nutrition plan from your fitness level.</p>
+          <div class="trainer-tags"><span class="trainer-tag">Workout Plans</span><span class="trainer-tag">Nutrition</span><span class="trainer-tag">BMI Analysis</span><span class="trainer-tag">24/7</span></div>
         </div>
-      </div>
+      </div></div>
     </div>
+    <button class="trainers-slider-btn trainers-slider-prev" onclick="trainerSlide(-1)" aria-label="Previous">&#8592;</button>
+    <button class="trainers-slider-btn trainers-slider-next" onclick="trainerSlide(1)" aria-label="Next">&#8594;</button>
+  </div>
+  <div class="trainers-slider-dots" id="trainersSliderDots">
+    <div class="trainers-slider-dot active" onclick="trainerGoTo(0)"></div>
+    <div class="trainers-slider-dot" onclick="trainerGoTo(1)"></div>
+    <div class="trainers-slider-dot" onclick="trainerGoTo(2)"></div>
+    <div class="trainers-slider-dot" onclick="trainerGoTo(3)"></div>
   </div>
 
   <div class="reveal rd5" style="text-align:center;">
@@ -755,7 +763,7 @@ mobileMenu.querySelectorAll('a').forEach(a => {
   });
 });
 
-// ── Slider
+// ── Zones Slider
 let current = 0;
 const total = 3;
 const track = document.getElementById('sliderTrack');
@@ -767,6 +775,30 @@ function goTo(n) {
 }
 function slide(dir) { goTo(current + dir); }
 setInterval(() => slide(1), 4000);
+
+// ── Classes Slider
+(function(){
+  var cCur=0,cTotal=5,cTrack=document.getElementById('classesTrack'),cDots=document.querySelectorAll('.classes-slider-dot');
+  function cW(){var s=cTrack.querySelector('.class-slide');return s?s.offsetWidth:0;}
+  window.classGoTo=function(n){cCur=((n%cTotal)+cTotal)%cTotal;cTrack.style.transform='translateX(-'+(cCur*cW())+'px)';cDots.forEach(function(d,i){d.classList.toggle('active',i===cCur);});};
+  window.classSlide=function(dir){window.classGoTo(cCur+dir);};
+  var cTX=0;
+  cTrack.addEventListener('touchstart',function(e){cTX=e.touches[0].clientX;},{passive:true});
+  cTrack.addEventListener('touchend',function(e){var d=cTX-e.changedTouches[0].clientX;if(Math.abs(d)>40)window.classSlide(d>0?1:-1);},{passive:true});
+  window.addEventListener('resize',function(){window.classGoTo(cCur);});
+})();
+
+// ── Trainers Slider
+(function(){
+  var tCur=0,tTotal=4,tTrack=document.getElementById('trainersTrack'),tDots=document.querySelectorAll('.trainers-slider-dot');
+  function tW(){var s=tTrack.querySelector('.trainer-slide');return s?s.offsetWidth:0;}
+  window.trainerGoTo=function(n){tCur=((n%tTotal)+tTotal)%tTotal;tTrack.style.transform='translateX(-'+(tCur*tW())+'px)';tDots.forEach(function(d,i){d.classList.toggle('active',i===tCur);});};
+  window.trainerSlide=function(dir){window.trainerGoTo(tCur+dir);};
+  var tTX=0;
+  tTrack.addEventListener('touchstart',function(e){tTX=e.touches[0].clientX;},{passive:true});
+  tTrack.addEventListener('touchend',function(e){var d=tTX-e.changedTouches[0].clientX;if(Math.abs(d)>40)window.trainerSlide(d>0?1:-1);},{passive:true});
+  window.addEventListener('resize',function(){window.trainerGoTo(tCur);});
+})();
 
 // ── Scroll Reveal
 const revs = document.querySelectorAll('.reveal');
@@ -810,16 +842,3 @@ revs.forEach(r => obs.observe(r));
 <script src="hw-auth.js"></script>
 </body>
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
-
