@@ -148,18 +148,20 @@ nav.scrolled{background:rgba(8,8,8,0.97);backdrop-filter:blur(20px);border-botto
 .cta-btn:hover::before{transform:translateX(0);}
 .cta-btn:hover{gap:18px;}
 
-/* ── ZONE CARDS ── */
-.zones-grid{display:grid;grid-template-columns:1fr 1fr;gap:2px;margin-bottom:60px;}
-.zone-card{position:relative;overflow:hidden;min-height:440px;display:flex;flex-direction:column;justify-content:flex-end;}
-.zone-card img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:transform 0.6s ease;}
-.zone-card:hover img{transform:scale(1.04);}
-.zone-card-overlay{position:absolute;inset:0;background:linear-gradient(to top,rgba(8,8,8,0.94) 45%,rgba(8,8,8,0.15) 100%);}
-.zone-card-content{position:relative;z-index:2;padding:40px 36px;}
-.zone-card-tag{font-family:'Inter',sans-serif;font-size:9px;font-weight:600;letter-spacing:4px;text-transform:uppercase;color:var(--gold);margin-bottom:10px;}
-.zone-card-title{font-family:'Rajdhani',sans-serif;font-weight:700;font-size:30px;letter-spacing:2px;text-transform:uppercase;color:#fff;margin-bottom:14px;}
-.zone-card-text{font-family:'Inter',sans-serif;font-size:13px;font-weight:300;line-height:1.8;color:rgba(255,255,255,0.65);margin-bottom:22px;}
-.zone-card-tags{display:flex;flex-wrap:wrap;gap:8px;}
-.zone-tag{font-family:'Inter',sans-serif;font-size:9px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,0.45);border:1px solid rgba(255,255,255,0.15);padding:5px 11px;}
+/* ── ZONE CARDS — REDESIGNED ── */
+.zones-grid{display:grid;grid-template-columns:1fr 1fr;gap:2px;margin-bottom:56px;}
+.zone-card{position:relative;overflow:hidden;cursor:default;}
+.zone-card-img-wrap{position:relative;width:100%;overflow:hidden;}
+.zone-card-img-wrap img{width:100%;height:260px;object-fit:cover;object-position:center;display:block;transition:transform 0.6s ease;}
+.zone-card:hover .zone-card-img-wrap img{transform:scale(1.04);}
+.zone-card-img-wrap::after{content:'';position:absolute;inset:0;background:linear-gradient(to bottom,transparent 40%,rgba(8,8,8,0.7) 100%);}
+.zone-card-body{background:#0d0d0d;border:1px solid rgba(255,255,255,0.05);border-top:none;padding:24px 24px 28px;}
+.zone-card-tag{font-family:'Inter',sans-serif;font-size:9px;font-weight:600;letter-spacing:4px;text-transform:uppercase;color:var(--gold);margin-bottom:8px;display:block;}
+.zone-card-title{font-family:'Rajdhani',sans-serif;font-weight:700;font-size:22px;letter-spacing:2px;text-transform:uppercase;color:#fff;margin-bottom:10px;line-height:1;}
+.zone-card-text{font-family:'Inter',sans-serif;font-size:12px;font-weight:300;line-height:1.75;color:rgba(255,255,255,0.45);margin-bottom:18px;}
+.zone-card-tags{display:flex;flex-wrap:wrap;gap:6px;}
+.zone-tag{font-family:'Inter',sans-serif;font-size:9px;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;color:rgba(255,255,255,0.4);border:1px solid rgba(255,255,255,0.1);padding:5px 10px;transition:border-color 0.2s,color 0.2s;}
+.zone-card:hover .zone-tag{border-color:rgba(201,146,42,0.25);color:rgba(255,255,255,0.6);}
 
 /* ── CLASS CARDS ── */
 .classes-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:rgba(201,146,42,0.1);max-width:1000px;margin:0 auto 56px;}
@@ -336,9 +338,9 @@ footer{background:#000;border-top:1px solid rgba(201,146,42,0.12);padding:72px 4
   .feat-grid{grid-template-columns:1fr;}
   .feat-card{padding:28px 22px;}
   .zones-grid{gap:2px;}
-  .zone-card{min-height:360px;}
-  .zone-card-content{padding:28px 22px;}
-  .zone-card-title{font-size:24px;}
+  .zone-card-img-wrap img{height:200px;}
+  .zone-card-body{padding:18px 18px 22px;}
+  .zone-card-title{font-size:18px;}
   .classes-grid{grid-template-columns:1fr;}
   .class-card.span-2{grid-column:span 1;}
   .trainer-card{flex-direction:column;gap:12px;padding:28px 22px;}
@@ -352,7 +354,7 @@ footer{background:#000;border-top:1px solid rgba(201,146,42,0.12);padding:72px 4
   .footer-bottom{flex-direction:column;align-items:center;text-align:center;padding:20px 0;}
   .footer-map-embed iframe{height:220px;}
   .slider-btn{width:36px;height:36px;font-size:14px;}
-  .slide{aspect-ratio:unset;height:360px;max-height:none;}
+  .slide{aspect-ratio:unset;height:260px;max-height:none;}
   .class-slide{width:85%;}
   .trainer-slide{width:85%;}
   .classes-slider-btn,.trainers-slider-btn{width:36px;height:36px;font-size:13px;}
@@ -360,7 +362,7 @@ footer{background:#000;border-top:1px solid rgba(201,146,42,0.12);padding:72px 4
 @media (max-width:400px){
   .hero-name{font-size:clamp(30px,12vw,50px);letter-spacing:3px;}
   .hstat-n{font-size:20px;}
-  .zone-card-title{font-size:20px;}
+  .zone-card-title{font-size:16px;}
 }
 @media (max-width:768px){
   .hero-stats{display:grid !important;grid-template-columns:repeat(3,minmax(0,1fr)) !important;overflow:visible !important;white-space:normal !important;}
@@ -454,39 +456,46 @@ footer{background:#000;border-top:1px solid rgba(201,146,42,0.12);padding:72px 4
   </div>
 </section>
 
-<!-- ── GYM ZONES ── -->
+<!-- ════════════════════════════════════════════════
+     ── GYM ZONES — REDESIGNED SECTION ONLY ──
+     ════════════════════════════════════════════════ -->
 <section class="section" id="zones">
   <div class="section-center reveal">
     <span class="sec-eyebrow">01 · The Zones</span>
-    <h2 class="sec-title">TWO ZONES.<br><em>ONE MISSION.</em></h2>
+    <h2 class="sec-title"><em>TWO ZONES.</em> ONE MISSION.</h2>
     <div class="sec-divider"></div>
     <p class="sec-body">Healthways Gym is divided into two purpose-built training zones — each with its own dedicated certified trainer, premium equipment and a layout engineered for results. Whether you're chasing fat loss or raw strength, you'll find your arena here.</p>
   </div>
 
+  <!-- Zone Cards — image on top, clean info below -->
   <div class="zones-grid reveal rd1">
+
     <div class="zone-card">
-      <img src="images/gym-cardio.webp" alt="Cardio Zone — Healthways Gym"/>
-      <div class="zone-card-overlay"></div>
-      <div class="zone-card-content">
-        <div class="zone-card-tag">Zone 01</div>
+      <div class="zone-card-img-wrap">
+        <img src="images/gym-cardio.webp" alt="Cardio Zone — Healthways Gym" loading="lazy"/>
+      </div>
+      <div class="zone-card-body">
+        <span class="zone-card-tag">Zone 01</span>
         <h3 class="zone-card-title">Cardio Zone</h3>
-        <p class="zone-card-text">A vast, dedicated cardio floor built for endurance, fat burn and cardiovascular health.</p>
+        <p class="zone-card-text">A vast dedicated cardio floor built for endurance, fat burn and cardiovascular health — with a certified trainer on the floor every session.</p>
         <div class="zone-card-tags">
           <span class="zone-tag">Treadmills</span>
           <span class="zone-tag">Spin Bikes</span>
           <span class="zone-tag">Ellipticals</span>
-          <span class="zone-tag">Rowing Machines</span>
+          <span class="zone-tag">Rowing</span>
           <span class="zone-tag">Assault Bikes</span>
         </div>
       </div>
     </div>
+
     <div class="zone-card">
-      <img src="images/gym-interior.webp" alt="Weight Training Zone — Healthways Gym"/>
-      <div class="zone-card-overlay"></div>
-      <div class="zone-card-content">
-        <div class="zone-card-tag">Zone 02</div>
+      <div class="zone-card-img-wrap">
+        <img src="images/gym-hero.webp" alt="Weight Training Zone — Healthways Gym" loading="lazy"/>
+      </div>
+      <div class="zone-card-body">
+        <span class="zone-card-tag">Zone 02</span>
         <h3 class="zone-card-title">Weight Training Zone</h3>
-        <p class="zone-card-text">A complete free-weight and machine setup for hypertrophy, strength and power training.</p>
+        <p class="zone-card-text">A complete free-weight and machine setup for hypertrophy, strength and power training — engineered for serious lifters and beginners alike.</p>
         <div class="zone-card-tags">
           <span class="zone-tag">Free Weights</span>
           <span class="zone-tag">Barbells</span>
@@ -496,13 +505,24 @@ footer{background:#000;border-top:1px solid rgba(201,146,42,0.12);padding:72px 4
         </div>
       </div>
     </div>
+
   </div>
 
+  <!-- Photo Slider — 3 images -->
   <div class="slider-wrap reveal rd2">
     <div class="slider-track" id="sliderTrack">
-      <div class="slide"><img src="images/gym-cardio.webp" alt="Healthways Gym"/><div class="slide-overlay"></div></div>
-      <div class="slide"><img src="images/gym-interior.webp" alt="Weight Training Zone"/><div class="slide-overlay"></div></div>
-      <div class="slide"><img src="images/gym-cardio.webp" alt="Cardio Zone"/><div class="slide-overlay"></div></div>
+      <div class="slide">
+        <img src="images/gym-interior.webp" alt="Cardio Zone — Healthways Gym"/>
+        <div class="slide-overlay"></div>
+      </div>
+      <div class="slide">
+        <img src="images/gym-hero.webp" alt="Weight Training Zone — Healthways Gym"/>
+        <div class="slide-overlay"></div>
+      </div>
+      <div class="slide">
+        <img src="images/gym-cardio.webp" alt="Group Classes Studio — Healthways Gym"/>
+        <div class="slide-overlay"></div>
+      </div>
     </div>
     <button class="slider-btn slider-prev" onclick="slide(-1)" aria-label="Previous">&#8592;</button>
     <button class="slider-btn slider-next" onclick="slide(1)" aria-label="Next">&#8594;</button>
@@ -517,6 +537,9 @@ footer{background:#000;border-top:1px solid rgba(201,146,42,0.12);padding:72px 4
     <a href="login.html?source=gym" class="cta-btn">Explore the Gym &nbsp;→</a>
   </div>
 </section>
+<!-- ════════════════════════════════════════════════
+     ── END OF REDESIGNED ZONES SECTION ──
+     ════════════════════════════════════════════════ -->
 
 <!-- ── GROUP CLASSES ── -->
 <section class="section" id="classes">
@@ -763,7 +786,7 @@ mobileMenu.querySelectorAll('a').forEach(a => {
   });
 });
 
-// ── Zones Slider
+// ── Zones Slider (3 slides)
 let current = 0;
 const total = 3;
 const track = document.getElementById('sliderTrack');
