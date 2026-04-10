@@ -40,16 +40,17 @@ nav.scrolled{background:rgba(8,8,8,0.97);backdrop-filter:blur(20px);border-botto
 .nav-hamburger.open span:nth-child(3){transform:translateY(-7px) rotate(-45deg);}
 
 /* Mobile Drawer */
-.mobile-menu{display:none;position:fixed;top:68px;left:0;right:0;background:rgba(6,6,6,0.99);backdrop-filter:blur(24px);border-bottom:1px solid rgba(201,146,42,0.18);z-index:199;flex-direction:column;align-items:stretch;transform:translateY(-100%);opacity:0;transition:transform 0.38s cubic-bezier(0.4,0,0.2,1),opacity 0.15s ease;pointer-events:none;box-shadow:0 16px 40px rgba(0,0,0,0.6);}
+body.menu-open{overflow:hidden;}
+body.menu-open .hw-wa-float{opacity:0;pointer-events:none;transform:scale(0.92);}
+.mobile-menu{display:none;position:fixed;top:0;left:0;right:0;bottom:0;min-height:100svh;padding:84px 0 max(18px,env(safe-area-inset-bottom));background:radial-gradient(circle at top center,rgba(201,146,42,0.09),transparent 38%),linear-gradient(180deg,rgba(9,9,9,0.985),rgba(5,5,5,0.995));backdrop-filter:blur(28px);z-index:205;flex-direction:column;align-items:stretch;justify-content:space-between;transform:translateY(-2%);opacity:0;transition:transform 0.38s cubic-bezier(0.4,0,0.2,1),opacity 0.2s ease;pointer-events:none;box-shadow:0 24px 60px rgba(0,0,0,0.72);}
 .mobile-menu.open{transform:translateY(0);opacity:1;pointer-events:all;}
-.mobile-menu-links{display:flex;flex-direction:column;}
-.mobile-menu-links a{font-family:'Inter',sans-serif;font-size:12px;font-weight:600;letter-spacing:2.5px;text-transform:uppercase;color:rgba(255,255,255,0.55);text-decoration:none;padding:17px 24px;border-bottom:1px solid rgba(255,255,255,0.05);display:flex;align-items:center;justify-content:space-between;transition:color 0.2s,background 0.2s,padding-left 0.2s;}
-.mobile-menu-links a::after{content:'→';font-size:11px;color:rgba(201,146,42,0.4);transition:color 0.2s,transform 0.2s;}
-.mobile-menu-links a:hover{color:#fff;background:rgba(201,146,42,0.04);padding-left:28px;}
-.mobile-menu-links a:hover::after{color:var(--gold);transform:translateX(3px);}
-.mobile-menu-ctas{display:flex;gap:10px;padding:16px 24px;background:rgba(0,0,0,0.4);}
-.mobile-menu-ctas .nav-trial{font-size:10px;padding:11px 16px;flex:1;text-align:center;}
-.mobile-menu-ctas .nav-join{font-size:10px;padding:11px 16px;flex:1;text-align:center;}
+.mobile-menu-links{display:flex;flex-direction:column;padding-top:8px;}
+.mobile-menu-links a{font-family:'Inter',sans-serif;font-size:13px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:rgba(255,255,255,0.62);text-decoration:none;padding:21px 24px;min-height:60px;border-bottom:1px solid rgba(255,255,255,0.06);display:flex;align-items:center;justify-content:space-between;transition:color 0.25s,background 0.25s,padding-left 0.25s,border-color 0.25s,box-shadow 0.25s;}
+.mobile-menu-links a::after{content:'→';font-size:12px;color:rgba(201,146,42,0.62);transition:color 0.25s,transform 0.25s,opacity 0.25s;opacity:0.9;}
+.mobile-menu-links a:hover,.mobile-menu-links a.active{color:#fff;background:linear-gradient(90deg,rgba(201,146,42,0.1),rgba(201,146,42,0.03) 45%,transparent 100%);padding-left:28px;border-color:rgba(201,146,42,0.12);box-shadow:inset 3px 0 0 rgba(201,146,42,0.8);}
+.mobile-menu-links a:hover::after,.mobile-menu-links a.active::after{color:var(--gold);transform:translateX(4px);opacity:1;}
+.mobile-menu-ctas{display:grid;grid-template-columns:1fr 1fr;gap:12px;padding:20px 24px 0;margin-top:auto;background:linear-gradient(180deg,rgba(0,0,0,0),rgba(0,0,0,0.32));border-top:1px solid rgba(255,255,255,0.06);}
+.mobile-menu-ctas .nav-trial,.mobile-menu-ctas .nav-join{font-size:10px;padding:13px 16px;flex:1;text-align:center;justify-content:center;}
 
 /* ── HERO ── */
 .hero{position:relative;height:100vh;min-height:700px;display:flex;flex-direction:column;align-items:center;justify-content:center;overflow:hidden;background-image:url('images/gym-hero.webp');background-size:cover;background-position:center;}
@@ -180,6 +181,33 @@ nav.scrolled{background:rgba(8,8,8,0.97);backdrop-filter:blur(20px);border-botto
 .ws-arrow{background:rgba(8,8,8,0.7);border:1px solid rgba(201,146,42,0.35);color:#fff;width:42px;height:42px;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:16px;transition:background 0.2s,border-color 0.2s;backdrop-filter:blur(8px);flex-shrink:0;}
 .ws-arrow:hover{background:rgba(201,146,42,0.18);border-color:var(--gold);}
 
+/* Selective atmosphere for the home WaysScore section */
+#ai{
+  position:relative;
+  overflow:hidden;
+  background:
+    radial-gradient(circle at top center, rgba(201,146,42,0.07), transparent 52%),
+    linear-gradient(180deg, rgba(255,255,255,0.015), rgba(255,255,255,0));
+}
+#ai::before{
+  content:'';
+  position:absolute;
+  inset:0;
+  background:
+    linear-gradient(180deg, rgba(4,4,4,0.9), rgba(4,4,4,0.78)),
+    url('images/gym-hero.webp') center/cover no-repeat;
+  opacity:0.3;
+  filter:grayscale(0.08) saturate(0.8);
+  pointer-events:none;
+}
+#ai .section-center{position:relative;z-index:1;}
+#ai .ws-slider-wrap{position:relative;z-index:1;}
+#ai .ws-card-left{
+  background:
+    linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0)),
+    #0d0d0d;
+}
+
 /* ── CTA BANNER ── */
 .cta-banner{padding:90px 48px;text-align:center;background:#0d0d0d;border-top:1px solid rgba(201,146,42,0.15);border-bottom:1px solid rgba(201,146,42,0.15);}
 .cta-banner-title{font-family:'Rajdhani',sans-serif;font-weight:700;font-size:clamp(30px,5vw,58px);letter-spacing:2px;text-transform:uppercase;color:#fff;line-height:0.92;margin-bottom:16px;}
@@ -257,7 +285,7 @@ footer{background:#000;border-top:1px solid rgba(201,146,42,0.12);padding:72px 4
 }
 @media (max-width:680px){
   nav{height:60px;padding:0 20px;}
-  .mobile-menu{top:60px;}
+  .mobile-menu{top:0;padding-top:76px;}
   .hero{min-height:100svh;}
   .hero-content{padding:0 20px;}
   .hero-name{font-size:clamp(34px,10vw,58px);letter-spacing:3px;line-height:1.1;}
@@ -331,6 +359,55 @@ footer{background:#000;border-top:1px solid rgba(201,146,42,0.12);padding:72px 4
   .ws-card-num{font-size:48px;}
   .ws-card-title{font-size:22px;}
   .ws-card-desc{font-size:13px;}
+
+  /* Refined mobile presentation for the home WaysScore section */
+  #ai{
+    background:
+      radial-gradient(circle at 50% 0, rgba(201,146,42,0.12), transparent 46%),
+      linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0));
+  }
+  #ai::before{
+    background:
+      linear-gradient(180deg, rgba(3,3,3,0.95), rgba(3,3,3,0.8)),
+      url('images/gym-hero.webp') center/cover no-repeat;
+    opacity:0.24;
+  }
+  #ai .section-center{
+    max-width:34rem;
+    padding-top:10px;
+  }
+  #ai .sec-title{margin-bottom:16px;}
+  #ai .sec-body{
+    max-width:31ch;
+    margin:0 auto 34px;
+    color:rgba(255,255,255,0.68);
+    line-height:1.85;
+  }
+  #ai .ws-slider-wrap{
+    width:100%;
+    margin:0 auto 40px;
+  }
+  #ai .ws-card-left{
+    padding:32px 24px 30px;
+    border:1px solid rgba(201,146,42,0.08);
+    background:
+      linear-gradient(180deg, rgba(201,146,42,0.06), rgba(201,146,42,0.015) 30%, rgba(255,255,255,0) 100%),
+      #0d0d0d;
+  }
+  #ai .ws-card-title{max-width:11ch;}
+  #ai .ws-card-desc{
+    max-width:30ch;
+    color:rgba(255,255,255,0.64);
+    line-height:1.85;
+    margin-bottom:24px;
+  }
+  #ai .ws-tags{gap:6px;}
+  #ai .ws-tag{
+    font-size:8px;
+    letter-spacing:1.6px;
+    padding:6px 10px;
+  }
+  #ai .ws-nav{margin-top:18px;}
 }
 @media (max-width:400px){
   .hero-name{font-size:clamp(34px,10vw,58px);letter-spacing:3px;line-height:1.1;}
@@ -353,6 +430,7 @@ footer{background:#000;border-top:1px solid rgba(201,146,42,0.12);padding:72px 4
     <span class="nav-logo-text">HEALTH<span>WAYS</span></span>
   </a>
   <div class="nav-links">
+    <a href="index.html" class="active">Home</a>
     <a href="gym.html">Gym</a>
     <a href="swimming.html">Swimming</a>
     <a href="ai-trainer.html">WaysScore</a>
@@ -371,6 +449,7 @@ footer{background:#000;border-top:1px solid rgba(201,146,42,0.12);padding:72px 4
 <!-- Mobile Menu Drawer -->
 <div class="mobile-menu" id="mobileMenu">
   <div class="mobile-menu-links">
+    <a href="index.html" class="active">Home</a>
     <a href="gym.html">Gym</a>
     <a href="swimming.html">Swimming</a>
     <a href="ai-trainer.html">WaysScore</a>
@@ -713,7 +792,7 @@ footer{background:#000;border-top:1px solid rgba(201,146,42,0.12);padding:72px 4
     <div>
       <div class="footer-col-title">Navigate</div>
       <ul class="footer-links">
-        <li><a href="index.html">Home</a></li>
+        <a href="index.html" class="active">Home</a>
         <li><a href="gym.html">Gym</a></li>
         <li><a href="swimming.html">Swimming Pool</a></li>
         <li><a href="ai-trainer.html">WaysScore</a></li>
@@ -779,11 +858,13 @@ const mobileMenu = document.getElementById('mobileMenu');
 hamburger.addEventListener('click', () => {
   const open = hamburger.classList.toggle('open');
   mobileMenu.classList.toggle('open', open);
+  document.body.classList.toggle('menu-open', open);
 });
 mobileMenu.querySelectorAll('a').forEach(a => {
   a.addEventListener('click', () => {
     hamburger.classList.remove('open');
     mobileMenu.classList.remove('open');
+    document.body.classList.remove('menu-open');
   });
 });
 
